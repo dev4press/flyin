@@ -1,0 +1,219 @@
+/*
+Smart Animated Popup v1.5
+http://www.smartplugins.info/plugin/javascript/smart-animated-popup/
+
+Copyright 2008 - 2017 Milan Petrovic (email: support@dev4press.com)
+
+https://www.dev4press.com
+http://www.smartplugins.info
+*/
+
+/* style: plain black */
+.sanp-style-plain-black .sanp-wrapper {
+    background: #111111;
+    border-radius: 4px;
+    box-shadow: 1px 1px 4px rgba(32, 32, 32, .3);
+}
+
+.sanp-style-plain-black .sanp-wrapper .sanp-header {
+    border-radius: 4px 4px 0 0;
+    padding: 10px;
+    border-bottom: 1px solid #555555;
+}
+
+.sanp-style-plain-black .sanp-wrapper > button {
+    -webkit-appearance: none;
+
+    outline: 1px solid transparent;
+    background: none;
+    border: none;
+    color: #888888;
+    cursor: pointer;
+    float: right;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 24px;
+    right: 10px;
+    top: 10px;
+}
+
+.sanp-style-plain-black .sanp-wrapper .sanp-header h5 {
+    color: #ffffff;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    line-height: 24px;
+}
+
+.sanp-style-plain-black .sanp-wrapper .sanp-content {
+    padding: 10px;
+    color: #ffffff;
+}
+
+.sanp-style-plain-black .sanp-wrapper .sanp-footer {
+    border-radius: 0 0 4px 4px;
+    padding: 10px;
+    border-top: 1px solid #555555;
+    text-align: center;
+}
+
+.sanp-style-plain-black .sanp-wrapper .sanp-footer button {
+    -webkit-appearance: none;
+
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    outline: 1px solid transparent;
+    background: none;
+    border: none;
+    color: #eeeeee;
+}
+
+.sanp-style-plain-black.sanp-button-alt .sanp-wrapper > button {
+    background: #ffffff;
+    box-shadow: 1px 1px 4px rgba(32, 32, 32, 0.3);
+    color: #111111;
+}
+
+/* style: clean gray */
+.sanp-style-clean-gray .sanp-wrapper {
+    background: #fbfbfb;
+    border-radius: 6px;
+    box-shadow: 1px 1px 5px rgba(32, 32, 32, 0.6);
+}
+
+.sanp-style-clean-gray .sanp-wrapper .sanp-header {
+    background: #bbbbbb;
+    border-radius: 6px 6px 0 0;
+    padding: 15px;
+}
+
+.sanp-style-clean-gray .sanp-wrapper > button {
+    -webkit-appearance: none;
+
+    background: none;
+    border: medium none;
+    color: #666666;
+    cursor: pointer;
+    float: right;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 24px;
+    right: 15px;
+    text-shadow: 1px 1px 1px #eee;
+    top: 15px;
+}
+
+.sanp-style-clean-gray .sanp-wrapper .sanp-header h5 {
+    color: #111;
+    font-size: 18px;
+    line-height: 24px;
+    margin: 0;
+    padding: 0;
+    text-shadow: 1px 1px 1px #eee;
+}
+
+.sanp-style-clean-gray .sanp-wrapper .sanp-content {
+    padding: 15px;
+}
+
+.sanp-style-clean-gray .sanp-wrapper .sanp-footer {
+    border-radius: 0 0 6px 6px;
+    padding: 15px;
+    background: #eeeeee;
+    text-align: center;
+}
+
+.sanp-style-clean-gray .sanp-wrapper .sanp-footer button {
+    -webkit-appearance: none;
+
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    outline: 1px solid transparent;
+    background: none;
+    border: none;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.sanp-style-clean-gray.sanp-button-alt .sanp-wrapper > button {
+    background: #666666;
+    box-shadow: 1px 1px 4px rgba(32, 32, 32, 0.3);
+    color: #ffffff;
+    text-shadow: none;
+}
+
+/* style: box red */
+.sanp-style-box-red .sanp-wrapper {
+    background: #FFF1F1;
+    border-radius: 0;
+    border: 4px solid #c43636;
+    box-shadow: 1px 1px 5px rgba(32, 32, 32, 0.6);
+}
+
+.sanp-style-box-red .sanp-wrapper .sanp-header {
+    background: #c43636;
+    border-radius: 0;
+    padding: 15px;
+}
+
+.sanp-style-box-red .sanp-wrapper > button {
+    -webkit-appearance: none;
+
+    background: none;
+    border: medium none;
+    color: #550000;
+    cursor: pointer;
+    float: right;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 24px;
+    right: 15px;
+    top: 15px;
+}
+
+.sanp-style-box-red .sanp-wrapper .sanp-header h5 {
+    border-bottom: 4px solid #c43636;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 24px;
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+}
+
+.sanp-style-box-red .sanp-wrapper .sanp-content {
+    padding: 15px;
+}
+
+.sanp-style-box-red .sanp-wrapper .sanp-footer {
+    border-radius: 0;
+    padding: 15px;
+    background: #ffdada;
+    text-align: center;
+}
+
+.sanp-style-box-red .sanp-wrapper .sanp-footer button {
+    -webkit-appearance: none;
+
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    color: #c43636;
+    font-weight: bold;
+    outline: 1px solid transparent;
+    background: none;
+    border: none;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.sanp-style-box-red.sanp-button-alt .sanp-wrapper > button {
+    background: #550000;
+    box-shadow: 1px 1px 4px rgba(32, 32, 32, 0.3);
+    color: #fff;
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Smart Animated Popup: Example #02</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css" href="../source/css/popup.helper.css">
+    <link rel="stylesheet" type="text/css" href="../pack/popup.pack.css">
+
+    <style type="text/css">
+        #sanip-example-demo-02 img {
+            float: right;
+            margin: 0 0 0 15px;
+        }
+
+        #sanip-example-demo-02 p {
+            margin: 0;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="srm-helper-header">
+        <h1 class="srm-helper-left">Smart Animated Popup | <span>example #02</span></h1>
+        <span class="srm-helper-right">
+            <a href="../index.html">Index</a> | 
+            <a href="../files.html">Files</a> | <strong>Demos:</strong> 
+            <a href="01.html">#1</a> - 
+            <a href="02.html">#2</a> - 
+            <a href="03.html">#3</a> - 
+            <a href="04.html">#4</a> - 
+            <a href="05.html">#5</a> - 
+            <a href="06.html">#6</a>
+        </span>
+    </div>
+
+    <div id="sanip-example-demo-02" data-title="Smart Animated Popup" style="display: none;">
+        <img width="172" src="https://s3.amazonaws.com/smartplugins/logo_256.png" alt="SMARTPlugins" />
+        <p>Smart Animated Popup is a jQuery powered plugin for creating normal or modal popups with custom positioning, popup open/close animation effect, customized overlay and popup looks, tons of settings. And it's responsive.</p>
+        <p>Plugin has over 20 animation effects you can assign, with additional 'random' effect that will pick random effect on every page load.</p>
+    </div>
+
+    <div class="srm-helper-central">
+        <p><strong>Example #02:</strong> This example opens popup automatically 2 seconds after page load, and it will close it after 5 seconds. It sets one of the extra styles and effect is set to random. Popup is set to appear in the middle of the page. This example uses cookie to store the number of times popup is displayed, and it will show it 3 times (refresh page 4 times, and the last time it will not show it, and it will not show it for a day).</p>
+
+        <div class="srm-helper-info">
+            &lt;script type="text/javascript"&gt;<br/>
+            &nbsp;&nbsp;jQuery(document).ready(function() {<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;jQuery("#sanip-example-demo-02").smartAniPopup({<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;settings: {<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style: "sanp-style-clean-gray"<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onLoadDelay: 2000<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;closeAuto: true<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;closeAutoDelay: 5000<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width: "40%"<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minWidth: "320px"<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cookieCode: "sap-demo-02"<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;autoShowLimit: true<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;autoShowCounter: 3<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;autoShowDelay: 1<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br/>
+            &nbsp;&nbsp;});<br/>
+            &lt;/script&gt;<br/>
+        </div>
+    </div>
+
+    <div class="srm-helper-copyright">
+        <span class="srm-helper-left">
+            <a href="http://www.smartplugins.info/plugin/javascript/smart-animated-popup/" rel="me" target="_blank">Smart Animated Popup v1.5</a>
+        </span>
+        <span class="srm-helper-right">
+            &copy; 2008-2017. Milan Petrovic - <a href="http://www.smartplugins.info/" rel="me" target="_blank">SMART Plugins</a> | <a href="https://www.dev4press.com/" rel="me" target="_blank">dev4Press.com</a><br/>
+            Screen: <span class="srm-helper-screen-width">1024</span> x <span class="srm-helper-screen-height">1024</span> | 
+            Client: <span class="srm-helper-client-width">1024</span> x <span class="srm-helper-client-height">1024</span>
+        </span>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../pack/popup.pack.js"></script>
+
+    <script type="text/javascript" src="../source/js/popup.helper.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            jQuery("#sanip-example-demo-02").smartAniPopup({
+                settings: {
+                    style: "sanp-style-clean-gray",
+                    onLoadDelay: 2000,
+                    closeAuto: true,
+                    closeAutoDelay: 5000,
+                    width: "40%",
+                    minWidth: "320px",
+                    cookieCode: "sap-demo-02",
+                    autoShowLimit: true,
+                    autoShowCounter: 3,
+                    autoShowDelay: 1
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

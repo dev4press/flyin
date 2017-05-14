@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Smart Animated Popup: Example #06</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css" href="../source/css/popup.helper.css">
+    <link rel="stylesheet" type="text/css" href="../pack/popup.pack.css">
+
+    <style type="text/css">
+        .sanip-open {
+            height: 32px;
+            margin: 10px;
+            width: 220px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="srm-helper-header">
+        <h1 class="srm-helper-left">Smart Animated Popup | <span>example #06</span></h1>
+        <span class="srm-helper-right">
+            <a href="../index.html">Index</a> | 
+            <a href="../files.html">Files</a> | <strong>Demos:</strong> 
+            <a href="01.html">#1</a> - 
+            <a href="02.html">#2</a> - 
+            <a href="03.html">#3</a> - 
+            <a href="04.html">#4</a> - 
+            <a href="05.html">#5</a> - 
+            <a href="06.html">#6</a>
+        </span>
+    </div>
+
+    <div id="sanip-example-root" data-title="Smart Animated Popup" style="display: none;">
+        <p>Smart Animated Popup is a jQuery powered plugin for creating normal or modal popups with custom positioning, popup open/close animation effect, customized overlay and popup looks, tons of settings. And it's responsive.</p>
+        <p>Plugin has over 20 animation effects you can assign, with additional 'random' effect that will pick random effect on every page load.</p>
+    </div>
+
+    <div id="sanip-demo-container"></div>
+
+    <div class="srm-helper-central" id="sanip-buttons-container">
+        <p><strong>Example #06:</strong> This simply shows all the effects plugin has. This examples creates new popup for each effect by cloning the default content.</p>
+
+    </div>
+
+    <div class="srm-helper-copyright">
+        <span class="srm-helper-left">
+            <a href="http://www.smartplugins.info/plugin/javascript/smart-animated-popup/" rel="me" target="_blank">Smart Animated Popup v1.5</a>
+        </span>
+        <span class="srm-helper-right">
+            &copy; 2008-2017. Milan Petrovic - <a href="http://www.smartplugins.info/" rel="me" target="_blank">SMART Plugins</a> | <a href="https://www.dev4press.com/" rel="me" target="_blank">dev4Press.com</a><br/>
+            Screen: <span class="srm-helper-screen-width">1024</span> x <span class="srm-helper-screen-height">1024</span> | 
+            Client: <span class="srm-helper-client-width">1024</span> x <span class="srm-helper-client-height">1024</span>
+        </span>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../pack/popup.pack.js"></script>
+
+    <script type="text/javascript" src="../source/js/popup.helper.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            var allEffects = {
+                "none": "No effect",
+                "fade": "Fade",
+                "scale": "Scale",
+                "zoomfade": "Zoom and Fade",
+                "slideinright": "Slide In From Right",
+                "slideinleft": "Slide In From Left",
+                "slideintop": "Slide In From Top",
+                "slideinbottom": "Slide In From Bottom",
+                "newspaper": "Newspaper",
+                "fallcenter": "Fall Center",
+                "fallleft": "Fall Left",
+                "fallright": "Fall Right",
+                "fliphorleft": "Flip Horizontal Left",
+                "fliphorright": "Flip Horizontal Right",
+                "flipvertop": "Flip Vertical Top",
+                "flipverbottom": "Flip Vertical Bottom",
+                "flipsign": "Flip Sign",
+                "flipsignfront": "Flip Sign Front",
+                "rotatebottom": "Rotate Bottom",
+                "rotatetop": "Rotate Top",
+                "rotateleft": "Rotate Left",
+                "rotateright": "Rotate Right",
+                "slit": "Slit Vertical",
+                "slithor": "Slit Horizontal",
+                "bounce": "Bounce",
+                "roll": "Roll"
+            }, settings = {
+                style: "sanp-style-plain-white",
+                onLoad: false,
+                overlayColor: "#550000",
+                overlayOpacity: .9,
+                width: "40%",
+                minWidth: "320px",
+                effect: ""
+            };
+
+            jQuery.each(allEffects, function(effect, title){
+                var obj = jQuery("#sanip-example-root").clone(),
+                    id = "sanip-demo-effect-" + effect,
+                    local = jQuery.extend({}, settings, {effect: effect}), 
+                    button = "<input type='button' value='" + title + "' class='sanip-open' data-effect='" + effect + "' />";
+
+                obj.attr("id", id);
+                local.effect = effect;
+
+                jQuery("#sanip-demo-container").append(obj);
+                jQuery("#sanip-buttons-container").append(button);
+
+                jQuery("#" + id).smartAniPopup({
+                    settings: local
+                });
+            });
+
+            jQuery(".sanip-open").click(function(){
+                var id = "#sanip-demo-effect-" + jQuery(this).data("effect");
+
+                jQuery(id).smartAniPopup("open");
+            });
+        });
+    </script>
+
+</body>
+</html>

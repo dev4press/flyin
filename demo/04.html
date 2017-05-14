@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Smart Animated Popup: Example #04</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+    <link rel="stylesheet" type="text/css" href="../source/css/popup.helper.css">
+    <link rel="stylesheet" type="text/css" href="../pack/popup.pack.css">
+
+    <style type="text/css">
+        #sanip-example-demo-04 img {
+            float: right;
+            margin: 0 0 0 15px;
+        }
+
+        #sanip-example-demo-04 p {
+            margin: 0;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="srm-helper-header">
+        <h1 class="srm-helper-left">Smart Animated Popup | <span>example #04</span></h1>
+        <span class="srm-helper-right">
+            <a href="../index.html">Index</a> | 
+            <a href="../files.html">Files</a> | <strong>Demos:</strong> 
+            <a href="01.html">#1</a> - 
+            <a href="02.html">#2</a> - 
+            <a href="03.html">#3</a> - 
+            <a href="04.html">#4</a> - 
+            <a href="05.html">#5</a> - 
+            <a href="06.html">#6</a>
+        </span>
+    </div>
+
+    <div id="sanip-example-demo-04" data-title="Smart Animated Popup" style="display: none;">
+        <img width="172" src="https://s3.amazonaws.com/smartplugins/logo_256.png" alt="SMARTPlugins" />
+        <p>Smart Animated Popup is a jQuery powered plugin for creating normal or modal popups with custom positioning, popup open/close animation effect, customized overlay and popup looks, tons of settings. And it's responsive.</p>
+        <p>Plugin has over 20 animation effects you can assign, with additional 'random' effect that will pick random effect on every page load.</p>
+    </div>
+
+    <div class="srm-helper-central">
+        <p><strong>Example #04:</strong> This example doesn't have auto open/close active, and it is not modal popup with overal, and ESC is not closing the popup. But, you have buttons to open/close the popup and to show it's status based on the callback functions.</p>
+
+        <input type="button" id="snap-open-popup" value="OPEN" /> | <input type="button" id="snap-close-popup" value="CLOSE" />
+
+        <div class="srm-helper-info" style="margin: 15px 0;">
+            Event Fired: <strong id="span-event">/</strong><br/>
+            Popup Status:  <strong id="span-status">closed</strong><br/>
+        </div>
+
+        <div class="srm-helper-info">
+            &lt;script type="text/javascript"&gt;<br/>
+            &nbsp;&nbsp;jQuery(document).ready(function() {<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;jQuery("#snap-open-popup").click(function(){<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#sanip-example-demo-04").smartAniPopup("open");<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br/><br/>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;jQuery("#snap-close-popup").click(function(){<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#sanip-example-demo-04").smartAniPopup("close");<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br/><br/>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;jQuery("#sanip-example-demo-04").smartAniPopup({<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callbacks: {<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeOpen: function(obj){<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-event").html("beforeOpen");<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-status").html(obj.get("status"));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;afterOpen: function(obj){<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-event").html("afterOpen");<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-status").html(obj.get("status"));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeClose: function(obj){<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-event").html("beforeClose");<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-status").html(obj.get("status"));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;afterClose: function(obj){<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-event").html("afterClose");<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-status").html(obj.get("status"));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;settings: {<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;modal: false,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;closeEscape: false,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onLoad: false,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;footer: false,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positionX: "right",<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positionY: "bottom",<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width: "30%",<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minWidth: "320px"<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br/>
+            &nbsp;&nbsp;});<br/>
+            &lt;/script&gt;<br/>
+        </div>
+    </div>
+
+    <div class="srm-helper-copyright">
+        <span class="srm-helper-left">
+            <a href="http://www.smartplugins.info/plugin/javascript/smart-animated-popup/" rel="me" target="_blank">Smart Animated Popup v1.5</a>
+        </span>
+        <span class="srm-helper-right">
+            &copy; 2008-2017. Milan Petrovic - <a href="http://www.smartplugins.info/" rel="me" target="_blank">SMART Plugins</a> | <a href="https://www.dev4press.com/" rel="me" target="_blank">dev4Press.com</a><br/>
+            Screen: <span class="srm-helper-screen-width">1024</span> x <span class="srm-helper-screen-height">1024</span> | 
+            Client: <span class="srm-helper-client-width">1024</span> x <span class="srm-helper-client-height">1024</span>
+        </span>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="../pack/popup.pack.js"></script>
+
+    <script type="text/javascript" src="../source/js/popup.helper.js"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            jQuery("#snap-open-popup").click(function(){
+                jQuery("#sanip-example-demo-04").smartAniPopup("open");
+            });
+
+            jQuery("#snap-close-popup").click(function(){
+                jQuery("#sanip-example-demo-04").smartAniPopup("close");
+            });
+
+            jQuery("#sanip-example-demo-04").smartAniPopup({
+                callbacks: {
+                    beforeOpen: function(obj){
+                        jQuery("#span-event").html("beforeOpen");
+                        jQuery("#span-status").html(obj.get("status"));
+                    },
+                    afterOpen: function(obj){
+                        jQuery("#span-event").html("afterOpen");
+                        jQuery("#span-status").html(obj.get("status"));
+                    },
+                    beforeClose: function(obj){
+                        jQuery("#span-event").html("beforeClose");
+                        jQuery("#span-status").html(obj.get("status"));
+                    },
+                    afterClose: function(obj){
+                        jQuery("#span-event").html("afterClose");
+                        jQuery("#span-status").html(obj.get("status"));
+                    }
+                },
+                settings: {
+                    modal: false,
+                    closeEscape: false,
+                    onLoad: false,
+                    footer: false,
+                    positionX: "right",
+                    positionY: "bottom",
+                    width: "30%",
+                    minWidth: "320px"
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

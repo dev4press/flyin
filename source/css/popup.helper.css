@@ -1,0 +1,268 @@
+/*
+Smart Animated Popup v1.5
+http://www.smartplugins.info/plugin/javascript/smart-animated-popup/
+
+Copyright 2008 - 2017 Milan Petrovic (email: support@dev4press.com)
+
+https://www.dev4press.com
+http://www.smartplugins.info
+*/
+
+body {
+    margin: 0;
+    padding: 20px;
+    background-color: lightyellow;
+    font-family: "Open Sans", "Lucida Sans", "Arial", "Helvetica", sans-serif;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.srm-helper-files {
+    width: 992px;
+    margin: 0 auto;
+}
+
+.srm-helper-header {
+    border-bottom: 1px solid gray;
+    margin: 0 auto 30px;
+    overflow: auto;
+    padding: 0 20px 10px;
+    width: 992px;
+    font-size: 12px;
+}
+
+.srm-helper-header h1 {
+    font-size: 13px;
+    margin: 0;
+}
+
+.srm-helper-header h1 span {
+    font-size: 12px;
+    font-weight: normal;
+    color: #990000;
+}
+
+.srm-helper-copyright {
+    border-top: 1px solid gray;
+    clear: both;
+    margin: 30px auto 0;
+    overflow: auto;
+    padding: 20px 20px 0;
+    width: 992px;
+}
+
+.srm-helper-copyright {
+    padding: 10px 20px 0;
+    font-size: 11px;
+}
+
+.srm-helper-built {
+    color: red;
+    font-weight: bold;
+}
+
+.srm-helper-comment {
+    color: grey;
+    margin-left: 22px;
+}
+
+.srm-helper-list {
+    margin-left: 22px;
+}
+
+.srm-helper-left {
+    float: left;
+    text-align: left;
+}
+
+.srm-helper-right {
+    float: right;
+    text-align: right
+}
+
+.srm-helper-info {
+    overflow: auto;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border: 1px dashed grey;
+    background-color: #fefefe;
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 1.5em;
+}
+
+.srm-helper-central {
+    margin: 20px auto;
+    overflow: auto;
+    padding: 10px 0px;
+    width: 992px;
+}
+
+.srm-helper-demoarea {
+    margin: 20px auto;
+    overflow: hidden;
+    padding: 10px 0px;
+    width: 992px;
+}
+
+.srm-helper-demoarea > div > h4 {
+    text-align: left;
+    margin: 0 0 15px;
+    padding: 0 0 5px;
+    border-bottom: 1px dotted #bbb;
+}
+
+.srm-helper-demotitle {
+    margin: 0px auto;
+    overflow: auto;
+    padding: 10px 0px;
+    width: 992px;
+}
+
+.srm-helper-demotitle p {
+    margin: 0;
+}
+
+.srm-helper-builder {
+    margin: 0px auto 20px;
+    overflow: auto;
+    padding: 0px;
+    width: 992px;
+}
+
+.srm-helper-builder > h3 {
+    margin: 0 0 5px;
+}
+
+.srm-helper-builder > p {
+    margin: 0 0 3px;
+}
+
+.srm-helper-b-setup {
+    background-color: #FDFDFD;
+    padding: 10px;
+    border: 1px dashed #808080;
+    overflow: auto;
+}
+
+.srm-helper-b-style {
+    width: 25%;
+    float: left;
+    padding: 10px;
+    border-right: 1px dashed #808080;
+}
+
+.srm-helper-b-code {
+    float: left;
+    padding: 0 0 0 10px;
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 1.5em;
+    margin: 0 0 15px 0;
+}
+
+.srm-helper-b-demo {
+    border: 1px dashed #808080;
+    margin: 0 0 15px 0;
+    padding: 40px 10px;
+    overflow: auto;
+}
+
+.srm-helper-b-style label {
+    display: block;
+    margin-bottom: 3px;
+}
+
+.srm-helper-b-style select {
+    width: 99%;
+    border-radius: 3px;
+    border: 1px solid #333;
+    padding: 3px;
+    margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1070px) {
+    .srm-helper-demoarea,
+    .srm-helper-demotitle,
+    .srm-helper-central,
+    .srm-helper-files {
+        width: 100%;
+    }
+
+    .srm-helper-copyright {
+        width: 100%;
+        padding: 0 0 10px;
+    }
+
+    .srm-helper-header {
+        width: 100%;
+        padding: 10px 0 0;
+    }
+
+    .srm-helper-builder {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .srm-helper-demoarea,
+    .srm-helper-demotitle,
+    .srm-helper-central,
+    .srm-helper-files {
+        width: 100%;
+    }
+
+    .srm-helper-copyright {
+        width: 100%;
+        padding: 0 0 10px;
+        text-align: center;
+    }
+
+    .srm-helper-header {
+        width: 100%;
+        padding: 10px 0 0;
+        text-align: center;
+    }
+
+    .srm-helper-left {
+        display: block;
+        float: none;
+        text-align: center;
+    }
+
+    .srm-helper-right {
+        display: block;
+        float: none;
+        clear: both;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .srm-helper-demoarea,
+    .srm-helper-demotitle,
+    .srm-helper-central,
+    .srm-helper-files {
+        width: 100%;
+    }
+}
+
+.stc-edit-style {
+    font-weight: bold;
+    color: #a00;
+    background-color: #fff;
+}
+
+.stac-clear {
+    clear: both;
+}
+
+.sanp-content p {
+    font-size: 1.2em;
+    line-height: 1.3em;
+    margin: 0 0 1em;
+}
+
+.sanp-content p:last-child {
+    margin: 0;
+}
