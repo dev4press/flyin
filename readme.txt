@@ -1,6 +1,6 @@
 === Smart Animated Popup ===
-Version: v1.5
-Build:   4080
+Version: v1.6
+Build:   4085
 Author:  Milan Petrovic, SMARTPlugins
 Home:    http://www.smartplugins.info/plugin/javascript/smart-animated-popup/
 
@@ -14,6 +14,9 @@ Author:  Klaus Hartl
 URL:     https://github.com/carhartl/jquery-cookie
 
 == Changelog ==
+= 1.6 / 2017.08.22 =
+* Edit: Removed all prototype functions not used by the plugin
+
 = 1.5 / 2017.04.29 =
 * New: Accessibility support: option for role (dialog)
 * New: Accessibility support: various ARIA elements

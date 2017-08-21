@@ -1,5 +1,5 @@
 /*
- * Smart Animated Popup v1.5
+ * Smart Animated Popup v1.6
  * http://www.smartplugins.info/plugin/javascript/smart-animated-popup/
  * 
  * Copyright 2008 - 2017 Milan Petrovic (email: support@dev4press.com)
@@ -20,24 +20,8 @@ var smartAniPopup,
         return new smartAniPopup.Core(element, options);
     };
 
-    Array.prototype.random = function() {
-        return this[Math.floor((Math.random() * this.length))];
-    };
-
-    String.prototype.padLeft = function(padchar, length){
-        return String(Array(length).join(padchar) + this.toString()).slice(-length);
-    };
-
-    String.prototype.ucfirst = function() {
-        return this.substr(0, 1).toUpperCase() + this.substr(1);
-    };
-
-    Number.prototype.round = function(places) {
-        return +(Math.round(this + "e+" + places)  + "e-" + places);
-    };
-
     smartAniPopup.Base = Base.extend({
-        version: "1.3",
+        version: "1.6",
 
         constructor: function(_default, options) {
             if (typeof _default !== "object") {
