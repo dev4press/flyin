@@ -113,6 +113,11 @@ var smartAniPopup,
 
             return this.$skin[name];
         },
+        randomFromArray: function(input) {
+            var idx = Math.floor((Math.random() * input.length));
+
+            return input[idx];
+        },
         _loadSkin: function(name, options) {
             if (!smartAniPopup[name + "Skin"]) {
                 name = "Base";
@@ -267,7 +272,7 @@ var smartAniPopup,
             this.$core = core;
 
             if (this.effect === "random") {
-                this.effect = this.$effects.random();
+                this.effect = this.$core.randomFromArray(this.$effects);
             }
 
             this._setMode();
