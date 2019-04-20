@@ -1,11 +1,11 @@
 /*
-Smart Animated Popup v1.6
-http://www.smartplugins.info/plugin/javascript/smart-animated-popup/
+Smart Animated Popup v1.7
+https://www.smartplugins.info/plugin/javascript/smart-animated-popup/
 
-Copyright 2008 - 2017 Milan Petrovic (email: support@dev4press.com)
+Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
 
 https://www.dev4press.com
-http://www.smartplugins.info
+https://www.smartplugins.info
 */
 
 .sanp-sr-only{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}.sanp-overlay{position:fixed;width:100%;height:100%;visibility:hidden;top:0;opacity:0;left:0}.sanp-overlay.sanp-active{visibility:visible}.sanp-active body{overflow:hidden}.sanp-dialog{position:fixed;backface-visibility:hidden;visibility:hidden}.sanp-dialog.sanp-active,.sanp-dialog.sanp-inactive{visibility:visible}.sanp-dialog .sanp-wrapper{position:relative;margin:0 auto}.sanp-dialog .sanp-wrapper .sanp-content{overflow:auto;position:relative}.sanp-dialog .sanp-wrapper >button{z-index:200;margin:0;padding:0;position:relative;outline:transparent solid 1px}.sanp-dialog .sanp-wrapper .sanp-content img{max-width:100%;height:auto}.sanp-button-alt .sanp-wrapper >button{border-radius:50%!important;font-size:16px!important;line-height:16px!important;padding:4px!important;right:-12px!important;top:-12px!important}.sanp-style-plain-white .sanp-wrapper{background:#fff;border-radius:4px;box-shadow:1px 1px 4px rgba(32,32,32,.3)}.sanp-style-plain-white .sanp-wrapper .sanp-header{border-radius:4px 4px 0 0;padding:10px;border-bottom:1px solid #ddd}.sanp-style-plain-white .sanp-wrapper >button{-webkit-appearance:none;outline:transparent solid 1px;background:0 0;border:none;color:#888;cursor:pointer;float:right;font-size:18px;font-weight:900;line-height:24px;right:10px;top:10px}.sanp-style-plain-white .sanp-wrapper .sanp-header h5{color:#444;font-size:18px;margin:0;padding:0;line-height:24px}.sanp-style-plain-white .sanp-wrapper .sanp-content{padding:10px}.sanp-style-plain-white .sanp-wrapper .sanp-footer{border-radius:0 0 4px 4px;padding:10px;border-top:1px solid #ddd;text-align:center}.sanp-style-plain-white .sanp-wrapper .sanp-footer button{-webkit-appearance:none;margin:0;padding:0;cursor:pointer;outline:transparent solid 1px;background:0 0;border:none}.sanp-style-plain-white.sanp-button-alt .sanp-wrapper >button{background:#888;box-shadow:1px 1px 4px rgba(32,32,32,.3);color:#fff}

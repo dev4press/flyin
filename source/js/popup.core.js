@@ -1,11 +1,11 @@
 /*
- * Smart Animated Popup v1.6
- * http://www.smartplugins.info/plugin/javascript/smart-animated-popup/
+ * Smart Animated Popup v1.7
+ * https://www.smartplugins.info/plugin/javascript/smart-animated-popup/
  * 
- * Copyright 2008 - 2017 Milan Petrovic (email: support@dev4press.com)
+ * Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
  * 
  * https://www.dev4press.com
- * http://www.smartplugins.info
+ * https://www.smartplugins.info
  *
  */
 
