@@ -10,13 +10,14 @@ Author:  Dean Edwards
 URL:     http://dean.edwards.name/weblog/2006/03/base/
 
 = jQuery Cookie =
-Author:  Klaus Hartl
-URL:     https://github.com/carhartl/jquery-cookie
+Authors: Klaus Hartl & Fagner Brack
+URL:     https://github.com/js-cookie/js-cookie
 
 == Changelog ==
 = 1.7 / 2019.04.21 =
 * Changed: removed some outdated and unused code
 * Updated: tested with the jQuery 3.x
+* Updated: Cookies Library 2.2.0
 
 = 1.6 / 2017.08.23 =
 * Edit: Random item from Array method added to the core object

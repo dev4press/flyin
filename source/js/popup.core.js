@@ -89,7 +89,7 @@ var smartAniPopup,
         constructor: function(element, options) {
             this.base(options);
 
-            this.$useCookie = $.cookie !== undefined;
+            this.$useCookie = Cookies !== undefined;
 
             this.$id = smpIDSequence;
             this.$obj = $(element);
@@ -212,7 +212,7 @@ var smartAniPopup,
         extraClass: "",
 
         effect: "random",
-        effectSpeed: .7,
+        effectSpeed: 0.7,
 
         onLoad: true,
         onLoadDelay: 500,
@@ -227,8 +227,8 @@ var smartAniPopup,
 
         overlayActive: true,
         overlayColor: "#ffffff",
-        overlayOpacity: .7,
-        overlaySpeed: .7,
+        overlayOpacity: 0.7,
+        overlaySpeed: .07,
 
         angle: 0,
         width: "40%",
@@ -637,7 +637,7 @@ var smartAniPopup,
         },
         _cookieInit: function() {
             if (this.$core.$useCookie && this.autoShowLimit) {
-                this.$cookie = $.cookie(this.cookieCode, Number);
+                this.$cookie = Cookies.get(this.cookieCode);
 
                 if (this.$cookie === undefined) {
                     this.$cookie = this.autoShowCounter;
@@ -652,7 +652,7 @@ var smartAniPopup,
                     this.$cookie = 0;
                 }
 
-                $.cookie(this.cookieCode, this.$cookie, {expires: expire, path: "/"});
+                Cookies.set(this.cookieCode, this.$cookie, {expires: expire, path: "/"});
             }
         }
     });
