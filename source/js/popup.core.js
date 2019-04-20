@@ -637,9 +637,9 @@ var smartAniPopup,
         },
         _cookieInit: function() {
             if (this.$core.$useCookie && this.autoShowLimit) {
-                this.$cookie = Cookies.get(this.cookieCode);
+                this.$cookie = parseInt(Cookies.get(this.cookieCode));
 
-                if (this.$cookie === undefined) {
+                if (isNaN(this.$cookie) || this.$cookie === undefined) {
                     this.$cookie = this.autoShowCounter;
                 }
             }
