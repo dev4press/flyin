@@ -89,7 +89,7 @@ var smartAniPopup,
         constructor: function(element, options) {
             this.base(options);
 
-            this.$useCookie = Cookies !== undefined;
+            this.$useCookie = typeof Cookies !== "undefined";
 
             this.$id = smpIDSequence;
             this.$obj = $(element);
@@ -209,6 +209,7 @@ var smartAniPopup,
         title: true,
         titleTag: "h5",
         style: "sanp-style-plain-white",
+        containerSelector: "body",
         extraClass: "",
 
         effect: "random",
@@ -228,7 +229,7 @@ var smartAniPopup,
         overlayActive: true,
         overlayColor: "#ffffff",
         overlayOpacity: 0.7,
-        overlaySpeed: .07,
+        overlaySpeed: 0.07,
 
         angle: 0,
         width: "40%",
@@ -316,17 +317,20 @@ var smartAniPopup,
 
             this._buttonClick();
         },
+        container: function() {
+            return $(this.containerSelector).length === 1 ? $(this.containerSelector) : $("body");
+        },
         createModalay: function() {
             var style = ["z-index: " + this.zIndex + ";"];
 
-            $("body").append("<div style='" + style.join(" ") + "' class='" + this.$classes.overlay + " " + this.css("overlay") + "'></div>");
+            this.container().append("<div style='" + style.join(" ") + "' class='" + this.$classes.overlay + " " + this.css("overlay") + "'></div>");
         },
         createOverlay: function() {
             var style = this.props("overlay");
 
             style.push("transition: all " + this.overlaySpeed + "s;");
 
-            $("body").append("<div style='" + style.join(" ") + "' class='" + this.$classes.overlay + " " + this.css("overlay") + "'></div>");
+            this.container().append("<div style='" + style.join(" ") + "' class='" + this.$classes.overlay + " " + this.css("overlay") + "'></div>");
         },
         createDialog: function() {
             var title = "", html = "", style = this.props("dialog"),
@@ -397,7 +401,7 @@ var smartAniPopup,
             html+= "</div>";
             html+= "</div>";
 
-            $("body").append(html);
+            this.container().append(html);
 
             if (this.headerContent !== false) {
                 $("." + this.css("dialog") + " ." + this.$classes.header).append(this.headerContent);
