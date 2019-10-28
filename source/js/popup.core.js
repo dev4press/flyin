@@ -1,5 +1,5 @@
 /*
- * Smart Animated Popup v1.7
+ * Smart Animated Popup v1.8
  * https://www.smartplugins.info/plugin/javascript/smart-animated-popup/
  * 
  * Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
