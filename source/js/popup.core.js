@@ -1,8 +1,8 @@
 /*
- * Smart Animated Popup v1.8
+ * Smart Animated Popup v1.9
  * https://www.smartplugins.info/plugin/javascript/smart-animated-popup/
  * 
- * Copyright 2008 - 2019 Milan Petrovic (email: support@dev4press.com)
+ * Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
  * 
  * https://www.dev4press.com
  * https://www.smartplugins.info
@@ -10,7 +10,7 @@
  */
 
 /*jslint regexp: true, nomen: true, undef: true, sloppy: true, eqeq: true, vars: true, white: true, plusplus: true, maxerr: 50, indent: 4 */
-/*global Base*/
+/*global Base, jQuery*/
 
 var smartAniPopup, 
     smpIDSequence = 1;
@@ -333,7 +333,7 @@ var smartAniPopup,
             this.container().append("<div style='" + style.join(" ") + "' class='" + this.$classes.overlay + " " + this.css("overlay") + "'></div>");
         },
         createDialog: function() {
-            var title = "", html = "", style = this.props("dialog"),
+            var title = "", html, style = this.props("dialog"),
                 wrapper = [], $this = this, css = [
                     this.$classes.dialog,
                     this.css("dialog"),
@@ -484,10 +484,12 @@ var smartAniPopup,
                 $("html").addClass($this.$htmlClass);
             }
 
-            $("." + $this.css("dialog")).addClass($this.$classes.dialogActive);
+            var el = $("." + $this.css("dialog"));
+
+            el.addClass($this.$classes.dialogActive);
 
             if ($this.$mode === "animation") {
-                $("." + $this.css("dialog")).removeClass($this.$classes.dialogInactive);
+                el.removeClass($this.$classes.dialogInactive);
             }
 
             $("." + $this.css("overlay")).css("opacity", $this.overlayOpacity)
@@ -514,10 +516,12 @@ var smartAniPopup,
 
             $("html").removeClass(this.$htmlClass);
 
-            $("." + $this.css("dialog")).removeClass($this.$classes.dialogActive);
+            var el = $("." + $this.css("dialog"));
+
+            el.removeClass($this.$classes.dialogActive);
 
             if ($this.$mode === "animation") {
-                $("." + $this.css("dialog")).addClass($this.$classes.dialogInactive);
+                el.addClass($this.$classes.dialogInactive);
             }
 
             $("." + $this.css("overlay")).css("opacity", 0)
@@ -583,9 +587,10 @@ var smartAniPopup,
             }
         },
         _buttonClick: function() {
-            var $this = this;
+            var $this = this,
+                selector = "." + this.css("dialog") + " ." + this.$classes.closeButton;
 
-            $("." + this.css("dialog") + " ." + this.$classes.closeButton).click(function(e){
+            $(document).on("click", selector, function(e){
                 e.stopPropagation();
 
                 $this.close($this);
@@ -594,16 +599,17 @@ var smartAniPopup,
         _escapeClick: function() {
             var $this = this;
 
-            $(document).keyup(function(e){
+            $(document).on("keyup", function(e){
                 if ($this.$status === "opened" && e.keyCode === 27) {
                     $this.close($this);
                 }
             });
         },
         _overlayClick: function() {
-            var $this = this;
+            var $this = this,
+                selector = "." + this.css("overlay");
 
-            $("." + this.css("overlay")).click(function(e){
+            $(document).on("click", selector, function(e){
                 e.stopPropagation();
 
                 $this.close($this);
@@ -626,7 +632,7 @@ var smartAniPopup,
         _onLeaveTop: function() {
             var $this = this;
 
-            $(document).mousemove(function(event){
+            $(document).on("mousemove", function(event){
                 if (event.pageY < $this.onLeaveTopOffset) {
                     $this.open($this, true);
                 }
@@ -665,7 +671,7 @@ var smartAniPopup,
         
     });
 
-    $.fn.smartAniPopup = function(option, name, value) {
+    $.fn.smartAniPopup = function(option, name) {
         if (option === undefined || typeof option === "object") {
             return this.each(function(){
                 var $elem = $(this),

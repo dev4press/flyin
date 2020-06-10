@@ -1,6 +1,6 @@
 === Smart Animated Popup - jQuery Popup Plugin ===
-Version: v1.8
-Build:   5032
+Version: v1.9
+Build:   5050
 Author:  Milan Petrovic, SMARTPlugins
 Home:    https://www.smartplugins.info/plugin/javascript/smart-animated-popup/
 
@@ -14,6 +14,10 @@ Authors: Klaus Hartl & Fagner Brack
 URL:     https://github.com/js-cookie/js-cookie
 
 == Changelog ==
+= 1.9 / 2020.06.11 =
+* Updated: refactoring some jQuery event handlers
+* Updated: various improvements to the plugin core
+
 = 1.8 / 2019.10.28 =
 * New: custom container selected for appending popup elements
 * Updated: changes to some of the plugin default settings
