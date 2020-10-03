@@ -1,6 +1,6 @@
 === Smart Animated Popup - jQuery Popup Plugin ===
-Version: v1.9
-Build:   5050
+Version: v2.0
+Build:   5200
 Author:  Milan Petrovic, SMARTPlugins
 Home:    https://www.smartplugins.info/plugin/javascript/smart-animated-popup/
 
@@ -14,6 +14,10 @@ Authors: Klaus Hartl & Fagner Brack
 URL:     https://github.com/js-cookie/js-cookie
 
 == Changelog ==
+= 2.0 / 2020.10.12 =
+* New: skin 'Free' - with drag and drop and resizing of popup
+* New: positionX and positionY can be absolute numbers
+
 = 1.9 / 2020.06.11 =
 * Updated: refactoring some jQuery event handlers
 * Updated: various improvements to the plugin core

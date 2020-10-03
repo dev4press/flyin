@@ -84,6 +84,7 @@
             });
 
             jQuery("#sanip-example").smartAniPopup({
+                skin: "Free",
                 callbacks: {
                     beforeOpen: function(obj){
                         jQuery("#span-event").html("beforeOpen");
@@ -107,7 +108,8 @@
                     closeEscape: false,
                     onLoad: true,
                     footer: true,
-                    positionY: "top",
+                    positionX: 60,
+                    positionY: 20,
                     overlayColor: "#222",
                     cookieCode: "sap-demo-02",
                     autoShowLimit: true,

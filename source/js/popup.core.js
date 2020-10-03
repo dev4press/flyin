@@ -78,6 +78,7 @@ var smartAniPopup,
         $overlay: false,
         $id: false,
 
+        skin: "Base",
         settings: {},
         callbacks: {
             beforeOpen: false,
@@ -128,6 +129,7 @@ var smartAniPopup,
     });
 
     smartAniPopup.Skin = smartAniPopup.Base.extend({
+        $skinCode: '',
         $core: false,
         $cookie: 1,
         $enabled: true,
@@ -189,6 +191,7 @@ var smartAniPopup,
             overlay: "sanp-overlay",
             overlayIDPrefix: "sanp-overlay-",
             overlayActive: "sanp-active",
+            skinPrefix: "sanp-skin-",
             titleIDPrefix: "sanp-dialog-title-",
             dialog: "sanp-dialog",
             dialogIDPrefix: "sanp-dialog-",
@@ -200,7 +203,8 @@ var smartAniPopup,
             content: "sanp-content",
             footer: "sanp-footer",
             srOnly: "sanp-sr-only",
-            closeButton: "sanp-button-close"
+            closeButton: "sanp-button-close",
+            drag: "sanp-drag"
         },
 
         role: "dialog",
@@ -278,6 +282,7 @@ var smartAniPopup,
 
             this._setMode();
             this._cookieInit();
+            this._prepareDialog();
 
             if (this.modal) {
                 if (this.overlayActive) {
@@ -316,6 +321,7 @@ var smartAniPopup,
             });
 
             this._buttonClick();
+            this._finishDialog();
         },
         container: function() {
             return $(this.containerSelector).length === 1 ? $(this.containerSelector) : $("body");
@@ -336,6 +342,7 @@ var smartAniPopup,
             var title = "", html, style = this.props("dialog"),
                 wrapper = [], $this = this, css = [
                     this.$classes.dialog,
+                    this.css("skin"),
                     this.css("dialog"),
                     this.css("effect"),
                     this.style,
@@ -343,7 +350,7 @@ var smartAniPopup,
                 ], content = this.props("content");
 
             if (this.title === true) {
-                title = this.$core.$obj.data("title");
+                title = this.o().data("title");
             } else if (this.title !== false) {
                 title = this.title;
             }
@@ -411,9 +418,9 @@ var smartAniPopup,
                 $("." + this.css("dialog") + " ." + this.$classes.footer).append(this.footerContent);
             }
 
-            $("." + this.css("dialog") + " ." + this.$classes.content).append(this.$core.$obj);
+            $("." + this.css("dialog") + " ." + this.$classes.content).append(this.o());
 
-            this.$core.$obj.show();
+            this.o().show();
 
             $this._calculatePosition(true);
         },
@@ -451,6 +458,10 @@ var smartAniPopup,
                     return this.$classes.dialogIDPrefix + this.$core.$id;
                 case "effect":
                     return this.$classes.dialogEffectPrefix + this.effect;
+                case "wrapper":
+                    return this.$classes.dialogIDPrefix + this.$core.$id + " ." + this.$classes.wrapper;
+                case "skin":
+                    return this.$classes.skinPrefix + this.$skinCode;
             }
         },
         props: function(name) {
@@ -475,6 +486,8 @@ var smartAniPopup,
             if ($this.$status === "opened") {
                 return false;
             }
+
+            $this._beforeOpen($this);
 
             $this.callback($this.$core.callbacks.beforeOpen, $this.$core);
 
@@ -501,9 +514,11 @@ var smartAniPopup,
 
             $this.callback($this.$core.callbacks.afterOpen, $this.$core);
 
-            if (this.closeAuto && this.closeAutoDelay > 0) {
-                this._autoClose();
+            if ($this.closeAuto && $this.closeAutoDelay > 0) {
+                $this._autoClose();
             }
+
+            $this._afterOpen($this);
 
             return true;
         },
@@ -565,7 +580,10 @@ var smartAniPopup,
                         d.css("left", this.offsetX);
                         break;
                     case "right":
-                        d.css("right", this.offsetY);
+                        d.css("right", this.offsetX);
+                        break;
+                    default:
+                        d.css("left", this.positionX + "px");
                         break;
                 }
 
@@ -578,6 +596,9 @@ var smartAniPopup,
                         break;
                     case "bottom":
                         d.css("bottom", this.offsetY);
+                        break;
+                    default:
+                        d.css("top", this.positionY + "px");
                         break;
                 }
 
@@ -638,6 +659,8 @@ var smartAniPopup,
                 }
             });
         },
+        _beforeOpen: function($this) {},
+        _afterOpen: function($this) {},
         _autoClose: function() {
             var $this = this;
 
@@ -664,11 +687,182 @@ var smartAniPopup,
 
                 Cookies.set(this.cookieCode, this.$cookie, {expires: expire, path: "/"});
             }
-        }
+        },
+        o: function() {
+            return this.$core.$obj;
+        },
+        w: function() {
+            return $("." + this.css("wrapper"));
+        },
+        _prepareDialog: function() {},
+        _finishDialog: function() {}
     });
 
     smartAniPopup.BaseSkin = smartAniPopup.Skin.extend({
-        
+        $skinCode: "base",
+    });
+
+    smartAniPopup.FreeSkin = smartAniPopup.Skin.extend({
+        $skinCode: "free",
+        $cookieUsed: false,
+        $cookiePosize: {
+            left: 0,
+            top: 0,
+            width: 0,
+            height: 0
+        },
+
+        savePosize: true,
+
+        cookiePositionSizeCode: "smart-animated-popup-posize",
+
+        _prepareDialog: function() {
+            if (this.savePosize) {
+                var cookie = Cookies.get(this.cookiePositionSizeCode, true);
+
+                if (cookie !== undefined) {
+                    cookie = JSON.parse(cookie);
+                    this.$cookiePosize = $.extend({
+                        left: 0,
+                        top: 0,
+                        width: 0,
+                        height: 0
+                    }, cookie);
+                    this.$cookieUsed = true;
+                }
+            }
+
+            if (this.$cookieUsed) {
+                this.positionX = this.$cookiePosize.left;
+                this.positionY = this.$cookiePosize.top;
+                this.width = this.$cookiePosize.width + "px";
+                this.height = this.$cookiePosize.height + "px";
+
+                if ($(window).width() < this.positionX + this.$cookiePosize.width) {
+                    this.positionX = $(window).width() - this.$cookiePosize.width;
+                }
+
+                if ($(window).height < this.positionY + this.$cookiePosize.height) {
+                    this.positionY = $(window).height - this.$cookiePosize.height;
+                }
+            }
+        },
+        _afterOpen: function($this) {
+            $this._posizeCookie();
+        },
+        _finishDialog: function() {
+            this._posizeCookie();
+
+            var $this = this,
+                header = "." + this.css("wrapper") + " ." + this.$classes.header;
+
+            $(document).on("mousedown", header, function(e) {
+                $this.mover._mouseDown($this, e);
+            });
+            $(document).on("mousemove", function(e) {
+                $this.mover._mouseMove($this, e);
+            });
+            $(document).on("mouseup", function(e) {
+                $this.mover._mouseUp($this, e);
+            });
+
+            $(document).on("touchstart", header, function(e) {
+                $this.mover._touchDown($this, e);
+            });
+            $(document).on("touchmove", this, function(e) {
+                $this.mover._touchMove($this, e);
+            });
+            $(document).on("touchend", this, function(e) {
+                $this.mover._touchEnd($this, e);
+            });
+        },
+        _posizeCookie: function() {
+            if (this.savePosize) {
+                var poSize = {
+                    left: this.w().parent().offset().left,
+                    top: this.w().parent().offset().top,
+                    width: this.w().parent().width(),
+                    height: this.w().parent().height()
+                };
+
+                Cookies.set(this.cookiePositionSizeCode, poSize);
+            }
+        },
+        mover: {
+            dr: undefined,
+            width: 0,
+            height: 0,
+            minLeft: 0,
+            maxLeft: 0,
+            minTop: 0,
+            maxTop: 0,
+            posX: 0,
+            posY: 0,
+
+            _down: function($this, e) {
+                $this.mover.dr = $this.w().closest("." + $this.$classes.dialog).addClass($this.$classes.drag);
+                $this.mover.width = $this.mover.dr.outerWidth();
+                $this.mover.height = $this.mover.dr.outerHeight();
+
+                $this.mover.maxLeft = $(window).width() - $this.mover.width;
+                $this.mover.maxTop = $(window).height() - $this.mover.height;
+
+                $this.mover.posX = $this.mover.dr.offset().left + $this.mover.width - e.pageX;
+                $this.mover.posY = $this.mover.dr.offset().top + $this.mover.height - e.pageY;
+            },
+            _move: function($this, e) {
+                if ($this.mover.dr !== undefined) {
+                    var left = e.pageX + $this.mover.posX - $this.mover.width,
+                        top = e.pageY + $this.mover.posY - $this.mover.height;
+
+                    if (top <= 0 ) {
+                        top = 0;
+                    }
+
+                    if (left <= 0 ) {
+                        left = 0;
+                    }
+
+                    if (top >= $this.mover.maxTop ) {
+                        top = $this.mover.maxTop;
+                    }
+
+                    if (left >= $this.mover.maxLeft ) {
+                        left = $this.mover.maxLeft;
+                    }
+
+                    $this.mover.dr.offset({ top: top, left: left});
+                }
+            },
+            _up: function($this, e) {
+                if ($this.mover.dr !== undefined) {
+                    $this.mover.dr.removeClass($this.$classes.drag);
+                    $this.mover.dr = undefined;
+
+                    $this._posizeCookie();
+                }
+            },
+            _mouseDown: function($this, e) {
+                $this.mover._down($this, e);
+                e.preventDefault();
+            },
+            _mouseMove: function($this, e) {
+                $this.mover._move($this, e);
+                e.preventDefault();
+            },
+            _mouseUp: function($this, e) {
+                $this.mover._up($this, e);
+            },
+            _touchDown: function($this, e) {
+
+            },
+            _touchMove: function($this, e) {
+
+            },
+            _touchEnd: function($this, e) {
+
+            }
+        }
     });
 
     $.fn.smartAniPopup = function(option, name) {
