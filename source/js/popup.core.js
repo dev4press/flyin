@@ -456,10 +456,12 @@ var smartAniPopup,
                     return this.$classes.overlayIDPrefix + this.$core.$id;
                 case "dialog":
                     return this.$classes.dialogIDPrefix + this.$core.$id;
-                case "effect":
-                    return this.$classes.dialogEffectPrefix + this.effect;
                 case "wrapper":
                     return this.$classes.dialogIDPrefix + this.$core.$id + " ." + this.$classes.wrapper;
+                case "content":
+                    return this.$classes.dialogIDPrefix + this.$core.$id + " ." + this.$classes.content;
+                case "effect":
+                    return this.$classes.dialogEffectPrefix + this.effect;
                 case "skin":
                     return this.$classes.skinPrefix + this.$skinCode;
             }
@@ -688,6 +690,28 @@ var smartAniPopup,
                 Cookies.set(this.cookieCode, this.$cookie, {expires: expire, path: "/"});
             }
         },
+        _getOffset: function() {
+            var rect = this.w()[0].getBoundingClientRect(),
+                content = $("." + this.css("content")),
+                wrapper = $("." + this.css("wrapper")),
+                offsetX = window.scrollX || document.documentElement.scrollLeft,
+                offsetY = window.scrollY || document.documentElement.scrollTop;
+
+            return {
+                content: {
+                    width: content.width(),
+                    height: content.height()
+                },
+                wrapper: {
+                    width: wrapper.width(),
+                    height: wrapper.height()
+                },
+                left: rect.left + offsetX,
+                top: rect.top + offsetY,
+                right: rect.right + offsetX,
+                bottom: rect.bottom + offsetY
+            };
+        },
         o: function() {
             return this.$core.$obj;
         },
@@ -754,8 +778,15 @@ var smartAniPopup,
             this._posizeCookie();
 
             var $this = this,
-                header = "." + this.css("wrapper") + " ." + this.$classes.header;
+                wrapper = "." + this.css("wrapper"),
+                header = wrapper + " ." + this.$classes.header;
 
+            $(document).on("mousedown", wrapper, function(e) {
+                $this.mover._mouseDownWrapper($this, e);
+            });
+            $(document).on("mousedown", header, function(e) {
+                $this.mover._mouseDown($this, e);
+            });
             $(document).on("mousedown", header, function(e) {
                 $this.mover._mouseDown($this, e);
             });
@@ -781,8 +812,8 @@ var smartAniPopup,
                 var poSize = {
                     left: this.w().parent().offset().left,
                     top: this.w().parent().offset().top,
-                    width: this.w().parent().width(),
-                    height: this.w().parent().height()
+                    width: this.w().width(),
+                    height: this.w().height()
                 };
 
                 Cookies.set(this.cookiePositionSizeCode, poSize);
@@ -790,6 +821,9 @@ var smartAniPopup,
         },
         mover: {
             dr: undefined,
+            minContentWidth: 120,
+            minContentHeight: 60,
+            margin: 6,
             width: 0,
             height: 0,
             minLeft: 0,
@@ -798,8 +832,31 @@ var smartAniPopup,
             maxTop: 0,
             posX: 0,
             posY: 0,
+            moving: false,
+            resizing: false,
+            resizeTop: false,
+            resizeBottom: false,
+            resizeLeft: false,
+            resizeRight: false,
+            rmX: 0,
+            rmY: 0,
+            rm: "",
 
+            _downWrapper: function($this, e) {
+                if ($this.mover.rm === "") {
+                    return;
+                }
+
+                $this.mover.resizing = true;
+                $this.mover.rmX = e.pageX;
+                $this.mover.rmY = e.pageY;
+            },
             _down: function($this, e) {
+                if ($this.mover.rm !== "") {
+                    return;
+                }
+
+                $this.mover.moving = true;
                 $this.mover.dr = $this.w().closest("." + $this.$classes.dialog).addClass($this.$classes.drag);
                 $this.mover.width = $this.mover.dr.outerWidth();
                 $this.mover.height = $this.mover.dr.outerHeight();
@@ -833,14 +890,116 @@ var smartAniPopup,
 
                     $this.mover.dr.offset({ top: top, left: left});
                 }
+
+                if ($this.$status === "opened") {
+                    var box = $this._getOffset(), cs = '';
+
+                    if (!$this.mover.resizing) {
+                        $this.mover.rm = '';
+
+                        $this.mover.resizeTop = false;
+                        $this.mover.resizeBottom = false;
+                        $this.mover.resizeLeft = false;
+                        $this.mover.resizeRight = false;
+
+                        if (e.pageY >= box.top && e.pageY < box.top + $this.mover.margin) {
+                            $this.mover.resizeTop = true;
+                            $this.mover.rm += 'n';
+                        }
+
+                        if (e.pageY <= box.bottom && e.pageY > box.bottom - $this.mover.margin) {
+                            $this.mover.resizeBottom = true;
+                            $this.mover.rm += 's';
+                        }
+
+                        if (e.pageX >= box.left && e.pageX < box.left + $this.mover.margin) {
+                            $this.mover.resizeLeft = true;
+                            $this.mover.rm += 'w';
+                        }
+
+                        if (e.pageX <= box.right && e.pageX > box.right - $this.mover.margin) {
+                            $this.mover.resizeRight = true;
+                            $this.mover.rm += 'e';
+                        }
+
+                        if ($this.mover.rm !== "") {
+                            if ($this.mover.rm === "n" || $this.mover.rm === "s") {
+                                cs = "ns-resize";
+                            } else if ($this.mover.rm === "e" || $this.mover.rm === "w") {
+                                cs = "ew-resize";
+                            } else if ($this.mover.rm === "ne" || $this.mover.rm === "sw") {
+                                cs = "nesw-resize";
+                            } else if ($this.mover.rm === "nw" || $this.mover.rm === "se") {
+                                cs = "nwse-resize";
+                            }
+
+                            $this.w()[0].style.cursor = cs;
+                        } else {
+                            if (!$this.mover.resizing) {
+                                $this.w()[0].style.cursor = "";
+                            }
+                        }
+                    } else {
+                        var relX = e.pageX - $this.mover.rmX,
+                            relY = e.pageY - $this.mover.rmY,
+                            content = $("." + $this.css("content")),
+                            dialog = $("." + $this.css("dialog")),
+                            cWidth = content.width(),
+                            cHeight = content.height();
+
+                        $this.mover.rmX = e.pageX;
+                        $this.mover.rmY = e.pageY;
+
+                        if (relY !== 0) {
+                            if ($this.mover.resizeTop) {
+                                if (cHeight - relY > $this.mover.minContentHeight) {
+                                    content.height(cHeight - relY);
+                                    dialog.offset({ top: dialog.offset().top + relY });
+                                }
+                            }
+
+                            if ($this.mover.resizeBottom) {
+                                if (cHeight + relY > $this.mover.minContentHeight) {
+                                    content.height(cHeight + relY);
+                                }
+                            }
+                        }
+
+                        if (relX !== 0) {
+                            if ($this.mover.resizeLeft) {
+                                if (cWidth - relX > $this.mover.minContentWidth) {
+                                    dialog.width(dialog.width() - relX);
+                                    dialog.offset({ left: dialog.offset().left + relX });
+                                }
+                            }
+
+                            if ($this.mover.resizeRight) {
+                                if (cWidth + relX > $this.mover.minContentWidth) {
+                                    dialog.width(dialog.width() + relX);
+                                }
+                            }
+                        }
+                    }
+                }
             },
             _up: function($this, e) {
+                if ($this.mover.resizing) {
+                    $this.mover.rm = '';
+                    $this.mover.resizing = false;
+                    $this.w()[0].style.cursor = "";
+                }
+
                 if ($this.mover.dr !== undefined) {
+                    $this.mover.moving = false;
                     $this.mover.dr.removeClass($this.$classes.drag);
                     $this.mover.dr = undefined;
 
                     $this._posizeCookie();
                 }
+            },
+            _mouseDownWrapper: function($this, e) {
+                $this.mover._downWrapper($this, e);
+                e.preventDefault();
             },
             _mouseDown: function($this, e) {
                 $this.mover._down($this, e);
