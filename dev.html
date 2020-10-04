@@ -41,7 +41,7 @@
     </div>
 
     <div class="srm-helper-central">
-        <input type="button" id="snap-open-popup" value="OPEN" /> | <input type="button" id="snap-close-popup" value="CLOSE" />
+        <input type="button" id="snap-open-popup" value="OPEN" /> | <input type="button" id="snap-close-popup" value="CLOSE" /> | <input type="button" id="snap-resize-popup" value="RESET" />
 
         <div class="srm-helper-info" style="margin: 15px 0;">
             Event Fired: <strong id="span-event">/</strong><br/>
@@ -57,7 +57,7 @@
 
     <div class="srm-helper-copyright">
         <span class="srm-helper-left">
-            <a href="https://www.smartplugins.info/plugin/javascript/smart-animated-popup/" rel="me" target="_blank">Smart Animated Popup v1.9</a>
+            <a href="https://www.smartplugins.info/plugin/javascript/smart-animated-popup/" rel="me" target="_blank">Smart Animated Popup v2.0</a>
         </span>
         <span class="srm-helper-right">
             &copy; 2008 - 2020. Milan Petrovic - <a href="https://www.smartplugins.info/" rel="me" target="_blank">SMART Plugins</a> | <a href="https://www.dev4press.com/" rel="me" target="_blank">dev4Press.com</a><br/>
@@ -66,7 +66,7 @@
         </span>
     </div>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="source/js/libs/base.js"></script>
     <script type="text/javascript" src="source/js/libs/js.cookie.js"></script>
     <script type="text/javascript" src="source/js/popup.core.js"></script>
@@ -77,6 +77,10 @@
         jQuery(document).ready(function() {
             jQuery("#snap-open-popup").click(function(){
                 jQuery("#sanip-example").smartAniPopup("open");
+            });
+
+            jQuery("#snap-resize-popup").click(function() {
+                jQuery("#sanip-example").smartAniPopup("resize", {top: 32, left: 32, width: "40%", height: "auto"});
             });
 
             jQuery("#snap-close-popup").click(function(){

@@ -1,5 +1,5 @@
 /*
- * Smart Animated Popup v1.9
+ * Smart Animated Popup v2.0
  * https://www.smartplugins.info/plugin/javascript/smart-animated-popup/
  * 
  * Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
@@ -21,7 +21,7 @@ var smartAniPopup,
     };
 
     smartAniPopup.Base = Base.extend({
-        version: "1.6",
+        version: "2.0",
 
         constructor: function(_default, options) {
             if (typeof _default !== "object") {
@@ -114,6 +114,9 @@ var smartAniPopup,
 
             return this.$skin[name];
         },
+        resize: function(size) {
+            this.$skin._resize(size);
+        },
         randomFromArray: function(input) {
             var idx = Math.floor((Math.random() * input.length));
 
@@ -183,7 +186,10 @@ var smartAniPopup,
                 minHeight: "min-height",
                 maxHeight: "max-height"
             },
-            content: {}
+            content: {
+                cWidth: "width",
+                cHeight: "height"
+            }
         },
         $classes: {
             html: "sanp-active",
@@ -204,7 +210,8 @@ var smartAniPopup,
             footer: "sanp-footer",
             srOnly: "sanp-sr-only",
             closeButton: "sanp-button-close",
-            drag: "sanp-drag"
+            drag: "sanp-drag",
+            grip: "sanp-grip"
         },
 
         role: "dialog",
@@ -238,6 +245,8 @@ var smartAniPopup,
         angle: 0,
         width: "40%",
         height: "auto",
+        cWidth: "auto",
+        cHeight: "auto",
         minWidth: "200px",
         maxWidth: "95%",
         positionX: "center",
@@ -402,6 +411,8 @@ var smartAniPopup,
                     html+= "<button type='button' class='" + this.$classes.closeButton + "'><span aria-hidden='true'>" + this.buttonFooterContent + "</span><span class='" + this.$classes.srOnly + "'>" + this.ariaCloseLabel + "</span></button>";
                 }
 
+                html+= this._appendToFooter();
+
                 html+= "</div>";
             }
 
@@ -476,6 +487,30 @@ var smartAniPopup,
             });
 
             return style;
+        },
+        o: function() {
+            return this.$core.$obj;
+        },
+        w: function() {
+            return $("." + this.css("wrapper"));
+        },
+        _resize: function(size) {
+            var mod = $.extend({
+                    left: 0,
+                    top: 0,
+                    width: 0,
+                    height: 0
+                }, size),
+                dialog = $("." + this.css("dialog"));
+
+            dialog.offset({ top: mod.top, left: mod.left});
+            dialog.width(mod.width);
+            dialog.height(mod.height);
+
+            this.positionX = mod.left;
+            this.positionY = mod.top;
+
+            this._calculatePosition();
         },
         _setMode: function() {
             if ($.inArray(this.effect, this.$animation) > -1) {
@@ -663,6 +698,9 @@ var smartAniPopup,
         },
         _beforeOpen: function($this) {},
         _afterOpen: function($this) {},
+        _appendToFooter: function() {
+            return '';
+        },
         _autoClose: function() {
             var $this = this;
 
@@ -690,6 +728,18 @@ var smartAniPopup,
                 Cookies.set(this.cookieCode, this.$cookie, {expires: expire, path: "/"});
             }
         },
+        _getRect: function(el) {
+            var rect = el.getBoundingClientRect(),
+                offsetX = window.scrollX || document.documentElement.scrollLeft,
+                offsetY = window.scrollY || document.documentElement.scrollTop;
+
+            return {
+                left: rect.left + offsetX,
+                top: rect.top + offsetY,
+                right: rect.right + offsetX,
+                bottom: rect.bottom + offsetY
+            };
+        },
         _getOffset: function() {
             var rect = this.w()[0].getBoundingClientRect(),
                 content = $("." + this.css("content")),
@@ -712,12 +762,6 @@ var smartAniPopup,
                 bottom: rect.bottom + offsetY
             };
         },
-        o: function() {
-            return this.$core.$obj;
-        },
-        w: function() {
-            return $("." + this.css("wrapper"));
-        },
         _prepareDialog: function() {},
         _finishDialog: function() {}
     });
@@ -733,10 +777,16 @@ var smartAniPopup,
             left: 0,
             top: 0,
             width: 0,
-            height: 0
+            height: 0,
+            cWidth: 0,
+            cHeight: 0
         },
 
+        showGrip: false,
         savePosize: true,
+        sizeMinWidth: 90,
+        sizeMinHeight: 60,
+        resizeMargin: 5,
 
         cookiePositionSizeCode: "smart-animated-popup-posize",
 
@@ -750,17 +800,27 @@ var smartAniPopup,
                         left: 0,
                         top: 0,
                         width: 0,
-                        height: 0
+                        height: 0,
+                        cWidth: 0,
+                        cHeight: 0
                     }, cookie);
                     this.$cookieUsed = true;
                 }
             }
 
             if (this.$cookieUsed) {
+                if (this.$cookiePosize.cHeight === 0) {
+                    this.$cookiePosize.cHeight = this.$cookiePosize.height;
+                }
+
                 this.positionX = this.$cookiePosize.left;
                 this.positionY = this.$cookiePosize.top;
+
                 this.width = this.$cookiePosize.width + "px";
-                this.height = this.$cookiePosize.height + "px";
+                this.cHeight = this.$cookiePosize.cHeight + "px";
+
+                this.height = "auto"; //this.$cookiePosize.height + "px";
+                this.cWidth = "auto"; //this.$cookiePosize.cWidth + "px";
 
                 if ($(window).width() < this.positionX + this.$cookiePosize.width) {
                     this.positionX = $(window).width() - this.$cookiePosize.width;
@@ -774,19 +834,31 @@ var smartAniPopup,
         _afterOpen: function($this) {
             $this._posizeCookie();
         },
+        _appendToFooter: function() {
+            return this.showGrip ? '<div class="' + this.$classes.grip + '"></div>' : '';
+        },
         _finishDialog: function() {
             this._posizeCookie();
 
             var $this = this,
                 wrapper = "." + this.css("wrapper"),
+                grip = wrapper + " ." + this.$classes.grip,
                 header = wrapper + " ." + this.$classes.header;
+
+            if (!this.showGrip) {
+                $(document).on("mousedown", grip, function(e) {
+                    $this.mover._mouseDownWrapper($this, e);
+                });
+
+                $(document).on("touchstart", grip, function(e) {
+                    $this.mover._mouseDownWrapper($this, e);
+                });
+            }
 
             $(document).on("mousedown", wrapper, function(e) {
                 $this.mover._mouseDownWrapper($this, e);
             });
-            $(document).on("mousedown", header, function(e) {
-                $this.mover._mouseDown($this, e);
-            });
+
             $(document).on("mousedown", header, function(e) {
                 $this.mover._mouseDown($this, e);
             });
@@ -797,11 +869,15 @@ var smartAniPopup,
                 $this.mover._mouseUp($this, e);
             });
 
+            $(document).on("touchstart", wrapper, function(e) {
+                $this.mover._mouseDownWrapper($this, e);
+            });
+
             $(document).on("touchstart", header, function(e) {
-                $this.mover._touchDown($this, e);
+                $this.mover._mouseDown($this, e);
             });
             $(document).on("touchmove", this, function(e) {
-                $this.mover._touchMove($this, e);
+                $this.mover._mouseMove($this, e);
             });
             $(document).on("touchend", this, function(e) {
                 $this.mover._touchEnd($this, e);
@@ -809,11 +885,13 @@ var smartAniPopup,
         },
         _posizeCookie: function() {
             if (this.savePosize) {
-                var poSize = {
+                var c = $("." + this.css("content")), poSize = {
                     left: this.w().parent().offset().left,
                     top: this.w().parent().offset().top,
                     width: this.w().width(),
-                    height: this.w().height()
+                    height: this.w().height(),
+                    cWidth: c.width(),
+                    cHeight: c.height(),
                 };
 
                 Cookies.set(this.cookiePositionSizeCode, poSize);
@@ -821,9 +899,6 @@ var smartAniPopup,
         },
         mover: {
             dr: undefined,
-            minContentWidth: 120,
-            minContentHeight: 60,
-            margin: 6,
             width: 0,
             height: 0,
             minLeft: 0,
@@ -842,20 +917,40 @@ var smartAniPopup,
             rmY: 0,
             rm: "",
 
+            _mousePos: function(e) {
+                var pos = { pageX: 0, pageY: 0, touch: false };
+
+                if (typeof e.clientX === "number") {
+                    pos.pageX = e.clientX;
+                    pos.pageY = e.clientY;
+                } else if (e.originalEvent.touches) {
+                    pos.pageX = e.originalEvent.touches[0].clientX;
+                    pos.pageY = e.originalEvent.touches[0].clientY;
+                    pos.touch = true;
+                } else {
+                    pos = null;
+                }
+
+                return pos;
+            },
             _downWrapper: function($this, e) {
                 if ($this.mover.rm === "") {
                     return;
                 }
 
+                var _pos = $this.mover._mousePos(e);
+
                 $this.mover.resizing = true;
-                $this.mover.rmX = e.pageX;
-                $this.mover.rmY = e.pageY;
+                $this.mover.rmX = _pos.pageX;
+                $this.mover.rmY = _pos.pageY;
             },
             _down: function($this, e) {
                 if ($this.mover.rm !== "") {
                     return;
                 }
 
+                var _pos = $this.mover._mousePos(e);
+                
                 $this.mover.moving = true;
                 $this.mover.dr = $this.w().closest("." + $this.$classes.dialog).addClass($this.$classes.drag);
                 $this.mover.width = $this.mover.dr.outerWidth();
@@ -864,13 +959,15 @@ var smartAniPopup,
                 $this.mover.maxLeft = $(window).width() - $this.mover.width;
                 $this.mover.maxTop = $(window).height() - $this.mover.height;
 
-                $this.mover.posX = $this.mover.dr.offset().left + $this.mover.width - e.pageX;
-                $this.mover.posY = $this.mover.dr.offset().top + $this.mover.height - e.pageY;
+                $this.mover.posX = $this.mover.dr.offset().left + $this.mover.width - _pos.pageX;
+                $this.mover.posY = $this.mover.dr.offset().top + $this.mover.height - _pos.pageY;
             },
             _move: function($this, e) {
+                var _pos = $this.mover._mousePos(e);
+
                 if ($this.mover.dr !== undefined) {
-                    var left = e.pageX + $this.mover.posX - $this.mover.width,
-                        top = e.pageY + $this.mover.posY - $this.mover.height;
+                    var left = _pos.pageX + $this.mover.posX - $this.mover.width,
+                        top = _pos.pageY + $this.mover.posY - $this.mover.height;
 
                     if (top <= 0 ) {
                         top = 0;
@@ -880,46 +977,64 @@ var smartAniPopup,
                         left = 0;
                     }
 
-                    if (top >= $this.mover.maxTop ) {
+                    if (top >= $this.mover.maxTop) {
                         top = $this.mover.maxTop;
                     }
 
-                    if (left >= $this.mover.maxLeft ) {
+                    if (left >= $this.mover.maxLeft) {
                         left = $this.mover.maxLeft;
                     }
 
                     $this.mover.dr.offset({ top: top, left: left});
+
+                    $this.positionX = left;
+                    $this.positionY = top;
                 }
 
                 if ($this.$status === "opened") {
-                    var box = $this._getOffset(), cs = '';
+                    var box = $this._getOffset(),
+                        grip = $this.showGrip ? $this._getRect($("." + $this.css("wrapper") + " ." + $this.$classes.grip)[0]) : {},
+                        cs = '', inGrip = false;
 
                     if (!$this.mover.resizing) {
+                        var _mod = _pos.touch ? 20 : 0;
+
                         $this.mover.rm = '';
 
                         $this.mover.resizeTop = false;
-                        $this.mover.resizeBottom = false;
                         $this.mover.resizeLeft = false;
+                        $this.mover.resizeBottom = false;
                         $this.mover.resizeRight = false;
 
-                        if (e.pageY >= box.top && e.pageY < box.top + $this.mover.margin) {
-                            $this.mover.resizeTop = true;
-                            $this.mover.rm += 'n';
-                        }
+                        if ($this.showGrip && _pos.pageY >= grip.top - _mod && _pos.pageY <= grip.bottom && _pos.pageX >= grip.left - _mod && _pos.pageX <= grip.right) {
+                            $this.mover.rm = 'se';
 
-                        if (e.pageY <= box.bottom && e.pageY > box.bottom - $this.mover.margin) {
                             $this.mover.resizeBottom = true;
-                            $this.mover.rm += 's';
-                        }
-
-                        if (e.pageX >= box.left && e.pageX < box.left + $this.mover.margin) {
-                            $this.mover.resizeLeft = true;
-                            $this.mover.rm += 'w';
-                        }
-
-                        if (e.pageX <= box.right && e.pageX > box.right - $this.mover.margin) {
                             $this.mover.resizeRight = true;
-                            $this.mover.rm += 'e';
+
+                            inGrip = true;
+                        }
+
+                        if (!inGrip) {
+                            if (_pos.pageY >= box.top && _pos.pageY < box.top + $this.resizeMargin) {
+                                $this.mover.resizeTop = true;
+                                $this.mover.rm += 'n';
+                            }
+
+                            if (_pos.pageY <= box.bottom && _pos.pageY > box.bottom - $this.resizeMargin) {
+                                $this.mover.resizeBottom = true;
+                                $this.mover.rm += 's';
+                            }
+
+                            if (_pos.pageX >= box.left && _pos.pageX < box.left + $this.resizeMargin) {
+                                $this.mover.resizeLeft = true;
+                                $this.mover.rm += 'w';
+                            }
+
+                            if (_pos.pageX <= box.right && _pos.pageX > box.right - $this.resizeMargin) {
+                                $this.mover.resizeRight = true;
+                                $this.mover.rm += 'e';
+                            }
                         }
 
                         if ($this.mover.rm !== "") {
@@ -940,26 +1055,26 @@ var smartAniPopup,
                             }
                         }
                     } else {
-                        var relX = e.pageX - $this.mover.rmX,
-                            relY = e.pageY - $this.mover.rmY,
+                        var relX = _pos.pageX - $this.mover.rmX,
+                            relY = _pos.pageY - $this.mover.rmY,
                             content = $("." + $this.css("content")),
                             dialog = $("." + $this.css("dialog")),
                             cWidth = content.width(),
                             cHeight = content.height();
 
-                        $this.mover.rmX = e.pageX;
-                        $this.mover.rmY = e.pageY;
+                        $this.mover.rmX = _pos.pageX;
+                        $this.mover.rmY = _pos.pageY;
 
                         if (relY !== 0) {
                             if ($this.mover.resizeTop) {
-                                if (cHeight - relY > $this.mover.minContentHeight) {
+                                if (cHeight - relY > $this.sizeMinHeight) {
                                     content.height(cHeight - relY);
                                     dialog.offset({ top: dialog.offset().top + relY });
                                 }
                             }
 
                             if ($this.mover.resizeBottom) {
-                                if (cHeight + relY > $this.mover.minContentHeight) {
+                                if (cHeight + relY > $this.sizeMinHeight) {
                                     content.height(cHeight + relY);
                                 }
                             }
@@ -967,17 +1082,21 @@ var smartAniPopup,
 
                         if (relX !== 0) {
                             if ($this.mover.resizeLeft) {
-                                if (cWidth - relX > $this.mover.minContentWidth) {
+                                if (cWidth - relX > $this.sizeMinWidth) {
                                     dialog.width(dialog.width() - relX);
                                     dialog.offset({ left: dialog.offset().left + relX });
                                 }
                             }
 
                             if ($this.mover.resizeRight) {
-                                if (cWidth + relX > $this.mover.minContentWidth) {
+                                if (cWidth + relX > $this.sizeMinWidth) {
                                     dialog.width(dialog.width() + relX);
                                 }
                             }
+                        }
+
+                        if (relX !== 0 && relY !== 0) {
+                            $this._posizeCookie();
                         }
                     }
                 }
@@ -999,27 +1118,20 @@ var smartAniPopup,
             },
             _mouseDownWrapper: function($this, e) {
                 $this.mover._downWrapper($this, e);
-                e.preventDefault();
             },
             _mouseDown: function($this, e) {
                 $this.mover._down($this, e);
-                e.preventDefault();
             },
             _mouseMove: function($this, e) {
                 $this.mover._move($this, e);
-                e.preventDefault();
             },
             _mouseUp: function($this, e) {
                 $this.mover._up($this, e);
             },
-            _touchDown: function($this, e) {
-
-            },
-            _touchMove: function($this, e) {
-
-            },
             _touchEnd: function($this, e) {
-
+                if (e.touches.length === 0) {
+                    $this.mover._up($this, e);
+                }
             }
         }
     });
@@ -1036,7 +1148,7 @@ var smartAniPopup,
             if (option === "get") {
                 var values = [];
 
-                this.each(function(){
+                this.each(function() {
                     var data = $(this).data("smpPlugin");
 
                     if (data) {
@@ -1048,6 +1160,12 @@ var smartAniPopup,
                     return values[0];
                 } else {
                     return values;
+                }
+            } else if (option === "resize") {
+                var data = $(this).data("smpPlugin");
+
+                if (data) {
+                    data.resize(name);
                 }
             } else {
                 this.each(function(){

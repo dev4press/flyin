@@ -1,5 +1,5 @@
 /*
-Smart Animated Popup v1.9
+Smart Animated Popup v2.0
 https://www.smartplugins.info/plugin/javascript/smart-animated-popup/
 
 Copyright 2008 - 2020 Milan Petrovic (email: support@dev4press.com)
@@ -75,6 +75,16 @@ https://www.smartplugins.info
     padding: 4px !important;
     right: -12px !important;
     top: -12px !important;
+}
+
+.sanp-dialog .sanp-footer .sanp-grip {
+    border-top: 24px solid rgba(0, 0, 0, .1);
+    border-left: 24px solid transparent;
+    border-right: 24px solid transparent;
+    transform: rotate(-45deg);
+    position: fixed;
+    right: -14px;
+    bottom: -2px;
 }
 
 /* style: plain white */
