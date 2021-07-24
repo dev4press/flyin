@@ -14,10 +14,11 @@ Authors: Klaus Hartl & Fagner Brack
 URL:     https://github.com/js-cookie/js-cookie
 
 == Changelog ==
-= 2.0 / 2020.10.12 =
+= 2.0 / 2021.07.30 =
 * New: skin 'Free' - with drag and drop and resizing of popup
 * New: positionX and positionY can be absolute numbers
 * New: metod added to resize and reposition the popup
+* Edit: few improvements to the core core and jQuery methods
 
 = 1.9 / 2020.06.11 =
 * Updated: refactoring some jQuery event handlers
