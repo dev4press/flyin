@@ -14,11 +14,13 @@ Authors: Klaus Hartl & Fagner Brack
 URL:     https://github.com/js-cookie/js-cookie
 
 == Changelog ==
-= 2.0 / 2021.07.30 =
-* New: skin 'Free' - with drag and drop and resizing of popup
-* New: positionX and positionY can be absolute numbers
-* New: metod added to resize and reposition the popup
-* Edit: few improvements to the core core and jQuery methods
+= 2.0 / 2023.03.01 =
+* New: metods added to resize and move the popup
+* New: storing position, offset and size into Cookie
+* New: experimental skin 'Free' - with drag and drop and resizing of popup
+* Updated: tested with jQuery 3.6.3
+* Updated: cookies library 3.0.1
+* Updated: many improvements to the core and jQuery methods
 
 = 1.9 / 2020.06.11 =
 * Updated: refactoring some jQuery event handlers
@@ -26,7 +28,7 @@ URL:     https://github.com/js-cookie/js-cookie
 
 = 1.8 / 2019.10.28 =
 * New: custom container selected for appending popup elements
-* Updated: changes to some of the plugin default settings
+* Updated: changes to some plugin default settings
 * Fix: problem when checking if the Cookies library is loaded
 
 = 1.7 / 2019.04.21 =

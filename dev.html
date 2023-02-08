@@ -41,7 +41,10 @@
     </div>
 
     <div class="srm-helper-central">
-        <input type="button" id="snap-open-popup" value="OPEN" /> | <input type="button" id="snap-close-popup" value="CLOSE" /> | <input type="button" id="snap-resize-popup" value="RESET" />
+        <input type="button" id="snap-open-popup" value="OPEN" /> |
+        <input type="button" id="snap-close-popup" value="CLOSE" /> |
+        <input type="button" id="snap-resize-popup" value="RESIZE" /> |
+        <input type="button" id="snap-move-popup" value="MOVE" />
 
         <div class="srm-helper-info" style="margin: 15px 0;">
             Event Fired: <strong id="span-event">/</strong><br/>
@@ -84,13 +87,13 @@
             <a href="https://www.smartplugins.info/plugin/javascript/smart-animated-popup/" rel="me" target="_blank">Smart Animated Popup v2.0</a>
         </span>
         <span class="srm-helper-right">
-            &copy; 2008 - 2021. Milan Petrovic - <a href="https://www.smartplugins.info/" rel="me" target="_blank">SMART Plugins</a> | <a href="https://www.dev4press.com/" rel="me" target="_blank">dev4Press.com</a><br/>
+            &copy; 2008 - 2023. Milan Petrovic - <a href="https://www.smartplugins.info/" rel="me" target="_blank">SMART Plugins</a> | <a href="https://www.dev4press.com/" rel="me" target="_blank">dev4Press.com</a><br/>
             Screen: <span class="srm-helper-screen-width">1024</span> x <span class="srm-helper-screen-height">1024</span> | 
             Client: <span class="srm-helper-client-width">1024</span> x <span class="srm-helper-client-height">1024</span>
         </span>
     </div>
 
-    <script type="text/javascript" src="../jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="../jquery-3.6.3.min.js"></script>
     <script type="text/javascript" src="source/js/libs/base.js"></script>
     <script type="text/javascript" src="source/js/libs/js.cookie.js"></script>
     <script type="text/javascript" src="source/js/popup.core.js"></script>
@@ -103,8 +106,12 @@
                 jQuery("#sanip-example").smartAniPopup("open");
             });
 
+            jQuery("#snap-move-popup").click(function() {
+                jQuery("#sanip-example").smartAniPopup("move", {offsetX: 0, offsetY: "20px"});
+            });
+
             jQuery("#snap-resize-popup").click(function() {
-                jQuery("#sanip-example").smartAniPopup("resize", {top: 32, left: 32, width: "40%", height: "auto"});
+                jQuery("#sanip-example").smartAniPopup("resize", {width: "100%", height: "200px"});
             });
 
             jQuery("#snap-close-popup").click(function(){
@@ -112,7 +119,7 @@
             });
 
             jQuery("#sanip-example").smartAniPopup({
-                skin: "Free",
+                skin: "Base",
                 callbacks: {
                     beforeOpen: function(obj){
                         jQuery("#span-event").html("beforeOpen");
@@ -134,20 +141,23 @@
                 settings: {
                     modal: true,
                     closeEscape: false,
+                    savePosize: true,
                     onLoad: true,
                     footer: true,
-                    positionX: 60,
-                    positionY: 20,
+                    positionX: "right",
+                    positionY: "bottom",
                     overlayColor: "#222",
                     cookieCode: "sap-demo-02",
                     autoShowLimit: true,
                     autoShowCounter: 1,
                     xContentSize: true,
-                    width: "40%",
-                    height: "auto",
+                    width: "30%",
+                    height: "300px",
                     effect: "scale",
                     minWidth: "320px",
-                    maxHeight: "80%"
+                    maxHeight: "80%",
+                    maxWidth: "100%",
+                    save: {do: "xxx"}
                 }
             });
         });

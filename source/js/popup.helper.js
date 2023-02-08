@@ -2,11 +2,9 @@
  * Smart Animated Popup v2.0
  * https://www.smartplugins.info/plugin/javascript/smart-animated-popup/
  * 
- * Copyright 2008 - 2021 Milan Petrovic (email: support@dev4press.com)
+ * Copyright 2008 - 2023 Milan Petrovic (email: support@smartplugins.info)
  *
- * https://www.dev4press.com
  * https://www.smartplugins.info
- *
  */
 
 /*jslint regexp: true, nomen: true, undef: true, sloppy: true, eqeq: true, vars: true, white: true, plusplus: true, maxerr: 50, indent: 4 */
