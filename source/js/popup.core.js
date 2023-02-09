@@ -115,7 +115,7 @@ var smartAniPopup,
             return this.$skin[name];
         },
         mod: function (data) {
-            this.$skin._mod(location);
+            this.$skin._mod(data);
         },
         move: function (location) {
             this.$skin._move(location);
@@ -145,6 +145,7 @@ var smartAniPopup,
         $cookiePosize: {},
         $enabled: true,
         $status: "closed",
+        $statusModal: "closed",
         $htmlClass: "",
         $animation: [
             "slit",
@@ -306,16 +307,14 @@ var smartAniPopup,
             this._cookieInit();
             this._prepareDialog();
 
-            if (this.modal) {
-                if (this.overlayActive) {
-                    this.createOverlay();
+            if (this.overlayActive) {
+                this.createOverlay();
 
-                    if (this.closeOverlay) {
-                        this._overlayClick();
-                    }
-                } else {
-                    this.createModalay();
+                if (this.closeOverlay) {
+                    this._overlayClick();
                 }
+            } else {
+                this.createModalay();
             }
 
             if (this.closeEscape) {
@@ -512,6 +511,14 @@ var smartAniPopup,
 
             $.each(data, function (idx, value) {
                 $this[idx] = value;
+
+                if (idx === "modal") {
+                    if (value) {
+                        $this._showModalOverlay($this);
+                    } else {
+                        $this._hideModalOverlay($this, true);
+                    }
+                }
             });
         },
         _move: function (location) {
@@ -560,12 +567,6 @@ var smartAniPopup,
 
             $this.callback($this.$core.callbacks.beforeOpen, $this.$core);
 
-            $this.$htmlClass = $this.$classes.html + " " + $this.$classes.htmlEffectPrefix + $this.effect;
-
-            if ($this.modal) {
-                $("html").addClass($this.$htmlClass);
-            }
-
             var el = $("." + $this.css("dialog"));
 
             el.addClass($this.$classes.dialogActive);
@@ -574,10 +575,8 @@ var smartAniPopup,
                 el.removeClass($this.$classes.dialogInactive);
             }
 
-            $("." + $this.css("overlay")).css("opacity", $this.overlayOpacity)
-                .addClass($this.$classes.overlayActive);
-
-            $this._calculatePosition();
+            $this._showModalOverlay($this);
+            $this._calculatePosition($this);
 
             $this.$status = "opened";
 
@@ -598,8 +597,6 @@ var smartAniPopup,
 
             $this.callback($this.$core.callbacks.beforeClose, $this.$core);
 
-            $("html").removeClass(this.$htmlClass);
-
             var el = $("." + $this.css("dialog"));
 
             el.removeClass($this.$classes.dialogActive);
@@ -608,14 +605,34 @@ var smartAniPopup,
                 el.addClass($this.$classes.dialogInactive);
             }
 
-            $("." + $this.css("overlay")).css("opacity", 0)
-                .removeClass($this.$classes.overlayActive);
+            $this._hideModalOverlay($this, false);
 
             $this.$status = "closed";
 
             $this.callback($this.$core.callbacks.afterClose, $this.$core);
 
             return true;
+        },
+        _showModalOverlay: function ($this) {
+            if ($this.modal && $this.$statusModal === "closed") {
+                $this.$htmlClass = $this.$classes.html + " " + $this.$classes.htmlEffectPrefix + $this.effect;
+
+                $("html").addClass($this.$htmlClass);
+
+                $("." + $this.css("overlay")).css("opacity", $this.overlayOpacity)
+                    .addClass($this.$classes.overlayActive);
+
+                $this.$statusModal = "opened";
+            }
+        },
+        _hideModalOverlay: function ($this, force) {
+            if (($this.modal || force) && $this.$statusModal === "opened") {
+                $("html").removeClass(this.$htmlClass);
+                $("." + $this.css("overlay")).css("opacity", 0)
+                    .removeClass($this.$classes.overlayActive);
+
+                $this.$statusModal = "closed";
+            }
         },
         _calculateContent: function () {
             var d = $("." + this.css("dialog")), dH = d.outerHeight(),
@@ -843,6 +860,9 @@ var smartAniPopup,
                 offsetY: this.offsetY,
                 width: this.width,
                 height: this.height,
+                modal: this.modal,
+                onLoad: this.onLoad,
+                onLoadDelay: this.onLoadDelay,
                 save: this.save
             }, cookie);
         }
