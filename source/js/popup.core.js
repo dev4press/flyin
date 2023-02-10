@@ -81,6 +81,8 @@ var smartAniPopup,
         skin: "Base",
         settings: {},
         callbacks: {
+            prepared: false,
+            ready: false,
             beforeOpen: false,
             afterOpen: false,
             beforeClose: false,
@@ -104,6 +106,9 @@ var smartAniPopup,
         },
         close: function () {
             this.$skin._close(this.$skin);
+        },
+        save: function() {
+            this.$skin._save(this.$skin);
         },
         get: function (name) {
             if (name === "cookie") {
@@ -147,13 +152,13 @@ var smartAniPopup,
         $status: "closed",
         $statusModal: "closed",
         $htmlClass: "",
+        $mode: "transition",
         $animation: [
             "slit",
             "slithor",
             "bounce",
             "roll"
         ],
-        $mode: "transition",
         $effects: [
             "none",
             "fade",
@@ -307,6 +312,8 @@ var smartAniPopup,
             this._cookieInit();
             this._prepareDialog();
 
+            this.callback(this.$core.callbacks.prepared, this.$core);
+
             if (this.overlayActive) {
                 this.createOverlay();
 
@@ -343,6 +350,8 @@ var smartAniPopup,
 
             this._buttonClick();
             this._finishDialog();
+
+            this.callback(this.$core.callbacks.ready, this.$core);
         },
         container: function () {
             return $(this.containerSelector).length === 1 ? $(this.containerSelector) : $("body");
@@ -610,6 +619,11 @@ var smartAniPopup,
             $this.$status = "closed";
 
             $this.callback($this.$core.callbacks.afterClose, $this.$core);
+
+            return true;
+        },
+        _save: function ($this) {
+            $this._savePosizeCookie();
 
             return true;
         },

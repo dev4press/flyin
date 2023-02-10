@@ -15,9 +15,10 @@ URL:     https://github.com/js-cookie/js-cookie
 
 == Changelog ==
 = 2.0 / 2023.03.01 =
-* New: metods added to resize and move the popup
 * New: internal methods to show and hide modal overlay
 * New: storing modal, position, offset and size into Cookie
+* New: `move` and `resize` methods added to modify the popup
+* New: `save` method added to trigger save of the cookie
 * New: experimental skin 'Free' - with drag and drop and resizing of popup
 * Updated: tested with jQuery 3.6.3
 * Updated: cookies library 3.0.1
