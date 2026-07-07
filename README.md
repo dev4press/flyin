@@ -1,20 +1,19 @@
-# Smart Animated Popup v3.0
+# Flyin Popup v1.0.0
 
-Modernized version of the Smart Animated Popup library, rewritten in TypeScript and SCSS.
+Modernized Flyin Popup library, rewritten in TypeScript and SCSS.
 
 ## Features
 
 - **TypeScript Core:** Completely rewritten for type safety and modern standards.
 - **SCSS Styles:** Modular styles with variables and nesting.
 - **Zero Dependencies:** Standalone version (only requires `js-cookie`).
-- **jQuery Compatible:** Includes a wrapper for backward compatibility.
 - **Modern Build:** Powered by Vite for fast development and small bundles.
 - **No IE Support:** Focused on modern browsers (Chrome, Firefox, Safari, Edge).
 
 ## Installation
 
 ```bash
-npm install smart-animated-popup
+npm install @dev4press/flyin
 ```
 
 ## Usage
@@ -22,24 +21,14 @@ npm install smart-animated-popup
 ### Vanilla JavaScript
 
 ```javascript
-import { SmartAniPopup } from 'smart-animated-popup';
+import { Flyin } from '@dev4press/flyin';
 
-const popup = new SmartAniPopup('#my-popup', {
+const popup = new Flyin('#my-popup', {
   effect: 'bounce',
-  style: 'sanp-style-plain-white'
+  style: 'flyin-style-plain-white'
 });
 
 popup.open();
-```
-
-### jQuery
-
-```javascript
-$('#my-popup').smartAniPopup({
-  effect: 'fade'
-});
-
-$('#my-popup').smartAniPopup('open');
 ```
 
 ## Development

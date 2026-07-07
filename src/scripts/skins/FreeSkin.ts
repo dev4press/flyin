@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
-import { Skin } from '../core/Skin';
-import type { Core } from '../core/Core';
-import type { Settings } from '../core/types';
+import { Skin } from '../Skin';
+import type { Flyin } from '../Flyin';
+import type { Settings } from '../types/types';
 
 export class FreeSkin extends Skin {
   $skinCode = 'free';
@@ -30,7 +30,7 @@ export class FreeSkin extends Skin {
     rm: '',
   };
 
-  constructor(core: Core, options: Settings = {}) {
+  constructor(core: Flyin, options: Settings = {}) {
     super(core, options);
   }
 

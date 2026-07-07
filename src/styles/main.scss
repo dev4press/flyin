@@ -1,5 +1,158 @@
-@use 'variables' as *;
-@use 'popup.core';
-@use 'animations';
-@use 'transitions';
-@use 'skins';
+@use 'partials/variables' as *;
+@use 'partials/animations';
+@use 'partials/transitions';
+@use 'partials/skins';
+
+.#{$flyin-prefix}-sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.#{$flyin-prefix}-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  top: 0;
+  opacity: 0;
+  left: 0;
+
+  &.#{$flyin-prefix}-active {
+    visibility: visible;
+  }
+}
+
+.#{$flyin-prefix}-active body {
+  overflow: hidden;
+}
+
+.#{$flyin-prefix}-dialog {
+  position: fixed;
+  backface-visibility: hidden;
+  visibility: hidden;
+
+  &.#{$flyin-prefix}-inactive,
+  &.#{$flyin-prefix}-active {
+    visibility: visible;
+  }
+
+  .#{$flyin-prefix}-wrapper {
+    position: relative;
+    margin: 0 auto;
+
+    .#{$flyin-prefix}-content {
+      overflow: auto;
+      position: relative;
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+
+    > button {
+      z-index: 200;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      outline: 1px solid transparent;
+    }
+  }
+
+  .#{$flyin-prefix}-footer {
+    .#{$flyin-prefix}-grip {
+      border-top: 24px solid rgba(0, 0, 0, 0.1);
+      border-left: 24px solid transparent;
+      border-right: 24px solid transparent;
+      transform: rotate(-45deg);
+      position: fixed;
+      right: -14px;
+      bottom: -2px;
+    }
+  }
+}
+
+.#{$flyin-prefix}-button-alt {
+  .#{$flyin-prefix}-wrapper > button {
+    border-radius: 50% !important;
+    font-size: 16px !important;
+    line-height: 16px !important;
+    padding: 4px !important;
+    right: -12px !important;
+    top: -12px !important;
+  }
+}
+
+/* style: plain white */
+.#{$flyin-prefix}-style-plain-white {
+  .#{$flyin-prefix}-wrapper {
+    background: $flyin-plain-white-bg;
+    border-radius: $flyin-border-radius;
+    box-shadow: 1px 1px 4px $flyin-shadow-color;
+
+    .#{$flyin-prefix}-header {
+      border-radius: $flyin-border-radius $flyin-border-radius 0 0;
+      padding: 10px;
+      border-bottom: 1px solid $flyin-plain-white-header-border;
+
+      h5 {
+        color: $flyin-plain-white-title-color;
+        font-size: 18px;
+        margin: 0;
+        padding: 0;
+        line-height: 24px;
+      }
+    }
+
+    > button {
+      -webkit-appearance: none;
+      outline: 1px solid transparent;
+      background: none;
+      border: none;
+      color: $flyin-plain-white-btn-color;
+      cursor: pointer;
+      float: right;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 24px;
+      right: 10px;
+      top: 10px;
+    }
+
+    .#{$flyin-prefix}-content {
+      padding: 10px;
+    }
+
+    .#{$flyin-prefix}-footer {
+      border-radius: 0 0 $flyin-border-radius $flyin-border-radius;
+      padding: 10px;
+      border-top: 1px solid $flyin-plain-white-header-border;
+      text-align: center;
+
+      button {
+        -webkit-appearance: none;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        outline: 1px solid transparent;
+        background: none;
+        border: none;
+      }
+    }
+  }
+
+  &.#{$flyin-prefix}-button-alt {
+    .#{$flyin-prefix}-wrapper > button {
+      background: $flyin-plain-white-btn-color;
+      box-shadow: 1px 1px 4px $flyin-shadow-color;
+      color: $flyin-white;
+    }
+  }
+}

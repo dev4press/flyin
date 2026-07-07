@@ -1,8 +1,12 @@
 {
-  "name": "smart-animated-popup",
-  "version": "3.0.0",
-  "description": "Modernized Smart Animated Popup",
+  "name": "@dev4press/flyin",
+  "version": "1.0.0",
+  "description": "Modernized Flyin Popup Library",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dev4press/flyin.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

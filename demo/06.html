@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Smart Animated Popup - jQuery Popup Plugin: Example #06</title>
+    <title>Flyin - Modernized Popup Library: Example #06</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
     <link rel="stylesheet" type="text/css" href="../source/css/popup.helper.css">
-    <link rel="stylesheet" type="text/css" href="../dist/smart-animated-popup.css">
+    <link rel="stylesheet" type="text/css" href="../dist/flyin.css">
 
     <style type="text/css">
-        .sanip-open {
+        .flyin-open {
             height: 32px;
             margin: 10px;
             width: 220px;
@@ -20,7 +20,7 @@
 <body>
 
     <div class="srm-helper-header">
-        <h1 class="srm-helper-left">Smart Animated Popup | <span>example #06</span></h1>
+        <h1 class="srm-helper-left">Flyin | <span>example #06</span></h1>
         <span class="srm-helper-right">
             <a href="../index.html">Index</a> | 
             <a href="../files.html">Files</a> | <strong>Demos:</strong> 
@@ -33,37 +33,36 @@
         </span>
     </div>
 
-    <div id="sanip-example-root" data-title="Smart Animated Popup" style="display: none;">
-        <p>Smart Animated Popup is a jQuery powered plugin for creating normal or modal popups with custom positioning, popup open/close animation effect, customized overlay and popup looks, tons of settings. And it's responsive.</p>
-        <p>Plugin has over 20 animation effects you can assign, with additional 'random' effect that will pick random effect on every page load.</p>
+    <div id="flyin-example-root" data-title="Flyin Popup" style="display: none;">
+        <p>Flyin is a modernized popup library for creating normal or modal popups with custom positioning, popup open/close animation effect, customized overlay and popup looks, tons of settings. And it's responsive.</p>
+        <p>Library has over 20 animation effects you can assign, with additional 'random' effect that will pick random effect on every page load.</p>
     </div>
 
-    <div id="sanip-demo-container"></div>
+    <div id="flyin-demo-container"></div>
 
-    <div class="srm-helper-central" id="sanip-buttons-container">
-        <p><strong>Example #06:</strong> This simply shows all the effects plugin has. This examples creates new popup for each effect by cloning the default content.</p>
+    <div class="srm-helper-central" id="flyin-buttons-container">
+        <p><strong>Example #06:</strong> This simply shows all the effects library has. This examples creates new popup for each effect by cloning the default content.</p>
 
     </div>
 
     <div class="srm-helper-copyright">
         <span class="srm-helper-left">
-            <a href="https://www.smartplugins.info/plugin/javascript/smart-animated-popup/" rel="me" target="_blank">Smart Animated Popup v2.0</a>
+            <a href="https://github.com/dev4press/flyin" rel="me" target="_blank">Flyin v1.0.0</a>
         </span>
         <span class="srm-helper-right">
-            &copy; 2008 - 2023. Milan Petrovic - <a href="https://www.smartplugins.info/" rel="me" target="_blank">SMART Plugins</a> | <a href="https://www.dev4press.com/" rel="me" target="_blank">dev4Press.com</a><br/>
+            &copy; 2026. <a href="https://www.dev4press.com/" rel="me" target="_blank">dev4Press.com</a><br/>
             Screen: <span class="srm-helper-screen-width">1024</span> x <span class="srm-helper-screen-height">1024</span> | 
             Client: <span class="srm-helper-client-width">1024</span> x <span class="srm-helper-client-height">1024</span>
         </span>
     </div>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
-    <script type="text/javascript" src="../dist/smart-animated-popup.umd.js"></script>
+    <script type="text/javascript" src="../dist/flyin.umd.js"></script>
 
     <script type="text/javascript" src="../source/js/popup.helper.js"></script>
 
     <script type="text/javascript">
-        jQuery(document).ready(function() {
+        document.addEventListener('DOMContentLoaded', function() {
             var allEffects = {
                 "none": "No effect",
                 "random": "Random",
@@ -93,7 +92,7 @@
                 "bounce": "Bounce",
                 "roll": "Roll"
             }, settings = {
-                style: "sanp-style-plain-white",
+                style: "flyin-style-plain-white",
                 onLoad: false,
                 overlayColor: "#550000",
                 overlayOpacity: .9,
@@ -102,27 +101,31 @@
                 effect: ""
             };
 
-            jQuery.each(allEffects, function(effect, title){
-                var obj = jQuery("#sanip-example-root").clone(),
-                    id = "sanip-demo-effect-" + effect,
-                    local = jQuery.extend({}, settings, {effect: effect}), 
-                    button = "<input type='button' value='" + title + "' class='sanip-open' data-effect='" + effect + "' />";
+            var popups = {};
 
-                obj.attr("id", id);
-                local.effect = effect;
+            Object.keys(allEffects).forEach(function(effect){
+                var title = allEffects[effect];
+                var root = document.querySelector("#flyin-example-root");
+                var obj = root.cloneNode(true);
+                var id = "flyin-demo-effect-" + effect;
+                var localSettings = Object.assign({}, settings, {effect: effect});
+                var button = document.createElement('input');
+                button.type = 'button';
+                button.value = title;
+                button.className = 'flyin-open';
+                button.setAttribute('data-effect', effect);
 
-                jQuery("#sanip-demo-container").append(obj);
-                jQuery("#sanip-buttons-container").append(button);
+                obj.id = id;
+                document.querySelector("#flyin-demo-container").appendChild(obj);
+                document.querySelector("#flyin-buttons-container").appendChild(button);
 
-                jQuery("#" + id).smartAniPopup({
-                    settings: local
+                popups[effect] = new Flyin("#" + id, {
+                    settings: localSettings
                 });
-            });
 
-            jQuery(".sanip-open").click(function(){
-                var id = "#sanip-demo-effect-" + jQuery(this).data("effect");
-
-                jQuery(id).smartAniPopup("open");
+                button.addEventListener('click', function() {
+                    popups[this.getAttribute('data-effect')].open();
+                });
             });
         });
     </script>

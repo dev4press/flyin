@@ -1,22 +1,22 @@
 @use 'variables' as *;
 
-.#{$sanp-prefix}-dialog {
-  &.#{$sanp-prefix}-effect-slit,
-  &.#{$sanp-prefix}-effect-slithor {
+.#{$flyin-prefix}-dialog {
+  &.#{$flyin-prefix}-effect-slit,
+  &.#{$flyin-prefix}-effect-slithor {
     perspective: 1500px;
   }
 
-  &.#{$sanp-prefix}-effect-roll,
-  &.#{$sanp-prefix}-effect-bounce,
-  &.#{$sanp-prefix}-effect-slit,
-  &.#{$sanp-prefix}-effect-slithor {
-    &.#{$sanp-prefix}-inactive {
-      animation: sanp-slit-hide $sanp-dialog-speed forwards;
+  &.#{$flyin-prefix}-effect-roll,
+  &.#{$flyin-prefix}-effect-bounce,
+  &.#{$flyin-prefix}-effect-slit,
+  &.#{$flyin-prefix}-effect-slithor {
+    &.#{$flyin-prefix}-inactive {
+      animation: flyin-slit-hide $flyin-dialog-speed forwards;
     }
   }
 }
 
-@keyframes sanp-slit-hide {
+@keyframes flyin-slit-hide {
   0% {
     visibility: visible;
   }
@@ -26,17 +26,17 @@
 }
 
 /* roll */
-.#{$sanp-prefix}-effect-roll {
-  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
-    animation: sanp-roll-in $sanp-dialog-speed;
+.#{$flyin-prefix}-effect-roll {
+  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+    animation: flyin-roll-in $flyin-dialog-speed;
   }
 
-  &.#{$sanp-prefix}-inactive .#{$sanp-prefix}-wrapper {
-    animation: sanp-roll-out $sanp-dialog-speed;
+  &.#{$flyin-prefix}-inactive .#{$flyin-prefix}-wrapper {
+    animation: flyin-roll-out $flyin-dialog-speed;
   }
 }
 
-@keyframes sanp-roll-in {
+@keyframes flyin-roll-in {
   0% {
     opacity: 0;
     transform: translate3d(-120%, 0, 0) rotate3d(0, 0, 1, -120deg);
@@ -47,7 +47,7 @@
   }
 }
 
-@keyframes sanp-roll-out {
+@keyframes flyin-roll-out {
   0% {
     opacity: 1;
   }
@@ -58,17 +58,17 @@
 }
 
 /* bounce */
-.#{$sanp-prefix}-effect-bounce {
-  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
-    animation: sanp-bounce-in $sanp-dialog-speed;
+.#{$flyin-prefix}-effect-bounce {
+  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+    animation: flyin-bounce-in $flyin-dialog-speed;
   }
 
-  &.#{$sanp-prefix}-inactive .#{$sanp-prefix}-wrapper {
-    animation: sanp-bounce-out $sanp-dialog-speed;
+  &.#{$flyin-prefix}-inactive .#{$flyin-prefix}-wrapper {
+    animation: flyin-bounce-out $flyin-dialog-speed;
   }
 }
 
-@keyframes sanp-bounce-in {
+@keyframes flyin-bounce-in {
   0%,
   20%,
   40%,
@@ -100,7 +100,7 @@
   }
 }
 
-@keyframes sanp-bounce-out {
+@keyframes flyin-bounce-out {
   20% {
     transform: scale3d(0.9, 0.9, 0.9);
   }
@@ -116,24 +116,24 @@
 }
 
 /* slit */
-.#{$sanp-prefix}-effect-slit {
-  .#{$sanp-prefix}-wrapper {
+.#{$flyin-prefix}-effect-slit {
+  .#{$flyin-prefix}-wrapper {
     transform-style: preserve-3d;
     opacity: 1;
   }
 
-  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
     transform: translateZ(-3000px) rotateY(90deg);
-    animation: sanp-slit $sanp-dialog-speed forwards ease-out;
+    animation: flyin-slit $flyin-dialog-speed forwards ease-out;
   }
 
-  &.#{$sanp-prefix}-inactive .#{$sanp-prefix}-wrapper {
+  &.#{$flyin-prefix}-inactive .#{$flyin-prefix}-wrapper {
     transform: translateZ(0) rotateY(0deg);
-    animation: sanp-slit-out $sanp-dialog-speed forwards ease-in;
+    animation: flyin-slit-out $flyin-dialog-speed forwards ease-in;
   }
 }
 
-@keyframes sanp-slit {
+@keyframes flyin-slit {
   40% {
     animation-timing-function: ease-out;
     transform: translateZ(-250px) rotateY(89deg);
@@ -145,7 +145,7 @@
   }
 }
 
-@keyframes sanp-slit-out {
+@keyframes flyin-slit-out {
   60% {
     animation-timing-function: ease-out;
     transform: translateZ(-250px) rotateY(89deg);
@@ -158,24 +158,24 @@
 }
 
 /* slithor */
-.#{$sanp-prefix}-effect-slithor {
-  .#{$sanp-prefix}-wrapper {
+.#{$flyin-prefix}-effect-slithor {
+  .#{$flyin-prefix}-wrapper {
     transform: translateZ(-3000px) rotateX(90deg);
     transform-style: preserve-3d;
     opacity: 1;
   }
 
-  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
-    animation: sanp-slithor $sanp-dialog-speed forwards ease-out;
+  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+    animation: flyin-slithor $flyin-dialog-speed forwards ease-out;
   }
 
-  &.#{$sanp-prefix}-inactive .#{$sanp-prefix}-wrapper {
+  &.#{$flyin-prefix}-inactive .#{$flyin-prefix}-wrapper {
     transform: translateZ(0) rotateX(0deg);
-    animation: sanp-slithor-out $sanp-dialog-speed forwards ease-out;
+    animation: flyin-slithor-out $flyin-dialog-speed forwards ease-out;
   }
 }
 
-@keyframes sanp-slithor {
+@keyframes flyin-slithor {
   40% {
     animation-timing-function: ease-out;
     transform: translateZ(-250px) rotateX(89deg);
@@ -187,7 +187,7 @@
   }
 }
 
-@keyframes sanp-slithor-out {
+@keyframes flyin-slithor-out {
   60% {
     animation-timing-function: ease-out;
     transform: translateZ(-250px) rotateX(89deg);

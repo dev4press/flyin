@@ -1,28 +1,21 @@
-=== Smart Animated Popup - jQuery Popup Plugin ===
-Version: v2.0
-Build:   5200
-Author:  Milan Petrovic, SMARTPlugins
-Home:    https://www.smartplugins.info/plugin/javascript/smart-animated-popup/
+=== Flyin - Modernized Popup Library ===
+Version: v1.0.0
+Author:  Milan Petrovic, dev4Press
+Home:    https://github.com/dev4press/flyin
 
 == Third Party Libraries ==
-= Base.js =
-Author:  Dean Edwards
-URL:     http://dean.edwards.name/weblog/2006/03/base/
-
-= jQuery Cookie =
+= JS Cookie =
 Authors: Klaus Hartl & Fagner Brack
 URL:     https://github.com/js-cookie/js-cookie
 
 == Changelog ==
-= 2.0 / 2023.03.01 =
-* New: internal methods to show and hide modal overlay
-* New: storing modal, position, offset and size into Cookie
-* New: `move` and `resize` methods added to modify the popup
-* New: `save` method added to trigger save of the cookie
-* New: experimental skin 'Free' - with drag and drop and resizing of popup
-* Updated: tested with jQuery 3.6.3
-* Updated: cookies library 3.0.1
-* Updated: many improvements to the core and jQuery methods
+= 1.0.0 / 2026.07.07 =
+* New: completely rewritten in TypeScript and SCSS
+* New: zero-dependency version (except for js-cookie)
+* New: modular SCSS structure
+* New: Vite-based build pipeline
+* Changed: renamed from Smart Animated Popup to Flyin
+* Changed: removed jQuery dependency and Base.js
 
 = 1.9 / 2020.06.11 =
 * Updated: refactoring some jQuery event handlers

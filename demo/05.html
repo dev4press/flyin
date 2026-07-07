@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Smart Animated Popup - jQuery Popup Plugin: Example #05</title>
+    <title>Flyin - Modernized Popup Library: Example #05</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
     <link rel="stylesheet" type="text/css" href="../source/css/popup.helper.css">
-    <link rel="stylesheet" type="text/css" href="../dist/smart-animated-popup.css">
+    <link rel="stylesheet" type="text/css" href="../dist/flyin.css">
 </head>
 <body>
 
     <div class="srm-helper-header">
-        <h1 class="srm-helper-left">Smart Animated Popup | <span>example #05</span></h1>
+        <h1 class="srm-helper-left">Flyin | <span>example #05</span></h1>
         <span class="srm-helper-right">
             <a href="../index.html">Index</a> | 
             <a href="../files.html">Files</a> | <strong>Demos:</strong> 
@@ -25,34 +25,34 @@
         </span>
     </div>
 
-    <div id="sanip-example-demo-05" data-title="Smart Animated Popup" style="display: none;">
+    <div id="flyin-example-demo-05" data-title="Flyin Popup" style="display: none;">
         <h5>This is the TITLE</h5>
-        <p>Smart Animated Popup is a jQuery powered plugin for creating normal or modal popups with custom positioning, popup open/close animation effect, customized overlay and popup looks, tons of settings. And it's responsive.</p>
-        <p>Plugin has over 20 animation effects you can assign, with additional 'random' effect that will pick random effect on every page load.</p>
+        <p>Flyin is a modernized popup library for creating normal or modal popups with custom positioning, popup open/close animation effect, customized overlay and popup looks, tons of settings. And it's responsive.</p>
+        <p>Library has over 20 animation effects you can assign, with additional 'random' effect that will pick random effect on every page load.</p>
         <footer>...and this is custom footer</footer>
     </div>
 
-    <div id="sanip-demo-container"></div>
+    <div id="flyin-demo-container"></div>
 
-    <div class="srm-helper-central" id="sanip-buttons-container">
+    <div class="srm-helper-central" id="flyin-buttons-container">
         <p><strong>Example #05:</strong> This example shows how can you easily set custom header and footer for the popup, in this case by taking parts of the target DIV.</p>
 
         <div class="srm-helper-info">
             &lt;script type="text/javascript"&gt;<br/>
-            &nbsp;&nbsp;jQuery(document).ready(function() {<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;jQuery("#sanip-example").smartAniPopup({<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;settings: {<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style: "sanp-style-box-red",<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headerContent: jQuery("#sanip-example-demo-05 h5"),<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;footerContent: jQuery("#sanip-example-demo-05 footer"),<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positionX: "left",<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positionY: "bottom",<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onLeaveViewport: true,<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width: "35%",<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minWidth: "500px",<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offsetX: "20px",<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offsetY: "20px"<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;document.addEventListener('DOMContentLoaded', function() {<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;new Flyin("#flyin-example-demo-05", {<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;settings: {<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style: "flyin-style-box-red",<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headerContent: document.querySelector("#flyin-example-demo-05 h5").innerHTML,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;footerContent: document.querySelector("#flyin-example-demo-05 footer").innerHTML,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positionX: "left",<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;positionY: "bottom",<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;onLeaveViewport: true,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width: "35%",<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minWidth: "500px",<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offsetX: "20px",<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;offsetY: "20px"<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;});<br/>
             &nbsp;&nbsp;});<br/>
             &lt;/script&gt;<br/>
@@ -61,28 +61,27 @@
 
     <div class="srm-helper-copyright">
         <span class="srm-helper-left">
-            <a href="https://www.smartplugins.info/plugin/javascript/smart-animated-popup/" rel="me" target="_blank">Smart Animated Popup v2.0</a>
+            <a href="https://github.com/dev4press/flyin" rel="me" target="_blank">Flyin v1.0.0</a>
         </span>
         <span class="srm-helper-right">
-            &copy; 2008 - 2023. Milan Petrovic - <a href="https://www.smartplugins.info/" rel="me" target="_blank">SMART Plugins</a> | <a href="https://www.dev4press.com/" rel="me" target="_blank">dev4Press.com</a><br/>
+            &copy; 2026. <a href="https://www.dev4press.com/" rel="me" target="_blank">dev4Press.com</a><br/>
             Screen: <span class="srm-helper-screen-width">1024</span> x <span class="srm-helper-screen-height">1024</span> | 
             Client: <span class="srm-helper-client-width">1024</span> x <span class="srm-helper-client-height">1024</span>
         </span>
     </div>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
-    <script type="text/javascript" src="../dist/smart-animated-popup.umd.js"></script>
+    <script type="text/javascript" src="../dist/flyin.umd.js"></script>
 
     <script type="text/javascript" src="../source/js/popup.helper.js"></script>
 
     <script type="text/javascript">
-        jQuery(document).ready(function() {
-            jQuery("#sanip-example-demo-05").smartAniPopup({
+        document.addEventListener('DOMContentLoaded', function() {
+            new Flyin("#flyin-example-demo-05", {
                 settings: {
-                    style: "sanp-style-box-red",
-                    headerContent: jQuery("#sanip-example-demo-05 h5"),
-                    footerContent: jQuery("#sanip-example-demo-05 footer"),
+                    style: "flyin-style-box-red",
+                    headerContent: document.querySelector("#flyin-example-demo-05 h5").innerHTML,
+                    footerContent: document.querySelector("#flyin-example-demo-05 footer").innerHTML,
                     positionX: "left",
                     positionY: "bottom",
                     onLeaveViewport: true,

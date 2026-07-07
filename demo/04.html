@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Smart Animated Popup - jQuery Popup Plugin: Example #04</title>
+    <title>Flyin - Modernized Popup Library: Example #04</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
     <link rel="stylesheet" type="text/css" href="../source/css/popup.helper.css">
-    <link rel="stylesheet" type="text/css" href="../dist/smart-animated-popup.css">
+    <link rel="stylesheet" type="text/css" href="../dist/flyin.css">
 
     <style type="text/css">
-        #sanip-example-demo-04 img {
+        #flyin-example-demo-04 img {
             float: right;
             margin: 0 0 0 15px;
         }
 
-        #sanip-example-demo-04 p {
+        #flyin-example-demo-04 p {
             margin: 0;
             padding: 10px 0;
         }
@@ -24,7 +24,7 @@
 <body>
 
     <div class="srm-helper-header">
-        <h1 class="srm-helper-left">Smart Animated Popup | <span>example #04</span></h1>
+        <h1 class="srm-helper-left">Flyin | <span>example #04</span></h1>
         <span class="srm-helper-right">
             <a href="../index.html">Index</a> | 
             <a href="../files.html">Files</a> | <strong>Demos:</strong> 
@@ -37,10 +37,10 @@
         </span>
     </div>
 
-    <div id="sanip-example-demo-04" data-title="Smart Animated Popup" style="display: none;">
+    <div id="flyin-example-demo-04" data-title="Flyin Popup" style="display: none;">
         <img width="172" src="https://s3.amazonaws.com/smartplugins/logo_256.png" alt="SMARTPlugins" />
-        <p>Smart Animated Popup is a jQuery powered plugin for creating normal or modal popups with custom positioning, popup open/close animation effect, customized overlay and popup looks, tons of settings. And it's responsive.</p>
-        <p>Plugin has over 20 animation effects you can assign, with additional 'random' effect that will pick random effect on every page load.</p>
+        <p>Flyin is a modernized popup library for creating normal or modal popups with custom positioning, popup open/close animation effect, customized overlay and popup looks, tons of settings. And it's responsive.</p>
+        <p>Library has over 20 animation effects you can assign, with additional 'random' effect that will pick random effect on every page load.</p>
     </div>
 
     <div class="srm-helper-central">
@@ -55,32 +55,24 @@
 
         <div class="srm-helper-info">
             &lt;script type="text/javascript"&gt;<br/>
-            &nbsp;&nbsp;jQuery(document).ready(function() {<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;jQuery("#snap-open-popup").click(function(){<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#sanip-example-demo-04").smartAniPopup("open");<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;});<br/><br/>
-
-            &nbsp;&nbsp;&nbsp;&nbsp;jQuery("#snap-close-popup").click(function(){<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#sanip-example-demo-04").smartAniPopup("close");<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;});<br/><br/>
-
-            &nbsp;&nbsp;&nbsp;&nbsp;jQuery("#sanip-example-demo-04").smartAniPopup({<br/>
+            &nbsp;&nbsp;document.addEventListener('DOMContentLoaded', function() {<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;const popup = new Flyin("#flyin-example-demo-04", {<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;callbacks: {<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeOpen: function(obj){<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-event").html("beforeOpen");<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-status").html(obj.get("status"));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.querySelector("#span-event").innerHTML = "beforeOpen";<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.querySelector("#span-status").innerHTML = obj.get("status");<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;afterOpen: function(obj){<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-event").html("afterOpen");<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-status").html(obj.get("status"));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.querySelector("#span-event").innerHTML = "afterOpen";<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.querySelector("#span-status").innerHTML = obj.get("status");<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;beforeClose: function(obj){<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-event").html("beforeClose");<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-status").html(obj.get("status"));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.querySelector("#span-event").innerHTML = "beforeClose";<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.querySelector("#span-status").innerHTML = obj.get("status");<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;afterClose: function(obj){<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-event").html("afterClose");<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;jQuery("#span-status").html(obj.get("status"));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.querySelector("#span-event").innerHTML = "afterClose";<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;document.querySelector("#span-status").innerHTML = obj.get("status");<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;settings: {<br/>
@@ -93,6 +85,12 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;width: "30%",<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minWidth: "320px"<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br/><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;document.querySelector("#snap-open-popup").addEventListener('click', function(){<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup.open();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br/><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;document.querySelector("#snap-close-popup").addEventListener('click', function(){<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;popup.close();<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;});<br/>
             &nbsp;&nbsp;});<br/>
             &lt;/script&gt;<br/>
@@ -101,48 +99,39 @@
 
     <div class="srm-helper-copyright">
         <span class="srm-helper-left">
-            <a href="https://www.smartplugins.info/plugin/javascript/smart-animated-popup/" rel="me" target="_blank">Smart Animated Popup v2.0</a>
+            <a href="https://github.com/dev4press/flyin" rel="me" target="_blank">Flyin v1.0.0</a>
         </span>
         <span class="srm-helper-right">
-            &copy; 2008 - 2023. Milan Petrovic - <a href="https://www.smartplugins.info/" rel="me" target="_blank">SMART Plugins</a> | <a href="https://www.dev4press.com/" rel="me" target="_blank">dev4Press.com</a><br/>
+            &copy; 2026. <a href="https://www.dev4press.com/" rel="me" target="_blank">dev4Press.com</a><br/>
             Screen: <span class="srm-helper-screen-width">1024</span> x <span class="srm-helper-screen-height">1024</span> | 
             Client: <span class="srm-helper-client-width">1024</span> x <span class="srm-helper-client-height">1024</span>
         </span>
     </div>
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
-    <script type="text/javascript" src="../dist/smart-animated-popup.umd.js"></script>
+    <script type="text/javascript" src="../dist/flyin.umd.js"></script>
 
     <script type="text/javascript" src="../source/js/popup.helper.js"></script>
 
     <script type="text/javascript">
-        jQuery(document).ready(function() {
-            jQuery("#snap-open-popup").click(function(){
-                jQuery("#sanip-example-demo-04").smartAniPopup("open");
-            });
-
-            jQuery("#snap-close-popup").click(function(){
-                jQuery("#sanip-example-demo-04").smartAniPopup("close");
-            });
-
-            jQuery("#sanip-example-demo-04").smartAniPopup({
+        document.addEventListener('DOMContentLoaded', function() {
+            const popup = new Flyin("#flyin-example-demo-04", {
                 callbacks: {
                     beforeOpen: function(obj){
-                        jQuery("#span-event").html("beforeOpen");
-                        jQuery("#span-status").html(obj.get("status"));
+                        document.querySelector("#span-event").innerHTML = "beforeOpen";
+                        document.querySelector("#span-status").innerHTML = obj.get("status");
                     },
                     afterOpen: function(obj){
-                        jQuery("#span-event").html("afterOpen");
-                        jQuery("#span-status").html(obj.get("status"));
+                        document.querySelector("#span-event").innerHTML = "afterOpen";
+                        document.querySelector("#span-status").innerHTML = obj.get("status");
                     },
                     beforeClose: function(obj){
-                        jQuery("#span-event").html("beforeClose");
-                        jQuery("#span-status").html(obj.get("status"));
+                        document.querySelector("#span-event").innerHTML = "beforeClose";
+                        document.querySelector("#span-status").innerHTML = obj.get("status");
                     },
                     afterClose: function(obj){
-                        jQuery("#span-event").html("afterClose");
-                        jQuery("#span-status").html(obj.get("status"));
+                        document.querySelector("#span-event").innerHTML = "afterClose";
+                        document.querySelector("#span-status").innerHTML = obj.get("status");
                     }
                 },
                 settings: {
@@ -155,6 +144,14 @@
                     width: "30%",
                     minWidth: "320px"
                 }
+            });
+
+            document.querySelector("#snap-open-popup").addEventListener('click', function(){
+                popup.open();
+            });
+
+            document.querySelector("#snap-close-popup").addEventListener('click', function(){
+                popup.close();
             });
         });
     </script>

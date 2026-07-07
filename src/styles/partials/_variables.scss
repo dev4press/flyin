@@ -1,0 +1,27 @@
+// Base Prefix
+$flyin-prefix: 'flyin';
+
+// Z-index
+$flyin-z-index: 1000000;
+
+// Colors
+$flyin-white: #ffffff;
+$flyin-black: #000000;
+$flyin-gray-dark: #444444;
+$flyin-gray: #888888;
+$flyin-gray-light: #dddddd;
+$flyin-shadow-color: rgba(32, 32, 32, 0.3);
+
+// Overlay
+$flyin-overlay-opacity: 0.7;
+$flyin-overlay-speed: 0.07s;
+
+// Dialog
+$flyin-dialog-speed: 0.7s;
+$flyin-border-radius: 4px;
+
+// Skins
+$flyin-plain-white-bg: $flyin-white;
+$flyin-plain-white-header-border: $flyin-gray-light;
+$flyin-plain-white-title-color: $flyin-gray-dark;
+$flyin-plain-white-btn-color: $flyin-gray;

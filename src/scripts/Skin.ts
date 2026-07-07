@@ -1,11 +1,11 @@
 import Cookies from 'js-cookie';
 import { Base } from './Base';
-import type { Core } from './Core';
-import type { Settings, Position } from './types';
+import type { Flyin } from './Flyin';
+import type { Settings, Position } from './types/types';
 
 export class Skin extends Base implements Settings {
   $skinCode = '';
-  $core: Core;
+  $core: Flyin;
   $cookie = 1;
   $cookieUsed = false;
   $cookiePosize: Record<string, any> = {};
@@ -45,26 +45,26 @@ export class Skin extends Base implements Settings {
   ];
 
   $classes: Record<string, string> = {
-    html: 'sanp-active',
-    htmlEffectPrefix: 'sanp-effect-',
-    overlay: 'sanp-overlay',
-    overlayIDPrefix: 'sanp-overlay-',
-    overlayActive: 'sanp-active',
-    skinPrefix: 'sanp-skin-',
-    titleIDPrefix: 'sanp-dialog-title-',
-    dialog: 'sanp-dialog',
-    dialogIDPrefix: 'sanp-dialog-',
-    dialogEffectPrefix: 'sanp-effect-',
-    dialogActive: 'sanp-active',
-    dialogInactive: 'sanp-inactive',
-    wrapper: 'sanp-wrapper',
-    header: 'sanp-header',
-    content: 'sanp-content',
-    footer: 'sanp-footer',
-    srOnly: 'sanp-sr-only',
-    closeButton: 'sanp-button-close',
-    drag: 'sanp-drag',
-    grip: 'sanp-grip',
+    html: 'flyin-active',
+    htmlEffectPrefix: 'flyin-effect-',
+    overlay: 'flyin-overlay',
+    overlayIDPrefix: 'flyin-overlay-',
+    overlayActive: 'flyin-active',
+    skinPrefix: 'flyin-skin-',
+    titleIDPrefix: 'flyin-dialog-title-',
+    dialog: 'flyin-dialog',
+    dialogIDPrefix: 'flyin-dialog-',
+    dialogEffectPrefix: 'flyin-effect-',
+    dialogActive: 'flyin-active',
+    dialogInactive: 'flyin-inactive',
+    wrapper: 'flyin-wrapper',
+    header: 'flyin-header',
+    content: 'flyin-content',
+    footer: 'flyin-footer',
+    srOnly: 'flyin-sr-only',
+    closeButton: 'flyin-button-close',
+    drag: 'flyin-drag',
+    grip: 'flyin-grip',
   };
 
   // Default Settings
@@ -73,7 +73,7 @@ export class Skin extends Base implements Settings {
   zIndex = 1000000;
   title = true;
   titleTag = 'h5';
-  style = 'sanp-style-plain-white';
+  style = 'flyin-style-plain-white';
   containerSelector = 'body';
   extraClass = '';
   effect = 'random';
@@ -114,8 +114,8 @@ export class Skin extends Base implements Settings {
   buttonFooter = true;
   buttonFooterContent = 'Close';
   ariaCloseLabel = 'Close this dialog';
-  cookieCode = 'smart-animated-popup';
-  cookiePosizeCode = 'smart-animated-popup-posize';
+  cookieCode = 'flyin';
+  cookiePosizeCode = 'flyin-posize';
   cookiePosizeExpiration = 365;
   autoShowLimit = false;
   autoShowCounter = 5;
@@ -127,7 +127,7 @@ export class Skin extends Base implements Settings {
   xContentSize = false;
   savePosize = true;
 
-  constructor(core: Core, options: Settings = {}) {
+  constructor(core: Flyin, options: Settings = {}) {
     super({}, options);
     this.$core = core;
 

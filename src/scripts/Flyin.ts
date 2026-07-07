@@ -1,11 +1,11 @@
 import { Base } from './Base';
 import { Skin } from './Skin';
-import { FreeSkin } from '../skins/FreeSkin';
-import type { Options, Callbacks } from './types';
+import { FreeSkin } from './skins/FreeSkin';
+import type { Options, Callbacks } from './types/types';
 
-let smpIDSequence = 1;
+let flyinIDSequence = 1;
 
-export class Core extends Base {
+export class Flyin extends Base {
   $useCookie = true;
   $skin: Skin | null = null;
   $obj: HTMLElement | null = null;
@@ -20,7 +20,7 @@ export class Core extends Base {
   constructor(element: HTMLElement | string, options: Options = {}) {
     super({}, options);
 
-    this.$id = smpIDSequence++;
+    this.$id = flyinIDSequence++;
     this.$obj = typeof element === 'string' ? document.querySelector(element) : element;
 
     this.$skin = this._loadSkin(this.skin, this.settings);
