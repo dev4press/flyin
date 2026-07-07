@@ -57,12 +57,16 @@
       }
     }
 
-    > button {
+    .#{$flyin-prefix}-button-close {
       z-index: 200;
       margin: 0;
       padding: 0;
       position: relative;
       outline: 1px solid transparent;
+      background: none;
+      border: none;
+      cursor: pointer;
+      float: right;
     }
   }
 
@@ -80,7 +84,7 @@
 }
 
 .#{$flyin-prefix}-button-alt {
-  .#{$flyin-prefix}-wrapper > button {
+  .#{$flyin-prefix}-wrapper .#{$flyin-prefix}-button-close {
     border-radius: 50% !important;
     font-size: 16px !important;
     line-height: 16px !important;
@@ -101,6 +105,7 @@
       border-radius: $flyin-border-radius $flyin-border-radius 0 0;
       padding: 10px;
       border-bottom: 1px solid $flyin-plain-white-header-border;
+      position: relative;
 
       h5 {
         color: $flyin-plain-white-title-color;
@@ -111,17 +116,15 @@
       }
     }
 
-    > button {
+    .#{$flyin-prefix}-button-close {
       -webkit-appearance: none;
-      outline: 1px solid transparent;
-      background: none;
-      border: none;
       color: $flyin-plain-white-btn-color;
-      cursor: pointer;
-      float: right;
       font-size: 18px;
       font-weight: 900;
       line-height: 24px;
+    }
+
+    > .#{$flyin-prefix}-button-close {
       right: 10px;
       top: 10px;
     }
@@ -149,7 +152,7 @@
   }
 
   &.#{$flyin-prefix}-button-alt {
-    .#{$flyin-prefix}-wrapper > button {
+    .#{$flyin-prefix}-wrapper .#{$flyin-prefix}-button-close {
       background: $flyin-plain-white-btn-color;
       box-shadow: 1px 1px 4px $flyin-shadow-color;
       color: $flyin-white;

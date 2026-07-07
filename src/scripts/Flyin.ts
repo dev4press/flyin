@@ -1,63 +1,64 @@
-import { Base } from './Base';
 import { Skin } from './Skin';
 import { FreeSkin } from './skins/FreeSkin';
 import type { Options, Callbacks } from './types/types';
 
 let flyinIDSequence = 1;
 
-export class Flyin extends Base {
-  $useCookie = true;
-  $skin: Skin | null = null;
-  $obj: HTMLElement | null = null;
-  $overlay: HTMLElement | null = null;
-  $dialog: HTMLElement | null = null;
-  $id: number;
+export class Flyin {
+  public useCookie = true;
+  public skinInstance: Skin | null = null;
+  public element: HTMLElement | null = null;
+  public overlay: HTMLElement | null = null;
+  public dialog: HTMLElement | null = null;
+  public id: number;
 
-  skin = 'Base';
-  settings = {};
-  callbacks: Callbacks = {};
+  public skinName = 'Base';
+  public settings: Options['settings'] = {};
+  public callbacks: Callbacks = {};
 
   constructor(element: HTMLElement | string, options: Options = {}) {
-    super({}, options);
+    this.id = flyinIDSequence++;
+    this.element = typeof element === 'string' ? document.querySelector(element) : element;
 
-    this.$id = flyinIDSequence++;
-    this.$obj = typeof element === 'string' ? document.querySelector(element) : element;
+    this.skinName = options.skin || 'Base';
+    this.settings = options.settings || {};
+    this.callbacks = options.callbacks || {};
 
-    this.$skin = this._loadSkin(this.skin, this.settings);
+    this.skinInstance = this.loadSkin(this.skinName, this.settings);
   }
 
   open(): void {
-    this.$skin?.open();
+    this.skinInstance?.open();
   }
 
   close(): void {
-    this.$skin?.close();
+    this.skinInstance?.close();
   }
 
   save(): void {
-    this.$skin?._save();
+    this.skinInstance?.save();
   }
 
   get(name: string): any {
     if (name === 'cookie') {
-      name = '$cookie';
+      name = 'cookieValue';
     } else if (name === 'status') {
-      name = '$status';
+      name = 'status';
     }
 
-    return this.$skin ? (this.$skin as any)[name] : undefined;
+    return this.skinInstance ? (this.skinInstance as any)[name] : undefined;
   }
 
   mod(data: any): void {
-    this.$skin?._mod(data);
+    this.skinInstance?.mod(data);
   }
 
   move(location: any): void {
-    this.$skin?._move(location);
+    this.skinInstance?.move(location);
   }
 
   resize(size: any): void {
-    this.$skin?._resize(size);
+    this.skinInstance?.resize(size);
   }
 
   randomFromArray(input: any[]): any {
@@ -65,7 +66,7 @@ export class Flyin extends Base {
     return input[idx];
   }
 
-  _loadSkin(name: string, options: any): Skin {
+  private loadSkin(name: string, options: any): Skin {
     if (name.toLowerCase() === 'free') {
       return new FreeSkin(this, options);
     }

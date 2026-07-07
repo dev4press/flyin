@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "postbuild": "cp node_modules/js-cookie/dist/js.cookie.min.js dist/js.cookie.min.js",
     "preview": "vite preview",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write \"src/**/*.{ts,scss}\""

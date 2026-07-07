@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Data Attributes Demo</title>
+    <link rel="stylesheet" href="../dist/flyin.css">
+    <script src="../dist/js.cookie.min.js"></script>
+    <script src="../dist/flyin.umd.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .example-box { border: 1px solid #ccc; padding: 10px; margin-bottom: 20px; display: none; }
+        button { padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h3>Flyin - Data Attributes Overrides Demo</h3>
+
+    <div id="popup-1" class="example-box" data-title="Override Title from Data Attribute" data-title-tag="h2">
+        This popup should have an H2 title saying "Override Title from Data Attribute".
+    </div>
+
+    <div id="popup-2" class="example-box" data-modal="false">
+        This popup should NOT have a modal overlay (data-modal="false").
+    </div>
+
+    <button id="btn-1">Open Popup 1 (Title/TitleTag Override)</button>
+    <button id="btn-2">Open Popup 2 (Modal Override)</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const p1 = new Flyin('#popup-1', {
+                settings: {
+                    onLoad: false
+                }
+            });
+
+            const p2 = new Flyin('#popup-2', {
+                settings: {
+                    onLoad: false,
+                    modal: true // Default is true, but data-attribute should override it to false
+                }
+            });
+
+            document.getElementById('btn-1').addEventListener('click', () => p1.open());
+            document.getElementById('btn-2').addEventListener('click', () => p2.open());
+        });
+    </script>
+</body>
+</html>

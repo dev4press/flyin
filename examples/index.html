@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Modernized Popup Library</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Modernized Popup Library</p>
+</header>
+
+<main>
+    <section id="demo">
+        <h2>Live Demo</h2>
+        <p>Click the button below to see Flyin in action with a full-featured popup example.</p>
+        <div style="text-align: center; margin: 2rem 0;">
+            <button id="open-demo-popup" class="cta-button">Open Example Popup</button>
+        </div>
+
+        <div id="example-popup" data-title="Welcome to Flyin" style="display: none;">
+            <div class="popup-logo" style="text-align: center; margin-bottom: 1rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" style="width: 60px; height: 60px; fill: #003366;" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+            </div>
+            <p><strong>Hello!</strong> This is an example of the Flyin popup library. It supports many features out of the box:</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About Flyin</h2>
+        <p>Flyin is a modernized popup library for creating normal or modal popups with custom positioning, animation effects, and customized looks. It is a complete rewrite of the Smart Animated Popup library, focusing on performance, type safety, and modern web standards.</p>
+        
+        <div class="features-grid">
+            <div class="feature-item">
+                <h3>TypeScript Core</h3>
+                <p>Completely rewritten for type safety and modern standards.</p>
+            </div>
+            <div class="feature-item">
+                <h3>SCSS Styles</h3>
+                <p>Modular styles with variables and nesting for easy customization.</p>
+            </div>
+            <div class="feature-item">
+                <h3>Zero Dependencies</h3>
+                <p>Standalone version (only requires <code>js-cookie</code>).</p>
+            </div>
+            <div class="feature-item">
+                <h3>Modern Build</h3>
+                <p>Powered by Vite for fast development and small bundles.</p>
+            </div>
+            <div class="feature-item">
+                <h3>No IE Support</h3>
+                <p>Focused on modern browsers (Chrome, Firefox, Safari, Edge).</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="installation">
+        <h2>Installation</h2>
+        <p>You can install Flyin via npm:</p>
+        <pre><code>npm install @dev4press/flyin</code></pre>
+    </section>
+
+    <section id="usage">
+        <h2>How to Use</h2>
+        
+        <p><strong>1. Prepare popup content:</strong> Create a DIV with popup content and hide it using inline style:</p>
+        <pre><code>&lt;div id="my-popup" data-title="Flyin Popup" style="display: none;"&gt;
+    &lt;p&gt;Popup Content&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+
+        <p><strong>2. Load Library Files:</strong> Include the CSS and JavaScript files in your HTML:</p>
+        <pre><code>&lt;!-- Load Styles --&gt;
+&lt;link rel="stylesheet" href="dist/flyin.css"&gt;
+
+&lt;!-- Load Scripts --&gt;
+&lt;script src="dist/js.cookie.min.js"&gt;&lt;/script&gt;
+&lt;script src="dist/flyin.umd.js"&gt;&lt;/script&gt;</code></pre>
+
+        <p><strong>3. Initialize Flyin:</strong> Initialize the popup in your JavaScript:</p>
+        <pre><code>&lt;script&gt;
+    document.addEventListener('DOMContentLoaded', function() {
+        new Flyin("#my-popup", {
+            settings: {
+                effect: 'bounce',
+                style: 'flyin-style-plain-white'
+            }
+        });
+    });
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <div class="cta-links">
+        <a href="https://github.com/dev4press/flyin">GitHub Repository</a>
+        <a href="https://www.dev4press.com/">Visit dev4Press</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved.</p>
+    <p>Licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var flyin = new Flyin("#example-popup", {
+            settings: {
+                onLoad: false,
+                effect: 'fade-in-down',
+                style: 'flyin-style-plain-white',
+                modal: true,
+                footer: true,
+                footerContent: '<small>Flyin Library Example Footer</small>',
+                buttonFooter: true,
+                buttonFooterContent: 'Close Demo',
+                width: 500
+            }
+        });
+
+        document.getElementById('open-demo-popup').addEventListener('click', function() {
+            flyin.open();
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,21 +1,22 @@
 import Cookies from 'js-cookie';
-import { Base } from './Base';
 import type { Flyin } from './Flyin';
-import type { Settings, Position } from './types/types';
+import type { Settings } from './types/types';
 
-export class Skin extends Base implements Settings {
-  $skinCode = '';
-  $core: Flyin;
-  $cookie = 1;
-  $cookieUsed = false;
-  $cookiePosize: Record<string, any> = {};
-  $enabled = true;
-  $status = 'closed';
-  $statusModal = 'closed';
-  $htmlClass = '';
-  $mode = 'transition';
-  $animation: string[] = ['slit', 'slithor', 'bounce', 'roll'];
-  $effects: string[] = [
+export class Skin {
+  protected skinCode = '';
+  protected core: Flyin;
+  protected cookieValue = 1;
+  protected cookieUsed = false;
+  protected cookiePosize: Record<string, any> = {};
+  protected enabled = true;
+  protected status = 'closed';
+  protected statusModal = 'closed';
+  protected htmlClass = '';
+  protected mode = 'transition';
+  protected lastActiveElement: HTMLElement | null = null;
+  protected focusTrapListener: ((e: KeyboardEvent) => void) | null = null;
+  protected animations: string[] = ['slit', 'slithor', 'bounce', 'roll'];
+  protected effects: string[] = [
     'none',
     'fade',
     'scale',
@@ -44,7 +45,7 @@ export class Skin extends Base implements Settings {
     'rotateright',
   ];
 
-  $classes: Record<string, string> = {
+  protected classes: Record<string, string> = {
     html: 'flyin-active',
     htmlEffectPrefix: 'flyin-effect-',
     overlay: 'flyin-overlay',
@@ -67,161 +68,194 @@ export class Skin extends Base implements Settings {
     grip: 'flyin-grip',
   };
 
-  // Default Settings
-  role = 'dialog';
-  modal = true;
-  zIndex = 1000000;
-  title = true;
-  titleTag = 'h5';
-  style = 'flyin-style-plain-white';
-  containerSelector = 'body';
-  extraClass = '';
-  effect = 'random';
-  effectSpeed = 0.7;
-  onLoad = true;
-  onLoadDelay = 500;
-  onLeaveTop = false;
-  onLeaveTopOffset = 3;
-  onLeaveViewport = false;
-  closeEscape = true;
-  closeOverlay = true;
-  closeAuto = false;
-  closeAutoDelay = 0;
-  overlayActive = true;
-  overlayColor = '#ffffff';
-  overlayOpacity = 0.7;
-  overlaySpeed = 0.07;
-  angle = 0;
-  cWidth: string | number = 'auto';
-  cHeight: string | number = 'auto';
-  save: Record<string, any> = {};
-  width: string | number = '40%';
-  height: string | number = 'auto';
-  positionX: Position = 'center';
-  positionY: Position = 'center';
-  offsetX = '10px';
-  offsetY = '10px';
-  minWidth: string | null = '200px';
-  maxWidth: string | null = '95%';
-  minHeight: string | null = null;
-  maxHeight: string | null = null;
-  header = true;
-  headerContent: string | boolean = false;
-  footer = true;
-  footerContent: string | boolean = false;
-  buttonX = true;
-  buttonXContent = '&#x2716;';
-  buttonFooter = true;
-  buttonFooterContent = 'Close';
-  ariaCloseLabel = 'Close this dialog';
-  cookieCode = 'flyin';
-  cookiePosizeCode = 'flyin-posize';
-  cookiePosizeExpiration = 365;
-  autoShowLimit = false;
-  autoShowCounter = 5;
-  autoShowDelay = 7;
-  attrWrapper = '';
-  attrHeader = '';
-  attrContent = '';
-  attrFooter = '';
-  xContentSize = false;
-  savePosize = true;
+  public settings: Settings = {
+    role: 'dialog',
+    modal: true,
+    zIndex: 1000000,
+    title: true,
+    titleTag: 'h5',
+    style: 'flyin-style-plain-white',
+    containerSelector: 'body',
+    extraClass: '',
+    effect: 'random',
+    effectSpeed: 0.7,
+    onLoad: true,
+    onLoadDelay: 500,
+    onLeaveTop: false,
+    onLeaveTopOffset: 3,
+    onLeaveViewport: false,
+    closeEscape: true,
+    closeOverlay: true,
+    closeAuto: false,
+    closeAutoDelay: 0,
+    overlayActive: true,
+    overlayColor: '#ffffff',
+    overlayOpacity: 0.7,
+    overlaySpeed: 0.07,
+    angle: 0,
+    cWidth: 'auto',
+    cHeight: 'auto',
+    save: {},
+    width: '40%',
+    height: 'auto',
+    positionX: 'center',
+    positionY: 'center',
+    offsetX: '10px',
+    offsetY: '10px',
+    minWidth: '200px',
+    maxWidth: '95%',
+    minHeight: null,
+    maxHeight: null,
+    header: true,
+    headerContent: false,
+    footer: true,
+    footerContent: false,
+    buttonX: true,
+    buttonXContent: '&#x2716;',
+    buttonFooter: true,
+    buttonFooterContent: 'Close',
+    ariaCloseLabel: 'Close this dialog',
+    cookieCode: 'flyin',
+    cookiePosizeCode: 'flyin-posize',
+    cookiePosizeExpiration: 365,
+    autoShowLimit: false,
+    autoShowCounter: 5,
+    autoShowDelay: 7,
+    attrWrapper: '',
+    attrHeader: '',
+    attrContent: '',
+    attrFooter: '',
+    xContentSize: false,
+    savePosize: true,
+  };
 
   constructor(core: Flyin, options: Settings = {}) {
-    super({}, options);
-    this.$core = core;
+    this.core = core;
+    this.setOptions(options);
 
-    if (this.effect === 'random') {
-      this.effect = this.$core.randomFromArray(this.$effects);
+    if (this.settings.effect === 'random') {
+      this.settings.effect = this.core.randomFromArray(this.effects);
     }
 
-    this._setMode();
-    this._cookieInit();
-    this._prepareDialog();
+    this.setMode();
+    this.cookieInit();
+    this.prepareDialog();
 
-    this.callback(this.$core.callbacks.prepared, this.$core);
+    // Re-apply explicit options and data attributes to ensure they take precedence over cookie
+    this.setOptions(options);
+    this.processDataAttributes();
 
-    if (this.overlayActive) {
+    this.callback(this.core.callbacks.prepared, this.core);
+
+    if (this.settings.overlayActive) {
       this.createOverlay();
-      if (this.closeOverlay) {
-        this._overlayClick();
+      if (this.settings.closeOverlay) {
+        this.overlayClick();
       }
     } else {
       this.createModalay();
     }
 
-    if (this.closeEscape) {
-      this._escapeClick();
+    if (this.settings.closeEscape) {
+      this.escapeClick();
     }
 
     this.createDialog();
 
-    if (this.onLoad) {
-      this._onLoad();
+    if (this.settings.onLoad) {
+      this.onLoad();
     }
 
-    if (this.onLeaveTop) {
-      this._onLeaveTop();
+    if (this.settings.onLeaveTop) {
+      this.onLeaveTop();
     }
 
-    if (this.onLeaveViewport) {
-      this._onLeaveViewport();
+    if (this.settings.onLeaveViewport) {
+      this.onLeaveViewport();
     }
 
-    window.addEventListener('resize', () => this._calculatePosition(false));
-    window.addEventListener('orientationchange', () => this._calculatePosition(false));
+    window.addEventListener('resize', () => this.calculatePosition(false));
+    window.addEventListener('orientationchange', () => this.calculatePosition(false));
   }
 
   css(index: string): string {
-    return this.$classes[index];
+    return this.classes[index];
   }
 
   w(): HTMLElement | null {
     return document.querySelector(`.${this.css('wrapper')}`);
   }
 
-  _setMode(): void {
-    this.$mode = this.$animation.includes(this.effect) ? 'animation' : 'transition';
+  protected setMode(): void {
+    this.mode = this.animations.includes(this.settings.effect || '') ? 'animation' : 'transition';
   }
 
-  _cookieInit(): void {
-    if (this.$core.$useCookie && this.cookieCode) {
-      const cookie = Cookies.get(this.cookieCode);
+  protected cookieInit(): void {
+    if (this.core.useCookie && this.settings.cookieCode) {
+      const cookie = Cookies.get(this.settings.cookieCode);
       if (cookie !== undefined) {
-        this.$cookie = parseInt(cookie, 10);
+        this.cookieValue = parseInt(cookie, 10);
       }
     }
   }
 
-  protected _prepareDialog(): void {
-    this._loadPosizeCookie();
+  protected prepareDialog(): void {
+    this.loadPosizeCookie();
+  }
+
+  protected processDataAttributes(): void {
+    if (!this.core.element) return;
+
+    const el = this.core.element;
+
+    if (el.dataset.title !== undefined) {
+      this.settings.headerContent = el.dataset.title;
+      this.settings.title = true;
+    }
+
+    if (el.dataset.titleTag !== undefined) {
+      this.settings.titleTag = el.dataset.titleTag;
+    }
+
+    if (el.dataset.modal !== undefined) {
+      this.settings.modal = el.dataset.modal !== 'false' && el.dataset.modal !== '0';
+    }
+
+    if (el.dataset.onLoad !== undefined) {
+      this.settings.onLoad = el.dataset.onLoad !== 'false' && el.dataset.onLoad !== '0';
+    }
+
+    if (el.dataset.onLoadDelay !== undefined) {
+      this.settings.onLoadDelay = parseInt(el.dataset.onLoadDelay, 10);
+    }
   }
 
   createOverlay(): void {
     const overlay = document.createElement('div');
-    overlay.className = `${this.css('overlay')} ${this.css('overlayIDPrefix')}${this.$core.$id}`;
-    overlay.style.zIndex = (this.zIndex - 1).toString();
-    overlay.style.backgroundColor = this.overlayColor;
-    overlay.style.transition = `opacity ${this.overlaySpeed}s`;
+    overlay.className = `${this.css('overlay')} ${this.css('overlayIDPrefix')}${this.core.id}`;
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.style.zIndex = ((this.settings.zIndex || 1000000) - 1).toString();
+    overlay.style.backgroundColor = this.settings.overlayColor || '#ffffff';
+    overlay.style.transition = `opacity ${this.settings.overlaySpeed}s`;
 
-    const container = document.querySelector(this.containerSelector) || document.body;
+    const container = document.querySelector(this.settings.containerSelector || 'body') || document.body;
     container.appendChild(overlay);
-    this.$core.$overlay = overlay;
+    this.core.overlay = overlay;
   }
 
   createModalay(): void {
     // Logic for modalay if needed (placeholder)
   }
 
-  _overlayClick(): void {
-    if (this.$core.$overlay) {
-      this.$core.$overlay.addEventListener('click', () => this.close());
+  protected overlayClick(): void {
+    if (this.core.overlay) {
+      this.core.overlay.addEventListener('click', () => this.close());
     }
   }
 
-  _escapeClick(): void {
+  protected escapeClick(): void {
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && this.$status === 'opened') {
+      if (e.key === 'Escape' && this.status === 'opened') {
         this.close();
       }
     });
@@ -229,89 +263,118 @@ export class Skin extends Base implements Settings {
 
   createDialog(): void {
     const dialog = document.createElement('div');
-    dialog.className = `${this.css('dialog')} ${this.css('dialogIDPrefix')}${this.$core.$id} ${this.css('dialogEffectPrefix')}${this.effect} ${this.style} ${this.extraClass}`;
-    dialog.style.zIndex = this.zIndex.toString();
+    dialog.className = `${this.css('dialog')} ${this.css('dialogIDPrefix')}${this.core.id} ${this.css('dialogEffectPrefix')}${this.settings.effect} ${this.settings.style} ${this.settings.extraClass}`;
+    dialog.style.zIndex = (this.settings.zIndex || 1000000).toString();
 
-    if (this.width) dialog.style.width = this._formatUnit(this.width);
-    if (this.height) dialog.style.height = this._formatUnit(this.height);
-    if (this.minWidth) dialog.style.minWidth = this._formatUnit(this.minWidth);
-    if (this.maxWidth) dialog.style.maxWidth = this._formatUnit(this.maxWidth);
-    if (this.minHeight) dialog.style.minHeight = this._formatUnit(this.minHeight);
-    if (this.maxHeight) dialog.style.maxHeight = this._formatUnit(this.maxHeight);
+    dialog.setAttribute('role', this.settings.role || 'dialog');
+    if (this.settings.modal) {
+      dialog.setAttribute('aria-modal', 'true');
+    }
+
+    if (this.settings.width) dialog.style.width = this.formatUnit(this.settings.width);
+    if (this.settings.height) dialog.style.height = this.formatUnit(this.settings.height);
+    if (this.settings.minWidth) dialog.style.minWidth = this.formatUnit(this.settings.minWidth);
+    if (this.settings.maxWidth) dialog.style.maxWidth = this.formatUnit(this.settings.maxWidth);
+    if (this.settings.minHeight) dialog.style.minHeight = this.formatUnit(this.settings.minHeight);
+    if (this.settings.maxHeight) dialog.style.maxHeight = this.formatUnit(this.settings.maxHeight);
 
     const wrapper = document.createElement('div');
     wrapper.className = this.css('wrapper');
-    if (this.attrWrapper) this._setAttributes(wrapper, this.attrWrapper);
-
-    // Header
-    if (this.header) {
-      const header = document.createElement('div');
-      header.className = this.css('header');
-      if (this.attrHeader) this._setAttributes(header, this.attrHeader);
-
-      if (this.title) {
-        const title = document.createElement(this.titleTag);
-        title.id = `${this.css('titleIDPrefix')}${this.$core.$id}`;
-        title.innerHTML = typeof this.headerContent === 'string' ? this.headerContent : '';
-        header.appendChild(title);
-      }
-      wrapper.appendChild(header);
-    }
+    if (this.settings.attrWrapper) this.setAttributes(wrapper, this.settings.attrWrapper);
 
     // Close button X
-    if (this.buttonX) {
-      const btnX = document.createElement('button');
+    let btnX: HTMLButtonElement | null = null;
+    if (this.settings.buttonX) {
+      btnX = document.createElement('button');
       btnX.type = 'button';
       btnX.className = this.css('closeButton');
-      btnX.innerHTML = this.buttonXContent;
-      btnX.setAttribute('aria-label', this.ariaCloseLabel);
-      btnX.addEventListener('click', () => this.close());
+      btnX.innerHTML = this.settings.buttonXContent || '&#x2716;';
+      btnX.setAttribute('aria-label', this.settings.ariaCloseLabel || 'Close this dialog');
+      btnX.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.close();
+      });
+      btnX.addEventListener('mousedown', (e) => e.stopPropagation());
+    }
+
+    // Header
+    if (this.settings.header) {
+      const header = document.createElement('div');
+      header.className = this.css('header');
+      if (this.settings.attrHeader) this.setAttributes(header, this.settings.attrHeader);
+
+      if (btnX) {
+        header.appendChild(btnX);
+      }
+
+      if (this.settings.title) {
+        const titleElement = document.createElement(this.settings.titleTag || 'h5');
+        titleElement.id = `${this.css('titleIDPrefix')}${this.core.id}`;
+        let titleText = '';
+        if (typeof this.settings.headerContent === 'string') {
+          titleText = this.settings.headerContent;
+        } else if (typeof this.settings.title === 'string') {
+          titleText = this.settings.title;
+        }
+        titleElement.innerHTML = titleText;
+        header.appendChild(titleElement);
+        dialog.setAttribute('aria-labelledby', titleElement.id);
+      }
+      wrapper.appendChild(header);
+    } else if (btnX) {
       wrapper.appendChild(btnX);
     }
 
     // Content
     const content = document.createElement('div');
     content.className = this.css('content');
-    if (this.attrContent) this._setAttributes(content, this.attrContent);
-    content.innerHTML = this.$core.$obj ? this.$core.$obj.innerHTML : '';
+    if (this.settings.attrContent) this.setAttributes(content, this.settings.attrContent);
+    content.innerHTML = this.core.element ? this.core.element.innerHTML : '';
     wrapper.appendChild(content);
 
     // Footer
-    if (this.footer) {
+    if (this.settings.footer) {
       const footer = document.createElement('div');
       footer.className = this.css('footer');
-      if (this.attrFooter) this._setAttributes(footer, this.attrFooter);
+      if (this.settings.attrFooter) this.setAttributes(footer, this.settings.attrFooter);
 
-      if (this.buttonFooter) {
+      if (this.settings.buttonFooter) {
         const btnFooter = document.createElement('button');
         btnFooter.type = 'button';
-        btnFooter.innerHTML = this.buttonFooterContent;
+        btnFooter.innerHTML = this.settings.buttonFooterContent || 'Close';
+        btnFooter.setAttribute('aria-label', this.settings.buttonFooterContent || 'Close');
         btnFooter.addEventListener('click', () => this.close());
         footer.appendChild(btnFooter);
       }
 
-      if (typeof this.footerContent === 'string') {
+      if (typeof this.settings.footerContent === 'string') {
         const footerText = document.createElement('div');
-        footerText.innerHTML = this.footerContent;
+        footerText.innerHTML = this.settings.footerContent;
         footer.appendChild(footerText);
       }
       wrapper.appendChild(footer);
     }
 
     dialog.appendChild(wrapper);
-    const container = document.querySelector(this.containerSelector) || document.body;
+    const container = document.querySelector(this.settings.containerSelector || 'body') || document.body;
     container.appendChild(dialog);
-    this.$core.$dialog = dialog;
+    this.core.dialog = dialog;
 
-    this._calculatePosition(true);
-    this.callback(this.$core.callbacks.ready, this.$core);
+    this.calculatePosition(true);
+    this.callback(this.core.callbacks.ready, this.core);
   }
 
-  _formatUnit(value: string | number): string {
+  protected formatUnit(value: string | number): string {
     return typeof value === 'number' ? `${value}px` : value;
   }
 
-  _setAttributes(el: HTMLElement, attrStr: string): void {
+  protected getFocusableElements(): HTMLElement[] {
+    if (!this.core.dialog) return [];
+    const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    return Array.from(this.core.dialog.querySelectorAll(focusableSelectors)) as HTMLElement[];
+  }
+
+  protected setAttributes(el: HTMLElement, attrStr: string): void {
     // Simple attribute parser
     const matches = attrStr.matchAll(/(\w+)="([^"]*)"/g);
     for (const match of matches) {
@@ -319,29 +382,29 @@ export class Skin extends Base implements Settings {
     }
   }
 
-  _onLoad(): void {
+  protected onLoad(): void {
     setTimeout(() => {
-      if (this.$enabled) this.open();
-    }, this.onLoadDelay);
+      if (this.enabled) this.open();
+    }, this.settings.onLoadDelay);
   }
 
-  _onLeaveTop(): void {
+  protected onLeaveTop(): void {
     const handleLeave = (e: MouseEvent) => {
-      if (e.clientY <= this.onLeaveTopOffset && this.$status === 'closed') {
+      if (e.clientY <= (this.settings.onLeaveTopOffset || 3) && this.status === 'closed') {
         this.open();
       }
     };
     document.addEventListener('mouseleave', handleLeave);
   }
 
-  _onLeaveViewport(): void {
+  protected onLeaveViewport(): void {
     // TODO: Implement intersection observer or similar
   }
 
-  _calculatePosition(_init = false): void {
-    if (!this.$core.$dialog) return;
+  protected calculatePosition(_init = false): void {
+    if (!this.core.dialog) return;
 
-    const dialog = this.$core.$dialog;
+    const dialog = this.core.dialog;
     const rect = dialog.getBoundingClientRect();
     const winW = window.innerWidth;
     const winH = window.innerHeight;
@@ -349,118 +412,171 @@ export class Skin extends Base implements Settings {
     let x: number;
     let y: number;
 
-    if (this.positionX === 'center') {
+    if (this.settings.positionX === 'center') {
       x = (winW - rect.width) / 2;
-    } else if (this.positionX === 'left') {
+    } else if (this.settings.positionX === 'left') {
       x = 0;
-    } else if (this.positionX === 'right') {
+    } else if (this.settings.positionX === 'right') {
       x = winW - rect.width;
     } else {
-      x = parseInt(this.positionX as string, 10);
+      x = parseInt(this.settings.positionX as string, 10);
     }
 
-    if (this.positionY === 'center') {
+    if (this.settings.positionY === 'center') {
       y = (winH - rect.height) / 2;
-    } else if (this.positionY === 'top') {
+    } else if (this.settings.positionY === 'top') {
       y = 0;
-    } else if (this.positionY === 'bottom') {
+    } else if (this.settings.positionY === 'bottom') {
       y = winH - rect.height;
     } else {
-      y = parseInt(this.positionY as string, 10);
+      y = parseInt(this.settings.positionY as string, 10);
     }
 
     dialog.style.left = `${x}px`;
     dialog.style.top = `${y}px`;
   }
 
-  open(): void {
-    this._open();
+  setOptions(options: Settings): void {
+    this.settings = { ...this.settings, ...options };
   }
 
-  _open(): void {
-    if (this.$status === 'opened') return;
+  callback(method: ((...args: any[]) => void) | any, ...args: any[]): void {
+    if (typeof method === 'function') {
+      method.apply(this, args);
+    }
+  }
 
-    this.callback(this.$core.callbacks.beforeOpen, this.$core);
+  open(): void {
+    if (this.status === 'opened') return;
 
-    this.$status = 'opened';
-    if (this.modal) document.documentElement.classList.add(this.css('html'));
+    this.callback(this.core.callbacks.beforeOpen, this.core);
 
-    if (this.$core.$overlay) {
-      this.$core.$overlay.classList.add(this.css('overlayActive'));
-      this.$core.$overlay.style.opacity = this.overlayOpacity.toString();
+    this.lastActiveElement = document.activeElement as HTMLElement;
+
+    this.status = 'opened';
+    if (this.settings.modal) document.documentElement.classList.add(this.css('html'));
+
+    if (this.core.overlay) {
+      this.core.overlay.classList.add(this.css('overlayActive'));
+      this.core.overlay.style.opacity = (this.settings.overlayOpacity || 0.7).toString();
     }
 
-    if (this.$core.$dialog) {
-      this.$core.$dialog.classList.remove(this.css('dialogInactive'));
-      this.$core.$dialog.classList.add(this.css('dialogActive'));
+    if (this.core.dialog) {
+      this.core.dialog.classList.remove(this.css('dialogInactive'));
+      this.core.dialog.classList.add(this.css('dialogActive'));
+
+      const focusable = this.getFocusableElements();
+      if (focusable.length > 0) {
+        focusable[0].focus();
+      } else {
+        this.core.dialog.setAttribute('tabindex', '-1');
+        this.core.dialog.focus();
+      }
+
+      if (this.settings.modal) {
+        this.focusTrapListener = (e: KeyboardEvent) => {
+          if (e.key === 'Tab') {
+            const focusableElements = this.getFocusableElements();
+            if (focusableElements.length === 0) {
+              e.preventDefault();
+              return;
+            }
+            const first = focusableElements[0];
+            const last = focusableElements[focusableElements.length - 1];
+
+            if (e.shiftKey) {
+              if (document.activeElement === first) {
+                last.focus();
+                e.preventDefault();
+              }
+            } else {
+              if (document.activeElement === last) {
+                first.focus();
+                e.preventDefault();
+              }
+            }
+          }
+        };
+        window.addEventListener('keydown', this.focusTrapListener);
+      }
     }
 
     setTimeout(() => {
-      this.callback(this.$core.callbacks.afterOpen, this.$core);
-    }, this.effectSpeed * 1000);
+      this.callback(this.core.callbacks.afterOpen, this.core);
+    }, (this.settings.effectSpeed || 0.7) * 1000);
   }
 
   close(): void {
-    this._close();
-  }
+    if (this.status === 'closed') return;
 
-  _close(): void {
-    if (this.$status === 'closed') return;
+    this.callback(this.core.callbacks.beforeClose, this.core);
 
-    this.callback(this.$core.callbacks.beforeClose, this.$core);
+    this.status = 'closed';
 
-    this.$status = 'closed';
+    if (this.focusTrapListener) {
+      window.removeEventListener('keydown', this.focusTrapListener);
+      this.focusTrapListener = null;
+    }
 
-    if (this.$core.$overlay) {
-      this.$core.$overlay.style.opacity = '0';
+    if (this.core.overlay) {
+      this.core.overlay.style.opacity = '0';
       setTimeout(() => {
-        if (this.$status === 'closed') {
-          this.$core.$overlay?.classList.remove(this.css('overlayActive'));
+        if (this.status === 'closed') {
+          this.core.overlay?.classList.remove(this.css('overlayActive'));
         }
-      }, this.overlaySpeed * 1000);
+      }, (this.settings.overlaySpeed || 0.07) * 1000);
     }
 
-    if (this.$core.$dialog) {
-      this.$core.$dialog.classList.remove(this.css('dialogActive'));
-      this.$core.$dialog.classList.add(this.css('dialogInactive'));
+    if (this.core.dialog) {
+      this.core.dialog.classList.remove(this.css('dialogActive'));
+      this.core.dialog.classList.add(this.css('dialogInactive'));
     }
 
-    if (this.modal) document.documentElement.classList.remove(this.css('html'));
+    if (this.settings.modal) document.documentElement.classList.remove(this.css('html'));
 
     setTimeout(() => {
-      this.callback(this.$core.callbacks.afterClose, this.$core);
-      this._finishDialog();
-    }, this.effectSpeed * 1000);
+      this.callback(this.core.callbacks.afterClose, this.core);
+      if (this.lastActiveElement) {
+        this.lastActiveElement.focus();
+      }
+      this.finishDialog();
+    }, (this.settings.effectSpeed || 0.7) * 1000);
   }
 
-  public _save(): void {
-    this._savePosizeCookie();
+  public save(): void {
+    if (this.settings.savePosize && this.core.useCookie) {
+      const poSize = this.genPosizeCookie();
+      Cookies.set(this.settings.cookiePosizeCode || 'flyin-posize', JSON.stringify(poSize), {
+        expires: this.settings.cookiePosizeExpiration,
+        path: '/',
+      });
+    }
   }
 
-  public _mod(_data: any): void {
+  public mod(_data: any): void {
     // Implementation for mod if needed
   }
 
-  public _move(_location: any): void {
+  public move(_location: any): void {
     // Implementation for move
   }
 
-  public _resize(_size: any): void {
+  public resize(_size: any): void {
     // Implementation for resize
   }
 
-  _finishDialog(): void {
-    this._savePosizeCookie();
+  protected finishDialog(): void {
+    this.save();
   }
 
-  _loadPosizeCookie(): void {
-    if (this.savePosize && this.$core.$useCookie) {
-      const cookie = Cookies.get(this.cookiePosizeCode);
+  protected loadPosizeCookie(): void {
+    if (this.settings.savePosize && this.core.useCookie) {
+      const cookie = Cookies.get(this.settings.cookiePosizeCode || 'flyin-posize');
       if (cookie !== undefined) {
         try {
-          this.$cookiePosize = JSON.parse(cookie);
-          this.$cookieUsed = true;
-          this._applyPosizeCookie();
+          this.cookiePosize = JSON.parse(cookie);
+          this.cookieUsed = true;
+          this.applyPosizeCookie();
         } catch {
           console.error('Failed to parse posize cookie');
         }
@@ -468,34 +584,23 @@ export class Skin extends Base implements Settings {
     }
   }
 
-  _applyPosizeCookie(): void {
-    if (this.$cookieUsed) {
-      Object.assign(this, this.$cookiePosize);
+  protected applyPosizeCookie(): void {
+    if (this.cookieUsed) {
+      Object.assign(this.settings, this.cookiePosize);
     }
   }
 
-  protected _savePosizeCookie(): void {
-    if (this.savePosize && this.$core.$useCookie) {
-      const poSize = this._genPosizeCookie();
-      Cookies.set(this.cookiePosizeCode, JSON.stringify(poSize), {
-        expires: this.cookiePosizeExpiration,
-        path: '/',
-      });
-    }
-  }
 
-  _genPosizeCookie(): Record<string, any> {
+  protected genPosizeCookie(): Record<string, any> {
     return {
-      positionX: this.positionX,
-      positionY: this.positionY,
-      offsetX: this.offsetX,
-      offsetY: this.offsetY,
-      width: this.width,
-      height: this.height,
-      modal: this.modal,
-      onLoad: this.onLoad,
-      onLoadDelay: this.onLoadDelay,
-      save: this.save,
+      positionX: this.settings.positionX,
+      positionY: this.settings.positionY,
+      offsetX: this.settings.offsetX,
+      offsetY: this.settings.offsetY,
+      width: this.settings.width,
+      height: this.settings.height,
+      modal: this.settings.modal,
+      save: this.settings.save,
     };
   }
 }

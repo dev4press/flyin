@@ -4,7 +4,7 @@ export interface Settings {
   role?: string;
   modal?: boolean;
   zIndex?: number;
-  title?: boolean;
+  title?: boolean | string;
   titleTag?: string;
   style?: string;
   containerSelector?: string;
@@ -59,6 +59,10 @@ export interface Settings {
   attrFooter?: string;
   xContentSize?: boolean;
   savePosize?: boolean;
+  showGrip?: boolean;
+  sizeMinWidth?: number;
+  sizeMinHeight?: number;
+  resizeMargin?: number;
 }
 
 export interface Callbacks {

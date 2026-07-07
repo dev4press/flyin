@@ -4,12 +4,7 @@ import type { Flyin } from '../Flyin';
 import type { Settings } from '../types/types';
 
 export class FreeSkin extends Skin {
-  $skinCode = 'free';
-
-  showGrip = false;
-  sizeMinWidth = 90;
-  sizeMinHeight = 60;
-  resizeMargin = 5;
+  protected override skinCode = 'free';
 
   private moverState = {
     dr: null as HTMLElement | null,
@@ -32,15 +27,20 @@ export class FreeSkin extends Skin {
 
   constructor(core: Flyin, options: Settings = {}) {
     super(core, options);
+    // Initialize FreeSkin defaults if not provided in options
+    this.settings.showGrip = options.showGrip ?? false;
+    this.settings.sizeMinWidth = options.sizeMinWidth ?? 90;
+    this.settings.sizeMinHeight = options.sizeMinHeight ?? 60;
+    this.settings.resizeMargin = options.resizeMargin ?? 5;
   }
 
-  protected override _prepareDialog(): void {
-    if (this.savePosize) {
-      const cookie = Cookies.get(this.cookiePosizeCode);
+  protected override prepareDialog(): void {
+    if (this.settings.savePosize) {
+      const cookie = Cookies.get(this.settings.cookiePosizeCode || 'flyin-posize');
       if (cookie !== undefined) {
         try {
           const data = JSON.parse(cookie);
-          this.$cookiePosize = {
+          this.cookiePosize = {
             left: 0,
             top: 0,
             width: 0,
@@ -49,32 +49,32 @@ export class FreeSkin extends Skin {
             cHeight: 0,
             ...data,
           };
-          this.$cookieUsed = true;
+          this.cookieUsed = true;
         } catch {
           console.error('Failed to parse FreeSkin posize cookie');
         }
       }
     }
 
-    if (this.$cookieUsed) {
-      if (this.$cookiePosize.cHeight === 0) {
-        this.$cookiePosize.cHeight = this.$cookiePosize.height;
+    if (this.cookieUsed) {
+      if (this.cookiePosize.cHeight === 0) {
+        this.cookiePosize.cHeight = this.cookiePosize.height;
       }
 
-      this.positionX = this.$cookiePosize.left;
-      this.positionY = this.$cookiePosize.top;
-      this.width = `${this.$cookiePosize.width}px`;
-      this.cHeight = `${this.$cookiePosize.cHeight}px`;
+      this.settings.positionX = this.cookiePosize.left;
+      this.settings.positionY = this.cookiePosize.top;
+      this.settings.width = `${this.cookiePosize.width}px`;
+      this.settings.cHeight = `${this.cookiePosize.cHeight}px`;
 
-      this.height = 'auto';
-      this.cWidth = 'auto';
+      this.settings.height = 'auto';
+      this.settings.cWidth = 'auto';
 
-      if (window.innerWidth < (this.positionX as number) + this.$cookiePosize.width) {
-        this.positionX = window.innerWidth - this.$cookiePosize.width;
+      if (window.innerWidth < (this.settings.positionX as number) + this.cookiePosize.width) {
+        this.settings.positionX = window.innerWidth - this.cookiePosize.width;
       }
 
-      if (window.innerHeight < (this.positionY as number) + this.$cookiePosize.height) {
-        this.positionY = window.innerHeight - this.$cookiePosize.height;
+      if (window.innerHeight < (this.settings.positionY as number) + this.cookiePosize.height) {
+        this.settings.positionY = window.innerHeight - this.cookiePosize.height;
       }
     }
   }
@@ -82,42 +82,43 @@ export class FreeSkin extends Skin {
   public override createDialog(): void {
     super.createDialog();
 
-    if (this.showGrip) {
+    if (this.settings.showGrip) {
       const grip = document.createElement('div');
       grip.className = this.css('grip');
-      this.$core.$dialog?.querySelector(`.${this.css('footer')}`)?.appendChild(grip);
+      grip.setAttribute('aria-hidden', 'true');
+      this.core.dialog?.querySelector(`.${this.css('footer')}`)?.appendChild(grip);
     }
 
-    this._setupMover();
+    this.setupMover();
   }
 
-  private _setupMover(): void {
-    const wrapper = this.$core.$dialog?.querySelector(`.${this.css('wrapper')}`) as HTMLElement;
-    const header = this.$core.$dialog?.querySelector(`.${this.css('header')}`) as HTMLElement;
-    const grip = this.$core.$dialog?.querySelector(`.${this.css('grip')}`) as HTMLElement;
+  private setupMover(): void {
+    const wrapper = this.core.dialog?.querySelector(`.${this.css('wrapper')}`) as HTMLElement;
+    const header = this.core.dialog?.querySelector(`.${this.css('header')}`) as HTMLElement;
+    const grip = this.core.dialog?.querySelector(`.${this.css('grip')}`) as HTMLElement;
 
     if (grip) {
-      grip.addEventListener('mousedown', (e) => this._mouseDownWrapper(e));
-      grip.addEventListener('touchstart', (e) => this._mouseDownWrapper(e), { passive: false });
+      grip.addEventListener('mousedown', (e) => this.mouseDownWrapper(e));
+      grip.addEventListener('touchstart', (e) => this.mouseDownWrapper(e), { passive: false });
     }
 
     if (wrapper) {
-      wrapper.addEventListener('mousedown', (e) => this._mouseDownWrapper(e));
-      wrapper.addEventListener('touchstart', (e) => this._mouseDownWrapper(e), { passive: false });
+      wrapper.addEventListener('mousedown', (e) => this.mouseDownWrapper(e));
+      wrapper.addEventListener('touchstart', (e) => this.mouseDownWrapper(e), { passive: false });
     }
 
     if (header) {
-      header.addEventListener('mousedown', (e) => this._mouseDown(e));
-      header.addEventListener('touchstart', (e) => this._mouseDown(e), { passive: false });
+      header.addEventListener('mousedown', (e) => this.mouseDown(e));
+      header.addEventListener('touchstart', (e) => this.mouseDown(e), { passive: false });
     }
 
-    document.addEventListener('mousemove', (e) => this._mouseMove(e));
-    document.addEventListener('mouseup', (e) => this._mouseUp(e));
-    document.addEventListener('touchmove', (e) => this._mouseMove(e), { passive: false });
-    document.addEventListener('touchend', (e) => this._touchEnd(e));
+    document.addEventListener('mousemove', (e) => this.mouseMove(e));
+    document.addEventListener('mouseup', (e) => this.mouseUp(e));
+    document.addEventListener('touchmove', (e) => this.mouseMove(e), { passive: false });
+    document.addEventListener('touchend', (e) => this.touchEnd(e));
   }
 
-  private _mousePos(e: MouseEvent | TouchEvent) {
+  private mousePos(e: MouseEvent | TouchEvent) {
     if ('clientX' in e) {
       return { pageX: e.clientX, pageY: e.clientY, touch: false };
     } else if (e.touches && e.touches.length > 0) {
@@ -126,9 +127,9 @@ export class FreeSkin extends Skin {
     return null;
   }
 
-  private _mouseDownWrapper(e: MouseEvent | TouchEvent): void {
+  private mouseDownWrapper(e: MouseEvent | TouchEvent): void {
     if (this.moverState.rm === '') return;
-    const pos = this._mousePos(e);
+    const pos = this.mousePos(e);
     if (!pos) return;
 
     this.moverState.resizing = true;
@@ -136,13 +137,13 @@ export class FreeSkin extends Skin {
     this.moverState.rmY = pos.pageY;
   }
 
-  private _mouseDown(e: MouseEvent | TouchEvent): void {
+  private mouseDown(e: MouseEvent | TouchEvent): void {
     if (this.moverState.rm !== '') return;
-    const pos = this._mousePos(e);
+    const pos = this.mousePos(e);
     if (!pos) return;
 
     this.moverState.moving = true;
-    const dialog = this.$core.$dialog;
+    const dialog = this.core.dialog;
     if (!dialog) return;
 
     dialog.classList.add(this.css('drag'));
@@ -159,8 +160,8 @@ export class FreeSkin extends Skin {
     this.moverState.posY = rect.top + this.moverState.height - pos.pageY;
   }
 
-  private _mouseMove(e: MouseEvent | TouchEvent): void {
-    const pos = this._mousePos(e);
+  private mouseMove(e: MouseEvent | TouchEvent): void {
+    const pos = this.mousePos(e);
     if (!pos) return;
 
     if (this.moverState.dr) {
@@ -175,12 +176,12 @@ export class FreeSkin extends Skin {
       this.moverState.dr.style.left = `${left}px`;
       this.moverState.dr.style.top = `${top}px`;
 
-      this.positionX = left;
-      this.positionY = top;
+      this.settings.positionX = left;
+      this.settings.positionY = top;
     }
 
-    if (this.$status === 'opened') {
-      const dialog = this.$core.$dialog;
+    if (this.status === 'opened') {
+      const dialog = this.core.dialog;
       if (!dialog) return;
 
       const rect = dialog.getBoundingClientRect();
@@ -196,7 +197,7 @@ export class FreeSkin extends Skin {
 
         let inGrip = false;
         const grip = dialog.querySelector(`.${this.css('grip')}`) as HTMLElement;
-        if (this.showGrip && grip) {
+        if (this.settings.showGrip && grip) {
           const gRect = grip.getBoundingClientRect();
           if (
             pos.pageY >= gRect.top - mod &&
@@ -212,19 +213,19 @@ export class FreeSkin extends Skin {
         }
 
         if (!inGrip) {
-          if (pos.pageY >= rect.top && pos.pageY < rect.top + this.resizeMargin) {
+          if (pos.pageY >= rect.top && pos.pageY < rect.top + (this.settings.resizeMargin || 5)) {
             this.moverState.resizeTop = true;
             this.moverState.rm += 'n';
           }
-          if (pos.pageY <= rect.bottom && pos.pageY > rect.bottom - this.resizeMargin) {
+          if (pos.pageY <= rect.bottom && pos.pageY > rect.bottom - (this.settings.resizeMargin || 5)) {
             this.moverState.resizeBottom = true;
             this.moverState.rm += 's';
           }
-          if (pos.pageX >= rect.left && pos.pageX < rect.left + this.resizeMargin) {
+          if (pos.pageX >= rect.left && pos.pageX < rect.left + (this.settings.resizeMargin || 5)) {
             this.moverState.resizeLeft = true;
             this.moverState.rm += 'w';
           }
-          if (pos.pageX <= rect.right && pos.pageX > rect.right - this.resizeMargin) {
+          if (pos.pageX <= rect.right && pos.pageX > rect.right - (this.settings.resizeMargin || 5)) {
             this.moverState.resizeRight = true;
             this.moverState.rm += 'e';
           }
@@ -269,13 +270,13 @@ export class FreeSkin extends Skin {
 
         if (relY !== 0) {
           if (this.moverState.resizeTop) {
-            if (cRect.height - relY > this.sizeMinHeight) {
+            if (cRect.height - relY > (this.settings.sizeMinHeight || 60)) {
               content.style.height = `${cRect.height - relY}px`;
               dialog.style.top = `${dRect.top + relY}px`;
             }
           }
           if (this.moverState.resizeBottom) {
-            if (cRect.height + relY > this.sizeMinHeight) {
+            if (cRect.height + relY > (this.settings.sizeMinHeight || 60)) {
               content.style.height = `${cRect.height + relY}px`;
             }
           }
@@ -283,30 +284,30 @@ export class FreeSkin extends Skin {
 
         if (relX !== 0) {
           if (this.moverState.resizeLeft) {
-            if (cRect.width - relX > this.sizeMinWidth) {
+            if (cRect.width - relX > (this.settings.sizeMinWidth || 90)) {
               dialog.style.width = `${dRect.width - relX}px`;
               dialog.style.left = `${dRect.left + relX}px`;
             }
           }
           if (this.moverState.resizeRight) {
-            if (cRect.width + relX > this.sizeMinWidth) {
+            if (cRect.width + relX > (this.settings.sizeMinWidth || 90)) {
               dialog.style.width = `${dRect.width + relX}px`;
             }
           }
         }
 
         if (relX !== 0 || relY !== 0) {
-          this._savePosizeCookie();
+          this.save();
         }
       }
     }
   }
 
-  private _mouseUp(_e?: MouseEvent | TouchEvent): void {
+  private mouseUp(_e?: MouseEvent | TouchEvent): void {
     if (this.moverState.resizing) {
       this.moverState.rm = '';
       this.moverState.resizing = false;
-      const wrapper = this.$core.$dialog?.querySelector(`.${this.css('wrapper')}`) as HTMLElement;
+      const wrapper = this.core.dialog?.querySelector(`.${this.css('wrapper')}`) as HTMLElement;
       if (wrapper) wrapper.style.cursor = '';
     }
 
@@ -314,38 +315,31 @@ export class FreeSkin extends Skin {
       this.moverState.moving = false;
       this.moverState.dr.classList.remove(this.css('drag'));
       this.moverState.dr = null;
-      this._savePosizeCookie();
+      this.save();
     }
   }
 
-  private _touchEnd(e: TouchEvent): void {
+  private touchEnd(e: TouchEvent): void {
     if (e.touches.length === 0) {
-      this._mouseUp(e);
+      this.mouseUp(e);
     }
   }
 
-  protected override _savePosizeCookie(): void {
-    if (this.savePosize && this.$core.$useCookie) {
-      const dialog = this.$core.$dialog;
-      const content = dialog?.querySelector(`.${this.css('content')}`) as HTMLElement;
-      if (!dialog || !content) return;
+  protected override genPosizeCookie(): Record<string, any> {
+    const dialog = this.core.dialog;
+    const content = dialog?.querySelector(`.${this.css('content')}`) as HTMLElement;
+    if (!dialog || !content) return {};
 
-      const rect = dialog.getBoundingClientRect();
-      const cRect = content.getBoundingClientRect();
+    const rect = dialog.getBoundingClientRect();
+    const cRect = content.getBoundingClientRect();
 
-      const poSize = {
-        left: rect.left,
-        top: rect.top,
-        width: rect.width,
-        height: rect.height,
-        cWidth: cRect.width,
-        cHeight: cRect.height,
-      };
-
-      Cookies.set(this.cookiePosizeCode, JSON.stringify(poSize), {
-        expires: this.cookiePosizeExpiration,
-        path: '/',
-      });
-    }
+    return {
+      left: rect.left,
+      top: rect.top,
+      width: rect.width,
+      height: rect.height,
+      cWidth: cRect.width,
+      cHeight: cRect.height,
+    };
   }
 }
