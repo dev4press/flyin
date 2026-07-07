@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin Documentation - Skins</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin Documentation</h1>
+    <p>Skins Information</p>
+</header>
+
+<main>
+    <section id="skins-overview">
+        <h2>Available Skins</h2>
+        <p>Flyin comes with two built-in JavaScript skins that define the behavior and core structure of the popups.</p>
+
+        <div class="skins-grid">
+            <div class="skin-item">
+                <h3>Base Skin</h3>
+                <p>The <strong>Base</strong> skin is the default implementation. It provides a standard, centered (configurable) popup that can be modal or non-modal. It is designed for simple notifications, alerts, and content display.</p>
+                <ul>
+                    <li>Standard lifecycle management</li>
+                    <li>Centering and positioning logic</li>
+                    <li>Overlay and focus management</li>
+                    <li>Responsive and accessible</li>
+                </ul>
+            </div>
+
+            <div class="skin-item">
+                <h3>Free Skin</h3>
+                <p>The <strong>Free</strong> skin is an advanced implementation that adds interactivity to your popups. It allows users to manually move and resize the popup on the screen.</p>
+                <ul>
+                    <li><strong>Draggable:</strong> Users can move the popup by clicking and dragging the header.</li>
+                    <li><strong>Resizable:</strong> Users can resize the popup from edges or corners.</li>
+                    <li><strong>Grip Support:</strong> Optional visual grip in the footer for easier resizing.</li>
+                    <li><strong>Persistence:</strong> Can save the last position and size in cookies, so the popup appears exactly where the user left it on the next visit.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="using-skins">
+        <h2>How to Use</h2>
+        <p>By default, Flyin uses the <code>Base</code> skin. You can specify the <code>Free</code> skin during initialization.</p>
+        <pre><code>&lt;script&gt;
+    // Using the default Base skin
+    new Flyin('#my-popup');
+
+    // Using the Free skin for a draggable/resizable popup
+    new Flyin('#my-free-popup', {
+        skin: 'Free',
+        settings: {
+            showGrip: true,
+            savePosize: true
+        }
+    });
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <div class="cta-links">
+        <a href="index.html">Back to Introduction</a>
+        <a href="settings.html">Settings Parameters</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
+

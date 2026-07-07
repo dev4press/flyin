@@ -3,10 +3,37 @@
   "version": "1.0.0",
   "description": "Modernized Flyin Popup Library",
   "type": "module",
+  "main": "./dist/flyin.umd.js",
+  "module": "./dist/flyin.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/flyin.es.js",
+      "require": "./dist/flyin.umd.js"
+    },
+    "./flyin.css": "./dist/flyin.css"
+  },
+  "files": [
+    "dist",
+    "license.txt",
+    "readme.md",
+    "changelog.md"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/dev4press/flyin.git"
   },
+  "bugs": {
+    "url": "https://github.com/dev4press/flyin/issues"
+  },
+  "homepage": "https://github.com/dev4press/flyin#readme",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
