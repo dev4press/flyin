@@ -1,0 +1,271 @@
+@use 'variables' as *;
+
+.#{$sanp-prefix}-dialog {
+  &.#{$sanp-prefix}-effect-rotatebottom,
+  &.#{$sanp-prefix}-effect-rotatetop,
+  &.#{$sanp-prefix}-effect-rotateleft,
+  &.#{$sanp-prefix}-effect-rotateright,
+  &.#{$sanp-prefix}-effect-flipverbottom,
+  &.#{$sanp-prefix}-effect-flipvertop,
+  &.#{$sanp-prefix}-effect-fliphorright,
+  &.#{$sanp-prefix}-effect-fliphorleft,
+  &.#{$sanp-prefix}-effect-flipsign,
+  &.#{$sanp-prefix}-effect-flipsignfront,
+  &.#{$sanp-prefix}-effect-fallcenter,
+  &.#{$sanp-prefix}-effect-fallleft,
+  &.#{$sanp-prefix}-effect-fallright {
+    perspective: 1500px;
+  }
+
+  .#{$sanp-prefix}-wrapper {
+    opacity: 0;
+    transition: all $sanp-dialog-speed;
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    opacity: 1;
+  }
+}
+
+/* scale */
+.#{$sanp-prefix}-effect-scale {
+  .#{$sanp-prefix}-wrapper {
+    transform: scale(2);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: scale(1);
+  }
+}
+
+/* zoomfade */
+.#{$sanp-prefix}-effect-zoomfade {
+  .#{$sanp-prefix}-wrapper {
+    transform: scale(0.2);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: scale(1);
+  }
+}
+
+/* slideinright */
+.#{$sanp-prefix}-effect-slideinright {
+  .#{$sanp-prefix}-wrapper {
+    transition-timing-function: cubic-bezier(0.3, 0.6, 0.6, 0.9);
+    transform: translateX(50%);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: translateX(0);
+  }
+}
+
+/* slideinleft */
+.#{$sanp-prefix}-effect-slideinleft {
+  .#{$sanp-prefix}-wrapper {
+    transition-timing-function: cubic-bezier(0.3, 0.6, 0.6, 0.9);
+    transform: translateX(-50%);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: translateX(0);
+  }
+}
+
+/* slideinbottom */
+.#{$sanp-prefix}-effect-slideinbottom {
+  .#{$sanp-prefix}-wrapper {
+    transition-timing-function: cubic-bezier(0.3, 0.6, 0.6, 0.9);
+    transform: translateY(50%);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: translateY(0);
+  }
+}
+
+/* slideintop */
+.#{$sanp-prefix}-effect-slideintop {
+  .#{$sanp-prefix}-wrapper {
+    transition-timing-function: cubic-bezier(0.3, 0.6, 0.6, 0.9);
+    transform: translateY(-50%);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: translateY(0);
+  }
+}
+
+/* newspaper */
+.#{$sanp-prefix}-effect-newspaper {
+  .#{$sanp-prefix}-wrapper {
+    transform: scale(0) rotate(720deg);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* fallcenter */
+.#{$sanp-prefix}-effect-fallcenter {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: translateZ(600px) rotateX(20deg);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: translateZ(0px) rotateX(0deg);
+  }
+}
+
+/* fallleft */
+.#{$sanp-prefix}-effect-fallleft {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: translateZ(600px) rotateX(20deg) rotateY(10deg);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: translateZ(0px) rotateX(0deg) rotateY(0deg);
+  }
+}
+
+/* fallright */
+.#{$sanp-prefix}-effect-fallright {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: translateZ(600px) rotateX(20deg) rotateY(-10deg);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: translateZ(0px) rotateX(0deg) rotateY(0deg);
+  }
+}
+
+/* fliphorleft */
+.#{$sanp-prefix}-effect-fliphorleft {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: rotateY(-70deg);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: rotateY(0deg);
+  }
+}
+
+/* fliphorright */
+.#{$sanp-prefix}-effect-fliphorright {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: rotateY(70deg);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: rotateY(0deg);
+  }
+}
+
+/* flipvertop */
+.#{$sanp-prefix}-effect-flipvertop {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: rotateX(-70deg);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: rotateX(0deg);
+  }
+}
+
+/* flipverbottom */
+.#{$sanp-prefix}-effect-flipverbottom {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: rotateX(70deg);
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: rotateX(0deg);
+  }
+}
+
+/* flipsign */
+.#{$sanp-prefix}-effect-flipsign {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: rotateX(-60deg);
+    transform-origin: 50% 0%;
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: rotateX(0deg);
+  }
+}
+
+/* flipsignfront */
+.#{$sanp-prefix}-effect-flipsignfront {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: rotateY(-60deg);
+    transform-origin: 0% 50%;
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: rotateY(0deg);
+  }
+}
+
+/* rotatebottom */
+.#{$sanp-prefix}-effect-rotatebottom {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: translateY(100%) rotateX(90deg);
+    transform-origin: 0% 100%;
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: translateY(0%) rotateX(0deg);
+  }
+}
+
+/* rotatetop */
+.#{$sanp-prefix}-effect-rotatetop {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: translateY(-100%) rotateX(-90deg);
+    transform-origin: 0% 0%;
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: translateY(0%) rotateX(0deg);
+  }
+}
+
+/* rotateleft */
+.#{$sanp-prefix}-effect-rotateleft {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: translateX(-100%) rotateY(90deg);
+    transform-origin: 0% 100%;
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: translateX(0%) rotateY(0deg);
+  }
+}
+
+/* rotateright */
+.#{$sanp-prefix}-effect-rotateright {
+  .#{$sanp-prefix}-wrapper {
+    transform-style: preserve-3d;
+    transform: translateX(100%) rotateY(-90deg);
+    transform-origin: 100% 0%;
+  }
+
+  &.#{$sanp-prefix}-active .#{$sanp-prefix}-wrapper {
+    transform: translateX(0%) rotateY(0deg);
+  }
+}

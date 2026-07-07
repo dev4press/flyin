@@ -1,0 +1,37 @@
+{
+  "name": "smart-animated-popup",
+  "version": "3.0.0",
+  "description": "Modernized Smart Animated Popup",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.{ts,scss}\""
+  },
+  "keywords": [
+    "popup",
+    "animated",
+    "typescript",
+    "sass"
+  ],
+  "author": "Milan Petrovic",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^26.1.0",
+    "@typescript-eslint/eslint-plugin": "^8.63.0",
+    "@typescript-eslint/parser": "^8.63.0",
+    "eslint": "^10.6.0",
+    "prettier": "^3.9.4",
+    "sass": "^1.101.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.63.0",
+    "vite": "^8.1.3"
+  },
+  "dependencies": {
+    "js-cookie": "^3.0.8"
+  }
+}

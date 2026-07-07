@@ -7,7 +7,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
     <link rel="stylesheet" type="text/css" href="source/css/popup.helper.css">
-    <link rel="stylesheet" type="text/css" href="pack/popup.pack.css">
+    <link rel="stylesheet" type="text/css" href="dist/smart-animated-popup.css">
 </head>
 <body>
 
@@ -36,13 +36,13 @@
         <p><strong>Step 1:</strong> Loading styles - add the following lines into header of the page, and adjust paths to match the location for files:</p>
 
         <div class="srm-helper-info">
-            &lt;link rel="stylesheet" type="text/css" href="<span style="color: red;">dist/popups.core.min.css</span>"&gt;<br/>
+            &lt;link rel="stylesheet" type="text/css" href="<span style="color: red;">dist/smart-animated-popup.css</span>"&gt;<br/>
         </div>
 
         <p><strong>Step 1a:</strong> Or you can load packed file:</p>
 
         <div class="srm-helper-info">
-            &lt;link rel="stylesheet" type="text/css" href="<span style="color: red;">pack/popup.pack.css</span>"&gt;
+            &lt;link rel="stylesheet" type="text/css" href="<span style="color: red;">dist/smart-animated-popup.css</span>"&gt;
         </div>
 
         <p><strong>Step 2:</strong> You need content to put into popup. This has to be a DIV type block with content inside. You also should set display for it to none. And if you want, set data-title to title to show on popup:</p>
@@ -54,13 +54,12 @@
             &lt;/div&gt;<br/>
         </div>
 
-        <p><strong>Step 3:</strong> Load &amp; run jQuery plugin - You need to load jQuery, Base.js, Knob.js (if you want to use Circular skin), plugin Core and Skings scripts:</p>
+        <p><strong>Step 3:</strong> Load &amp; run jQuery plugin - You need to load jQuery, JS Cookie, and plugin script:</p>
 
         <div class="srm-helper-info">
             &lt;script type="text/javascript" src="<span style="color: red;">https://code.jquery.com/jquery-3.6.3.min.js</span>"&gt;&lt;/script&gt;<br/>
-            &lt;script type="text/javascript" src="<span style="color: red;">dist/libs/base.min.js</span>"&gt;&lt;/script&gt;<br/>
-            &lt;script type="text/javascript" src="<span style="color: red;">dist/libs/js.cookie.min.js</span>"&gt;&lt;/script&gt;<br/>
-            &lt;script type="text/javascript" src="<span style="color: red;">dist/popup.core.min.js</span>"&gt;&lt;/script&gt;<br/>
+            &lt;script type="text/javascript" src="<span style="color: red;">https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js</span>"&gt;&lt;/script&gt;<br/>
+            &lt;script type="text/javascript" src="<span style="color: red;">dist/smart-animated-popup.umd.js</span>"&gt;&lt;/script&gt;<br/>
 
             &lt;script type="text/javascript"&gt;<br/>
             &nbsp;&nbsp;jQuery(document).ready(function() {<br/>
@@ -69,11 +68,12 @@
             &lt;/script&gt;<br/>
         </div>
 
-        <p><strong>Step 3A:</strong> Or you can load everything with one file (plus jQuery):</p>
+        <p><strong>Step 3A:</strong> Or you can load everything with one file (plus jQuery and JS Cookie):</p>
 
         <div class="srm-helper-info">
             &lt;script type="text/javascript" src="<span style="color: red;">https://code.jquery.com/jquery-3.6.3.min.js</span>"&gt;&lt;/script&gt;<br/>
-            &lt;script type="text/javascript" src="<span style="color: red;">pack/popup.pack.js</span>"&gt;&lt;/script&gt;
+            &lt;script type="text/javascript" src="<span style="color: red;">https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js</span>"&gt;&lt;/script&gt;<br/>
+            &lt;script type="text/javascript" src="<span style="color: red;">dist/smart-animated-popup.umd.js</span>"&gt;&lt;/script&gt;
         </div>
     </div>
 
@@ -89,7 +89,8 @@
     </div>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-    <script type="text/javascript" src="pack/popup.pack.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script type="text/javascript" src="dist/smart-animated-popup.umd.js"></script>
 
     <script type="text/javascript" src="source/js/popup.helper.js"></script>
 
