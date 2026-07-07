@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Basic Usage Example</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Basic Usage Example</p>
+</header>
+
+<main>
+    <section>
+        <h2>Basic Usage</h2>
+        <p>This example demonstrates the most basic way to initialize and open a Flyin popup.</p>
+        
+        <div style="text-align: center; margin: 2rem 0;">
+            <button id="open-popup" class="cta-button">Open Popup</button>
+        </div>
+
+        <div id="example-popup" data-title="Basic Popup" style="display: none;">
+            <p>This is a simple popup with default settings.</p>
+            <p>You can close it by clicking the X button, the background overlay, or the Close button in the footer.</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Flyin
+        var flyin = new Flyin("#example-popup", {
+            settings: {
+                onLoad: false,
+                style: 'flyin-style-plain-white'
+            }
+        });
+
+        // Open popup on button click
+        document.getElementById('open-popup').addEventListener('click', function() {
+            flyin.open();
+        });
+
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

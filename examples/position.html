@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Position and Offset Example</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Position and Offset Example</p>
+</header>
+
+<main>
+    <section>
+        <h2>Position and Offset</h2>
+        <p>You can position the popup anywhere on the screen using keywords (center, left, right, top, bottom) or specific pixel values, combined with offsets.</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 2rem 0;">
+            <button id="pos-center" class="cta-button">Center (Default)</button>
+            <button id="pos-top-left" class="cta-button">Top Left</button>
+            <button id="pos-top-right" class="cta-button">Top Right</button>
+            <button id="pos-bottom-left" class="cta-button">Bottom Left</button>
+            <button id="pos-bottom-right" class="cta-button">Bottom Right</button>
+            <button id="pos-custom" class="cta-button">Custom (100px, 100px)</button>
+        </div>
+
+        <div id="popup-content" data-title="Position Demo" style="display: none;">
+            <p>This popup is placed at the selected position.</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        var configs = {
+            'pos-center': { positionX: 'center', positionY: 'center' },
+            'pos-top-left': { positionX: 'left', positionY: 'top', offsetX: '20px', offsetY: '20px' },
+            'pos-top-right': { positionX: 'right', positionY: 'top', offsetX: '20px', offsetY: '20px' },
+            'pos-bottom-left': { positionX: 'left', positionY: 'bottom', offsetX: '20px', offsetY: '20px' },
+            'pos-bottom-right': { positionX: 'right', positionY: 'bottom', offsetX: '20px', offsetY: '20px' },
+            'pos-custom': { positionX: 100, positionY: 100 }
+        };
+
+        Object.keys(configs).forEach(function(id) {
+            document.getElementById(id).addEventListener('click', function() {
+                var flyin = new Flyin("#popup-content", {
+                    settings: Object.assign({
+                        onLoad: false,
+                        modal: false,
+                        overlayActive: false,
+                        style: 'flyin-style-plain-white'
+                    }, configs[id])
+                });
+                flyin.open();
+            });
+        });
+
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

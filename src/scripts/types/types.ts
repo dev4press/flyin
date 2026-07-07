@@ -44,6 +44,7 @@ export interface Settings {
   footerContent?: string | boolean;
   buttonX?: boolean;
   buttonXContent?: string;
+  buttonXSVG?: string;
   buttonFooter?: boolean;
   buttonFooterContent?: string;
   ariaCloseLabel?: string;
@@ -60,6 +61,7 @@ export interface Settings {
   xContentSize?: boolean;
   savePosize?: boolean;
   showGrip?: boolean;
+  gripSVG?: string;
   sizeMinWidth?: number;
   sizeMinHeight?: number;
   resizeMargin?: number;

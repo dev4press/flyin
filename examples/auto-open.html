@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Auto-open Example</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Auto-open Example</p>
+</header>
+
+<main>
+    <section>
+        <h2>Auto-open and Exit Intent</h2>
+        <p>Popups can be triggered automatically when the page loads, after a delay, or when the user's mouse leaves the top of the viewport (Exit Intent).</p>
+        
+        <div style="background: #fffbe6; padding: 1rem; border: 1px solid #ffe58f; margin-bottom: 2rem;">
+            <strong>Try it:</strong> Move your mouse above the browser's address bar area to trigger the "Exit Intent" popup.
+        </div>
+
+        <div id="onload-popup" data-title="Delayed Auto-open" style="display: none;">
+            <p>This popup opened automatically 2 seconds after the page loaded.</p>
+        </div>
+
+        <div id="exit-intent-popup" data-title="Wait! Don't go!" style="display: none;">
+            <p>You were about to leave the page. Here is a special offer!</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Delayed auto-open
+        new Flyin("#onload-popup", {
+            settings: {
+                onLoad: true,
+                onLoadDelay: 2000,
+                style: 'flyin-style-plain-white'
+            }
+        });
+
+        // Exit intent (triggered when mouse leaves top)
+        new Flyin("#exit-intent-popup", {
+            settings: {
+                onLoad: false,
+                onLeaveTop: true,
+                onLeaveTopOffset: 5,
+                style: 'flyin-style-box-red'
+            }
+        });
+
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

@@ -1,5 +1,71 @@
 @use 'variables' as *;
 
+/* style: plain white */
+.#{$flyin-prefix}-style-plain-white {
+  .#{$flyin-prefix}-wrapper {
+    background: $flyin-plain-white-bg;
+    border-radius: $flyin-border-radius;
+    box-shadow: 1px 1px 4px $flyin-shadow-color;
+
+    .#{$flyin-prefix}-header {
+      border-radius: $flyin-border-radius $flyin-border-radius 0 0;
+      padding: 10px;
+      border-bottom: 1px solid $flyin-plain-white-header-border;
+      position: relative;
+
+      h5 {
+        color: $flyin-plain-white-title-color;
+        font-size: 18px;
+        margin: 0;
+        padding: 0;
+        line-height: 24px;
+      }
+    }
+
+    .#{$flyin-prefix}-button-close {
+      -webkit-appearance: none;
+      color: $flyin-plain-white-btn-color;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 24px;
+    }
+
+    > .#{$flyin-prefix}-button-close {
+      right: 10px;
+      top: 10px;
+    }
+
+    .#{$flyin-prefix}-content {
+      padding: 10px;
+    }
+
+    .#{$flyin-prefix}-footer {
+      border-radius: 0 0 $flyin-border-radius $flyin-border-radius;
+      padding: 10px;
+      border-top: 1px solid $flyin-plain-white-header-border;
+      text-align: center;
+
+      button {
+        -webkit-appearance: none;
+        margin: 0;
+        padding: 0;
+        cursor: pointer;
+        outline: 1px solid transparent;
+        background: none;
+        border: none;
+      }
+    }
+  }
+
+  &.#{$flyin-prefix}-button-alt {
+    .#{$flyin-prefix}-wrapper .#{$flyin-prefix}-button-close {
+      background: $flyin-plain-white-btn-color;
+      box-shadow: 1px 1px 4px $flyin-shadow-color;
+      color: $flyin-white;
+    }
+  }
+}
+
 /* style: plain black */
 .#{$flyin-prefix}-style-plain-black {
   .#{$flyin-prefix}-wrapper {

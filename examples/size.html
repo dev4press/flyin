@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Size and Dimensions Example</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Size and Dimensions Example</p>
+</header>
+
+<main>
+    <section>
+        <h2>Size and Dimensions</h2>
+        <p>You can control the width, height, and boundary constraints of the popup using pixels, percentages, or other CSS units.</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 2rem 0;">
+            <button id="size-default" class="cta-button">Default (40%)</button>
+            <button id="size-fixed" class="cta-button">Fixed (600x400)</button>
+            <button id="size-narrow" class="cta-button">Narrow (250px)</button>
+            <button id="size-wide" class="cta-button">Wide (80%)</button>
+            <button id="size-min-max" class="cta-button">Min/Max Constraints</button>
+        </div>
+
+        <div id="popup-content" data-title="Size Demo" style="display: none;">
+            <p>This popup demonstrates the selected size configuration.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        var configs = {
+            'size-default': { width: '40%', height: 'auto' },
+            'size-fixed': { width: '600px', height: '400px' },
+            'size-narrow': { width: '250px' },
+            'size-wide': { width: '80%' },
+            'size-min-max': { width: '50%', minWidth: '400px', maxWidth: '800px' }
+        };
+
+        Object.keys(configs).forEach(function(id) {
+            document.getElementById(id).addEventListener('click', function() {
+                var flyin = new Flyin("#popup-content", {
+                    settings: Object.assign({
+                        onLoad: false,
+                        style: 'flyin-style-plain-white'
+                    }, configs[id])
+                });
+                flyin.open();
+            });
+        });
+
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

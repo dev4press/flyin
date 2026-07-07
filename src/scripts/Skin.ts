@@ -112,6 +112,7 @@ export class Skin {
     footerContent: false,
     buttonX: true,
     buttonXContent: '&#x2716;',
+    buttonXSVG: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M297.3722,319.9996l-175.9859,-175.9859c-6.2442,-6.2442 -6.2442,-16.3832 0,-22.6274c6.2442,-6.2442 16.3832,-6.2442 22.6274,0l175.9859,175.9859l175.9857,-175.9857c6.2442,-6.2442 16.3832,-6.2442 22.6274,-0c6.2442,6.2442 6.2442,16.3832 -0,22.6274l-175.9857,175.9857l175.9857,175.9857c6.2442,6.2442 6.2442,16.3832 0,22.6274c-6.2442,6.2442 -16.3832,6.2442 -22.6274,0l-175.9857,-175.9857l-175.9859,175.9859c-6.2442,6.2442 -16.3832,6.2442 -22.6274,-0c-6.2442,-6.2442 -6.2442,-16.3832 0,-22.6274l175.9859,-175.9859Z"/></svg>',
     buttonFooter: true,
     buttonFooterContent: 'Close',
     ariaCloseLabel: 'Close this dialog',
@@ -127,6 +128,7 @@ export class Skin {
     attrFooter: '',
     xContentSize: false,
     savePosize: true,
+    gripSVG: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M424.9139,518.6134c-6.2444,6.2444 -16.3837,6.2444 -22.628,-0c-6.2444,-6.2444 -6.2444,-16.3837 0,-22.628l93.0923,-93.0923c6.2444,-6.2444 16.3837,-6.2444 22.628,-0c6.2444,6.2444 6.2444,16.3837 -0,22.628l-93.0923,93.0923Zm-93.6009,0.5566c-6.2442,6.2442 -16.3832,6.2442 -22.6274,-0c-6.2442,-6.2442 -6.2442,-16.3832 0,-22.6274l187.2995,-187.2995c6.2442,-6.2442 16.3832,-6.2442 22.6274,0c6.2442,6.2442 6.2442,16.3832 -0,22.6274l-187.2995,187.2995Zm-93.6484,-0.2911c-6.2447,6.2447 -16.3846,6.2447 -22.6293,-0c-6.2447,-6.2447 -6.2447,-16.3846 -0,-22.6293l281.2145,-281.2145c6.2447,-6.2447 16.3846,-6.2447 22.6293,0c6.2447,6.2447 6.2447,16.3846 -0,22.6293l-281.2145,281.2145Zm-93.6509,-0.266c-6.2442,6.2442 -16.3832,6.2442 -22.6274,-0c-6.2442,-6.2442 -6.2442,-16.3832 0,-22.6274l374.599,-374.599c6.2442,-6.2442 16.3832,-6.2442 22.6274,-0c6.2442,6.2442 6.2442,16.3832 -0,22.6274l-374.599,374.599Z"/></svg>',
   };
 
   constructor(core: Flyin, options: Settings = {}) {
@@ -263,7 +265,7 @@ export class Skin {
 
   createDialog(): void {
     const dialog = document.createElement('div');
-    dialog.className = `${this.css('dialog')} ${this.css('dialogIDPrefix')}${this.core.id} ${this.css('dialogEffectPrefix')}${this.settings.effect} ${this.settings.style} ${this.settings.extraClass}`;
+    dialog.className = `${this.css('dialog')} ${this.css('dialogIDPrefix')}${this.core.id} ${this.css('dialogEffectPrefix')}${this.settings.effect} ${this.settings.style} ${this.settings.extraClass} ${this.skinCode ? this.css('skinPrefix') + this.skinCode : ''}`.trim();
     dialog.style.zIndex = (this.settings.zIndex || 1000000).toString();
 
     dialog.setAttribute('role', this.settings.role || 'dialog');
@@ -288,7 +290,7 @@ export class Skin {
       btnX = document.createElement('button');
       btnX.type = 'button';
       btnX.className = this.css('closeButton');
-      btnX.innerHTML = this.settings.buttonXContent || '&#x2716;';
+      btnX.innerHTML = this.settings.buttonXSVG || this.settings.buttonXContent || '&#x2716;';
       btnX.setAttribute('aria-label', this.settings.ariaCloseLabel || 'Close this dialog');
       btnX.addEventListener('click', (e) => {
         e.stopPropagation();

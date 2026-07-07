@@ -29,8 +29,8 @@ export class FreeSkin extends Skin {
     super(core, options);
     // Initialize FreeSkin defaults if not provided in options
     this.settings.showGrip = options.showGrip ?? false;
-    this.settings.sizeMinWidth = options.sizeMinWidth ?? 90;
-    this.settings.sizeMinHeight = options.sizeMinHeight ?? 60;
+    this.settings.sizeMinWidth = options.sizeMinWidth ?? 200;
+    this.settings.sizeMinHeight = options.sizeMinHeight ?? 100;
     this.settings.resizeMargin = options.resizeMargin ?? 5;
   }
 
@@ -64,10 +64,10 @@ export class FreeSkin extends Skin {
       this.settings.positionX = this.cookiePosize.left;
       this.settings.positionY = this.cookiePosize.top;
       this.settings.width = `${this.cookiePosize.width}px`;
-      this.settings.cHeight = `${this.cookiePosize.cHeight}px`;
+      this.settings.height = `${this.cookiePosize.height}px`;
 
-      this.settings.height = 'auto';
       this.settings.cWidth = 'auto';
+      this.settings.cHeight = 'auto';
 
       if (window.innerWidth < (this.settings.positionX as number) + this.cookiePosize.width) {
         this.settings.positionX = window.innerWidth - this.cookiePosize.width;
@@ -86,6 +86,7 @@ export class FreeSkin extends Skin {
       const grip = document.createElement('div');
       grip.className = this.css('grip');
       grip.setAttribute('aria-hidden', 'true');
+      grip.innerHTML = this.settings.gripSVG || '';
       this.core.dialog?.querySelector(`.${this.css('footer')}`)?.appendChild(grip);
     }
 
@@ -108,6 +109,7 @@ export class FreeSkin extends Skin {
     }
 
     if (header) {
+      header.style.cursor = 'move';
       header.addEventListener('mousedown', (e) => this.mouseDown(e));
       header.addEventListener('touchstart', (e) => this.mouseDown(e), { passive: false });
     }
@@ -128,13 +130,65 @@ export class FreeSkin extends Skin {
   }
 
   private mouseDownWrapper(e: MouseEvent | TouchEvent): void {
-    if (this.moverState.rm === '') return;
     const pos = this.mousePos(e);
     if (!pos) return;
+
+    this.updateRM(pos);
+    if (this.moverState.rm === '') return;
 
     this.moverState.resizing = true;
     this.moverState.rmX = pos.pageX;
     this.moverState.rmY = pos.pageY;
+    e.stopPropagation();
+  }
+
+  private updateRM(pos: { pageX: number; pageY: number; touch: boolean }): void {
+    const dialog = this.core.dialog;
+    if (!dialog) return;
+
+    const rect = dialog.getBoundingClientRect();
+    const mod = pos.touch ? 20 : 0;
+    this.moverState.rm = '';
+    this.moverState.resizeTop = false;
+    this.moverState.resizeLeft = false;
+    this.moverState.resizeBottom = false;
+    this.moverState.resizeRight = false;
+
+    let inGrip = false;
+    const grip = dialog.querySelector(`.${this.css('grip')}`) as HTMLElement;
+    if (this.settings.showGrip && grip) {
+      const gRect = grip.getBoundingClientRect();
+      if (
+        pos.pageY >= gRect.top - mod &&
+        pos.pageY <= gRect.bottom &&
+        pos.pageX >= gRect.left - mod &&
+        pos.pageX <= gRect.right
+      ) {
+        this.moverState.rm = 'se';
+        this.moverState.resizeBottom = true;
+        this.moverState.resizeRight = true;
+        inGrip = true;
+      }
+    }
+
+    if (!inGrip) {
+      if (pos.pageY >= rect.top && pos.pageY < rect.top + (this.settings.resizeMargin || 5)) {
+        this.moverState.resizeTop = true;
+        this.moverState.rm += 'n';
+      }
+      if (pos.pageY <= rect.bottom && pos.pageY > rect.bottom - (this.settings.resizeMargin || 5)) {
+        this.moverState.resizeBottom = true;
+        this.moverState.rm += 's';
+      }
+      if (pos.pageX >= rect.left && pos.pageX < rect.left + (this.settings.resizeMargin || 5)) {
+        this.moverState.resizeLeft = true;
+        this.moverState.rm += 'w';
+      }
+      if (pos.pageX <= rect.right && pos.pageX > rect.right - (this.settings.resizeMargin || 5)) {
+        this.moverState.resizeRight = true;
+        this.moverState.rm += 'e';
+      }
+    }
   }
 
   private mouseDown(e: MouseEvent | TouchEvent): void {
@@ -143,6 +197,7 @@ export class FreeSkin extends Skin {
     if (!pos) return;
 
     this.moverState.moving = true;
+    e.stopPropagation();
     const dialog = this.core.dialog;
     if (!dialog) return;
 
@@ -184,52 +239,11 @@ export class FreeSkin extends Skin {
       const dialog = this.core.dialog;
       if (!dialog) return;
 
-      const rect = dialog.getBoundingClientRect();
       const wrapper = dialog.querySelector(`.${this.css('wrapper')}`) as HTMLElement;
+      const header = dialog.querySelector(`.${this.css('header')}`) as HTMLElement;
 
       if (!this.moverState.resizing) {
-        const mod = pos.touch ? 20 : 0;
-        this.moverState.rm = '';
-        this.moverState.resizeTop = false;
-        this.moverState.resizeLeft = false;
-        this.moverState.resizeBottom = false;
-        this.moverState.resizeRight = false;
-
-        let inGrip = false;
-        const grip = dialog.querySelector(`.${this.css('grip')}`) as HTMLElement;
-        if (this.settings.showGrip && grip) {
-          const gRect = grip.getBoundingClientRect();
-          if (
-            pos.pageY >= gRect.top - mod &&
-            pos.pageY <= gRect.bottom &&
-            pos.pageX >= gRect.left - mod &&
-            pos.pageX <= gRect.right
-          ) {
-            this.moverState.rm = 'se';
-            this.moverState.resizeBottom = true;
-            this.moverState.resizeRight = true;
-            inGrip = true;
-          }
-        }
-
-        if (!inGrip) {
-          if (pos.pageY >= rect.top && pos.pageY < rect.top + (this.settings.resizeMargin || 5)) {
-            this.moverState.resizeTop = true;
-            this.moverState.rm += 'n';
-          }
-          if (pos.pageY <= rect.bottom && pos.pageY > rect.bottom - (this.settings.resizeMargin || 5)) {
-            this.moverState.resizeBottom = true;
-            this.moverState.rm += 's';
-          }
-          if (pos.pageX >= rect.left && pos.pageX < rect.left + (this.settings.resizeMargin || 5)) {
-            this.moverState.resizeLeft = true;
-            this.moverState.rm += 'w';
-          }
-          if (pos.pageX <= rect.right && pos.pageX > rect.right - (this.settings.resizeMargin || 5)) {
-            this.moverState.resizeRight = true;
-            this.moverState.rm += 'e';
-          }
-        }
+        this.updateRM(pos);
 
         if (this.moverState.rm !== '') {
           let cs = '';
@@ -252,46 +266,54 @@ export class FreeSkin extends Skin {
               break;
           }
           wrapper.style.cursor = cs;
+          if (header) header.style.cursor = cs;
         } else {
           wrapper.style.cursor = '';
+          if (header) header.style.cursor = 'move';
         }
       } else {
         if (e.cancelable) e.preventDefault();
 
         const relX = pos.pageX - this.moverState.rmX;
         const relY = pos.pageY - this.moverState.rmY;
-        const content = dialog.querySelector(`.${this.css('content')}`) as HTMLElement;
 
         this.moverState.rmX = pos.pageX;
         this.moverState.rmY = pos.pageY;
 
-        const cRect = content.getBoundingClientRect();
         const dRect = dialog.getBoundingClientRect();
 
         if (relY !== 0) {
           if (this.moverState.resizeTop) {
-            if (cRect.height - relY > (this.settings.sizeMinHeight || 60)) {
-              content.style.height = `${cRect.height - relY}px`;
-              dialog.style.top = `${dRect.top + relY}px`;
+            let actualRelY = relY;
+            if (dRect.top + actualRelY < 0) actualRelY = -dRect.top;
+            if (dRect.height - actualRelY > (this.settings.sizeMinHeight || 100)) {
+              dialog.style.height = `${dRect.height - actualRelY}px`;
+              dialog.style.top = `${dRect.top + actualRelY}px`;
             }
           }
           if (this.moverState.resizeBottom) {
-            if (cRect.height + relY > (this.settings.sizeMinHeight || 60)) {
-              content.style.height = `${cRect.height + relY}px`;
+            let actualRelY = relY;
+            if (dRect.bottom + actualRelY > window.innerHeight) actualRelY = window.innerHeight - dRect.bottom;
+            if (dRect.height + actualRelY > (this.settings.sizeMinHeight || 100)) {
+              dialog.style.height = `${dRect.height + actualRelY}px`;
             }
           }
         }
 
         if (relX !== 0) {
           if (this.moverState.resizeLeft) {
-            if (cRect.width - relX > (this.settings.sizeMinWidth || 90)) {
-              dialog.style.width = `${dRect.width - relX}px`;
-              dialog.style.left = `${dRect.left + relX}px`;
+            let actualRelX = relX;
+            if (dRect.left + actualRelX < 0) actualRelX = -dRect.left;
+            if (dRect.width - actualRelX > (this.settings.sizeMinWidth || 90)) {
+              dialog.style.width = `${dRect.width - actualRelX}px`;
+              dialog.style.left = `${dRect.left + actualRelX}px`;
             }
           }
           if (this.moverState.resizeRight) {
-            if (cRect.width + relX > (this.settings.sizeMinWidth || 90)) {
-              dialog.style.width = `${dRect.width + relX}px`;
+            let actualRelX = relX;
+            if (dRect.right + actualRelX > window.innerWidth) actualRelX = window.innerWidth - dRect.right;
+            if (dRect.width + actualRelX > (this.settings.sizeMinWidth || 90)) {
+              dialog.style.width = `${dRect.width + actualRelX}px`;
             }
           }
         }
@@ -307,8 +329,11 @@ export class FreeSkin extends Skin {
     if (this.moverState.resizing) {
       this.moverState.rm = '';
       this.moverState.resizing = false;
-      const wrapper = this.core.dialog?.querySelector(`.${this.css('wrapper')}`) as HTMLElement;
+      const dialog = this.core.dialog;
+      const wrapper = dialog?.querySelector(`.${this.css('wrapper')}`) as HTMLElement;
+      const header = dialog?.querySelector(`.${this.css('header')}`) as HTMLElement;
       if (wrapper) wrapper.style.cursor = '';
+      if (header) header.style.cursor = 'move';
     }
 
     if (this.moverState.dr) {

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Modal vs Non-Modal Example</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Modal vs Non-Modal Example</p>
+</header>
+
+<main>
+    <section>
+        <h2>Modal vs Non-Modal Popups</h2>
+        <p>A <strong>modal</strong> popup disables interaction with the rest of the page, while a <strong>non-modal</strong> popup allows the user to continue interacting with the page content.</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 2rem 0;">
+            <div style="text-align: center;">
+                <button id="open-modal" class="cta-button">Open Modal Popup</button>
+                <p><small>Disables page scrolling and background interaction.</small></p>
+            </div>
+            <div style="text-align: center;">
+                <button id="open-non-modal" class="cta-button">Open Non-Modal Popup</button>
+                <p><small>Allows page interaction while popup is open.</small></p>
+            </div>
+        </div>
+
+        <div id="popup-content" data-title="Modal Demo" style="display: none;">
+            <p>Try to scroll the page or click outside this popup to see the difference!</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+
+        <div style="height: 1000px; background: linear-gradient(#eee, #ccc); padding: 20px; margin-top: 2rem;">
+            <p>This long content is here to demonstrate page scrolling.</p>
+        </div>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('open-modal').addEventListener('click', function() {
+            var flyin = new Flyin("#popup-content", {
+                settings: {
+                    onLoad: false,
+                    modal: true,
+                    overlayActive: true,
+                    style: 'flyin-style-plain-white'
+                }
+            });
+            flyin.open();
+        });
+
+        document.getElementById('open-non-modal').addEventListener('click', function() {
+            var flyin = new Flyin("#popup-content", {
+                settings: {
+                    onLoad: false,
+                    modal: false,
+                    overlayActive: false, // Usually disabled for non-modal
+                    style: 'flyin-style-plain-white',
+                    positionX: 'right',
+                    positionY: 'bottom'
+                }
+            });
+            flyin.open();
+        });
+
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

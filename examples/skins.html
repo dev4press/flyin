@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Skins and Styles Example</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Skins and Styles Example</p>
+</header>
+
+<main>
+    <section>
+        <h2>Skins and Styles</h2>
+        <p>Flyin supports different skins and visual styles. Skins (like 'Base' and 'Free') control functionality, while styles control the CSS look.</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 2rem 0;">
+            <button id="open-plain-white" class="cta-button">Base Skin: Plain White</button>
+            <button id="open-plain-black" class="cta-button">Base Skin: Plain Black</button>
+            <button id="open-clean-gray" class="cta-button">Base Skin: Clean Gray</button>
+            <button id="open-box-red" class="cta-button">Base Skin: Box Red</button>
+            <button id="open-free-skin" class="cta-button">Free Skin (Draggable)</button>
+            <button id="open-custom-svg" class="cta-button">Custom SVG Icons</button>
+        </div>
+
+        <div id="popup-content" data-title="Skin Demo" style="display: none;">
+            <p>This popup demonstrates the selected skin and style.</p>
+            <p>If you opened the <strong>Free Skin</strong>, you can drag the popup by the header and resize it from the corners/edges!</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        var configurations = {
+            'open-plain-white': { skin: 'Base', settings: { style: 'flyin-style-plain-white' } },
+            'open-plain-black': { skin: 'Base', settings: { style: 'flyin-style-plain-black' } },
+            'open-clean-gray': { skin: 'Base', settings: { style: 'flyin-style-clean-gray' } },
+            'open-box-red': { skin: 'Base', settings: { style: 'flyin-style-box-red' } },
+            'open-free-skin': { skin: 'Free', settings: { style: 'flyin-style-plain-white', showGrip: true, savePosize: false } },
+            'open-custom-svg': { 
+                skin: 'Free', 
+                settings: { 
+                    style: 'flyin-style-plain-white', 
+                    showGrip: true, 
+                    savePosize: false,
+                    buttonXSVG: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
+                    gripSVG: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round"><circle cx="15" cy="15" r="2"/><circle cx="10" cy="15" r="2"/><circle cx="15" cy="10" r="2"/></svg>'
+                } 
+            }
+        };
+
+        Object.keys(configurations).forEach(function(id) {
+            document.getElementById(id).addEventListener('click', function() {
+                var config = configurations[id];
+                config.settings.onLoad = false;
+                
+                var flyin = new Flyin("#popup-content", config);
+                flyin.open();
+            });
+        });
+
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

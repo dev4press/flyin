@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Header and Footer Example</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Header and Footer Example</p>
+</header>
+
+<main>
+    <section>
+        <h2>Header and Footer Configuration</h2>
+        <p>You can enable or disable the header and footer, customize their content, and control the visibility of the close buttons.</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 2rem 0;">
+            <button id="config-full" class="cta-button">Full Header & Footer</button>
+            <button id="config-no-header" class="cta-button">No Header</button>
+            <button id="config-no-footer" class="cta-button">No Footer</button>
+            <button id="config-no-buttons" class="cta-button">No Close Buttons</button>
+            <button id="config-custom-text" class="cta-button">Custom Button Text</button>
+        </div>
+
+        <div id="popup-content" data-title="Configuration Demo" style="display: none;">
+            <p>This popup demonstrates various header and footer configurations.</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        var configs = {
+            'config-full': { header: true, footer: true, buttonX: true, buttonFooter: true },
+            'config-no-header': { header: false, footer: true },
+            'config-no-footer': { header: true, footer: false },
+            'config-no-buttons': { buttonX: false, buttonFooter: false },
+            'config-custom-text': { 
+                buttonXContent: 'EXIT', 
+                buttonFooterContent: 'I UNDERSTAND',
+                footerContent: '<em>Additional footer information</em>'
+            }
+        };
+
+        Object.keys(configs).forEach(function(id) {
+            document.getElementById(id).addEventListener('click', function() {
+                var flyin = new Flyin("#popup-content", {
+                    settings: Object.assign({
+                        onLoad: false,
+                        style: 'flyin-style-plain-white'
+                    }, configs[id])
+                });
+                flyin.open();
+            });
+        });
+
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

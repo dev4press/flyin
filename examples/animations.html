@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Animations and Effects Example</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Animations and Effects Example</p>
+</header>
+
+<main>
+    <section>
+        <h2>Supported Animations and Effects</h2>
+        <p>Flyin supports many CSS3 animations and transitions. Click the buttons below to open the popup with different effects.</p>
+        
+        <div id="animation-buttons" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin: 2rem 0;">
+            <!-- Buttons will be generated here -->
+        </div>
+
+        <div id="popup-content" data-title="Animation Demo" style="display: none;">
+            <p>This popup is using the selected effect.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        var effects = [
+            'none', 'fade', 'scale', 'zoomfade', 'slideinright', 'slideinleft', 'slideintop', 
+            'slideinbottom', 'newspaper', 'fallcenter', 'fallleft', 'fallright', 'fliphorleft', 
+            'fliphorright', 'flipvertop', 'flipverbottom', 'flipsign', 'flipsignfront', 'slit', 
+            'slithor', 'bounce', 'roll', 'rotatebottom', 'rotatetop', 'rotateleft', 'rotateright'
+        ];
+
+        var container = document.getElementById('animation-buttons');
+        
+        effects.forEach(function(effect) {
+            var btn = document.createElement('button');
+            btn.className = 'cta-button';
+            btn.style.fontSize = '0.9rem';
+            btn.style.padding = '0.5rem';
+            btn.textContent = effect;
+            btn.addEventListener('click', function() {
+                var flyin = new Flyin("#popup-content", {
+                    settings: {
+                        onLoad: false,
+                        effect: effect,
+                        style: 'flyin-style-plain-white'
+                    }
+                });
+                flyin.open();
+            });
+            container.appendChild(btn);
+        });
+
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

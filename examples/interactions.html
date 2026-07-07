@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Interactions Example</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Interactions Example</p>
+</header>
+
+<main>
+    <section>
+        <h2>Closing Interactions</h2>
+        <p>You can control how the user can interact with the popup to close it.</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin: 2rem 0;">
+            <button id="open-no-escape" class="cta-button">No Escape Key</button>
+            <button id="open-no-overlay" class="cta-button">No Overlay Click</button>
+            <button id="open-auto-close" class="cta-button">Auto Close (3s)</button>
+            <button id="open-strict" class="cta-button">Strict (Must use X/Footer button)</button>
+        </div>
+
+        <div id="popup-content" data-title="Interaction Demo" style="display: none;">
+            <p>This popup has specific interaction settings enabled/disabled.</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        var configs = {
+            'open-no-escape': { settings: { closeEscape: false } },
+            'open-no-overlay': { settings: { closeOverlay: false } },
+            'open-auto-close': { settings: { closeAuto: true, closeAutoDelay: 3000 } },
+            'open-strict': { settings: { closeEscape: false, closeOverlay: false } }
+        };
+
+        Object.keys(configs).forEach(function(id) {
+            document.getElementById(id).addEventListener('click', function() {
+                var flyin = new Flyin("#popup-content", {
+                    settings: Object.assign({
+                        onLoad: false,
+                        style: 'flyin-style-plain-white'
+                    }, configs[id].settings)
+                });
+                flyin.open();
+            });
+        });
+
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>
