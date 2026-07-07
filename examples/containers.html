@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Container Targeting</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+    <style>
+        #local-container {
+            width: 100%;
+            height: 300px;
+            border: 2px dashed #ccc;
+            position: relative;
+            margin: 2rem 0;
+            background: #fdfdfd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .local-label {
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Container Targeting</p>
+</header>
+
+<main>
+    <section>
+        <h2>Targeting Specific Containers</h2>
+        <p>This example demonstrates how to inject the popup into a specific element instead of the document body.</p>
+        
+        <div style="text-align: center; margin: 2rem 0;">
+            <button id="open-local" class="cta-button">Open in Container</button>
+        </div>
+
+        <h3>Local Container</h3>
+        <div id="local-container">
+            <span class="local-label">Popups will appear inside this box</span>
+        </div>
+
+        <div id="content-local" data-title="Local Popup" style="display: none;">
+            <p>I am constrained within the dashed box above!</p>
+            <p>Injecting popups into specific containers is useful for dashboards, sidebar widgets, or any UI where you want the popup to stay within a boundary.</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Flyin with containerSelector
+        var localFlyin = new Flyin("#content-local", {
+            settings: {
+                onLoad: false,
+                containerSelector: '#local-container',
+                extraClass: 'local-popup',
+                style: 'flyin-style-sky-blue',
+                width: '80%',
+                positionX: 'center',
+                positionY: 'center',
+                modal: false // Disable modal for local container usually
+            }
+        });
+
+        // Open popup on button click
+        document.getElementById('open-local').addEventListener('click', function() {
+            localFlyin.open();
+        });
+
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

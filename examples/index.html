@@ -21,54 +21,38 @@
 <main>
 
     <section id="demo">
-        <h2>Live Demo</h2>
-        <p>Click the button below to see Flyin in action with a full-featured popup example.</p>
-        <div style="text-align: center; margin: 2rem 0;">
-            <button id="open-demo-popup" class="cta-button">Open Example Popup</button>
+        <div class="demo-hero">
+            <h2>Experience Flyin</h2>
+            <p>Click the button below to see Flyin in action with a full-featured, responsive, and accessible popup example.</p>
+            <div class="demo-action">
+                <button id="open-demo-popup" class="cta-button">Launch Live Demo</button>
+            </div>
         </div>
 
-        <div id="example-popup" data-title="Welcome to Flyin" style="display: none;">
-            <div class="popup-logo" style="text-align: center; margin-bottom: 1rem;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" style="width: 60px; height: 60px; fill: #003366;" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+        <div id="example-popup" data-title="Flyin Modern Popup" style="display: none;">
+            <div class="popup-logo" style="text-align: center; margin-bottom: 1.5rem;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" style="width: 80px; height: 80px; fill: #007bff;" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
             </div>
-            <p><strong>Hello!</strong> This is an example of the Flyin popup library. It supports many features out of the box:</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-    </section>
-
-    <section id="about">
-        <h2>About Flyin</h2>
-        <p>Flyin is a modernized popup library for creating normal or modal popups with custom positioning, animation effects, and customized looks. It is a complete rewrite of the Smart Animated Popup library, focusing on performance, type safety, and modern web standards.</p>
-        
-        <div class="features-grid">
-            <div class="feature-item">
-                <h3>TypeScript Core</h3>
-                <p>Completely rewritten for type safety and modern standards.</p>
-            </div>
-            <div class="feature-item">
-                <h3>SCSS Styles</h3>
-                <p>Modular styles with variables and nesting for easy customization.</p>
-            </div>
-            <div class="feature-item">
-                <h3>Zero Dependencies</h3>
-                <p>Standalone version (only requires <code>js-cookie</code>).</p>
-            </div>
-            <div class="feature-item">
-                <h3>Modern Build</h3>
-                <p>Powered by Vite for fast development and small bundles.</p>
-            </div>
-            <div class="feature-item">
-                <h3>No IE Support</h3>
-                <p>Focused on modern browsers (Chrome, Firefox, Safari, Edge).</p>
+            <div class="popup-welcome">
+                <h3>Welcome to the Future of Popups</h3>
+                <p>Flyin is designed to be lightweight yet powerful. It gives you full control over every aspect of your popups.</p>
+                <ul style="margin: 1rem 0; padding-left: 1.2rem;">
+                    <li><strong>Responsive:</strong> Works perfectly on all screen sizes.</li>
+                    <li><strong>Accessible:</strong> Focus management and ARIA roles included.</li>
+                    <li><strong>Customizable:</strong> 10+ built-in skins and full SCSS support.</li>
+                    <li><strong>Performant:</strong> Zero heavy dependencies and small footprint.</li>
+                </ul>
+                <p>Feel free to explore the documentation and examples to see what else you can build with Flyin.</p>
             </div>
         </div>
     </section>
 
-    <section id="installation">
-        <h2>Installation</h2>
-        <p>You can install Flyin via npm:</p>
-        <pre><code>npm install @dev4press/flyin</code></pre>
+    <section id="documentation">
+        <h2>Documentation</h2>
+        <p>For detailed information on settings, CSS variables, and more examples, please check our documentation.</p>
+        <div class="cta-links" style="text-align: left; margin-top: 1rem;">
+            <a href="../docs/index.html" class="cta-button" style="margin-left: 0;">Browse Documentation</a>
+        </div>
     </section>
 
     <section id="usage">
@@ -100,28 +84,73 @@
 &lt;/script&gt;</code></pre>
     </section>
 
+    <section id="examples">
+        <h2>Examples</h2>
+        <p>Explore different use cases and configurations of Flyin through our interactive examples:</p>
+        <div class="examples-grid">
+            <div class="example-item">
+                <a href="basic.html">Basic Usage</a>
+                <span>Simple initialization and manual opening.</span>
+            </div>
+            <div class="example-item">
+                <a href="skins.html">Skins and Styles</a>
+                <span>Showcase 10+ visual looks and layout skins.</span>
+            </div>
+            <div class="example-item">
+                <a href="animations.html">Animations</a>
+                <span>Test 15+ supported entry and exit effects.</span>
+            </div>
+            <div class="example-item">
+                <a href="callbacks.html">Callbacks</a>
+                <span>Monitor and respond to popup lifecycle events.</span>
+            </div>
+            <div class="example-item">
+                <a href="interactions.html">Interactions</a>
+                <span>Control escape keys, overlays, and auto-closing.</span>
+            </div>
+            <div class="example-item">
+                <a href="styling.html">Custom Styling</a>
+                <span>Applying extra classes and overriding CSS.</span>
+            </div>
+            <div class="example-item">
+                <a href="modal.html">Modal Modes</a>
+                <span>Compare modal vs. non-modal interactions.</span>
+            </div>
+            <div class="example-item">
+                <a href="position.html">Positioning</a>
+                <span>Place popups anywhere with smart offsets.</span>
+            </div>
+            <div class="example-item">
+                <a href="auto-open.html">Auto-Triggers</a>
+                <span>Automatic opening and exit intent detection.</span>
+            </div>
+            <div class="example-item">
+                <a href="size.html">Dimensions</a>
+                <span>Responsive control over width and height.</span>
+            </div>
+            <div class="example-item">
+                <a href="header-footer.html">Header & Footer</a>
+                <span>Configuring titles and custom footer content.</span>
+            </div>
+            <div class="example-item">
+                <a href="predefined-content.html">Predefined Content</a>
+                <span>Create popups from HTML strings and update content.</span>
+            </div>
+            <div class="example-item">
+                <a href="containers.html">Container Targeting</a>
+                <span>Inject popups into specific elements instead of body.</span>
+            </div>
+            <div class="example-item">
+                <a href="advanced.html">Advanced Settings</a>
+                <span>Expert configuration, persistence, and targeting.</span>
+            </div>
+        </div>
+    </section>
+
     <div class="cta-links">
         <a href="https://github.com/dev4press/flyin">GitHub Repository</a>
         <a href="https://www.dev4press.com/">Visit dev4Press</a>
     </div>
-
-    <section id="examples">
-        <h2>Examples</h2>
-        <p>Explore different use cases and configurations of Flyin (each opens in a new tab):</p>
-        <ul class="examples-list">
-            <li><a href="basic.html">Basic Usage</a> - Simple initialization and opening.</li>
-            <li><a href="skins.html">Skins and Styles</a> - Showcase different visual looks and skins (Base, Free).</li>
-            <li><a href="animations.html">Animations and Effects</a> - Test all supported entry/exit animations.</li>
-            <li><a href="callbacks.html">Callbacks</a> - Monitor popup lifecycle events.</li>
-            <li><a href="interactions.html">Interactions</a> - Control how popups are closed (Escape, Overlay, Auto).</li>
-            <li><a href="styling.html">Custom Styling</a> - Using extra classes and custom CSS.</li>
-            <li><a href="modal.html">Modal vs Non-Modal</a> - Compare interaction modes.</li>
-            <li><a href="position.html">Position and Offset</a> - Placement anywhere on the screen.</li>
-            <li><a href="auto-open.html">Auto-open and Exit Intent</a> - Triggering popups automatically.</li>
-            <li><a href="size.html">Size and Dimensions</a> - Controlling popup width and height.</li>
-            <li><a href="header-footer.html">Header and Footer</a> - Configuration of popup header and footer elements.</li>
-        </ul>
-    </section>
 </main>
 
 <footer>
@@ -139,7 +168,7 @@
             settings: {
                 onLoad: false,
                 effect: 'fade-in-down',
-                style: 'flyin-style-plain-white',
+                style: 'flyin-style-sky-blue',
                 modal: true,
                 footer: true,
                 footerContent: '<small>Flyin Library Example Footer</small>',

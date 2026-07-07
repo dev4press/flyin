@@ -23,11 +23,26 @@
         <h2>Skins and Styles</h2>
         <p>Flyin supports different skins and visual styles. Skins (like 'Base' and 'Free') control functionality, while styles control the CSS look.</p>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 2rem 0;">
-            <button id="open-plain-white" class="cta-button">Base Skin: Plain White</button>
-            <button id="open-plain-black" class="cta-button">Base Skin: Plain Black</button>
-            <button id="open-clean-gray" class="cta-button">Base Skin: Clean Gray</button>
-            <button id="open-box-red" class="cta-button">Base Skin: Box Red</button>
+        <h3>Legacy Styles</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 1rem 0;">
+            <button id="open-plain-white" class="cta-button">Plain White</button>
+            <button id="open-plain-black" class="cta-button">Plain Black</button>
+            <button id="open-clean-gray" class="cta-button">Clean Gray</button>
+            <button id="open-box-red" class="cta-button">Box Red</button>
+        </div>
+
+        <h3>Modern Styles</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 1rem 0;">
+            <button id="open-sky-blue" class="cta-button">Sky Blue</button>
+            <button id="open-midnight-blue" class="cta-button">Midnight Blue</button>
+            <button id="open-mint-green" class="cta-button">Mint Green</button>
+            <button id="open-forest-green" class="cta-button">Forest Green</button>
+            <button id="open-sunny-orange" class="cta-button">Sunny Orange</button>
+            <button id="open-vibrant-orange" class="cta-button">Vibrant Orange</button>
+        </div>
+
+        <h3>Skins & Customization</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 1rem 0;">
             <button id="open-free-skin" class="cta-button">Free Skin (Draggable)</button>
             <button id="open-custom-svg" class="cta-button">Custom SVG Icons</button>
         </div>
@@ -61,7 +76,13 @@
             'open-plain-black': { skin: 'Base', settings: { style: 'flyin-style-plain-black' } },
             'open-clean-gray': { skin: 'Base', settings: { style: 'flyin-style-clean-gray' } },
             'open-box-red': { skin: 'Base', settings: { style: 'flyin-style-box-red' } },
-            'open-free-skin': { skin: 'Free', settings: { style: 'flyin-style-plain-white', showGrip: true, savePosize: false } },
+            'open-sky-blue': { skin: 'Base', settings: { style: 'flyin-style-sky-blue' } },
+            'open-midnight-blue': { skin: 'Base', settings: { style: 'flyin-style-midnight-blue' } },
+            'open-mint-green': { skin: 'Base', settings: { style: 'flyin-style-mint-green' } },
+            'open-forest-green': { skin: 'Base', settings: { style: 'flyin-style-forest-green' } },
+            'open-sunny-orange': { skin: 'Base', settings: { style: 'flyin-style-sunny-orange' } },
+            'open-vibrant-orange': { skin: 'Base', settings: { style: 'flyin-style-vibrant-orange' } },
+            'open-free-skin': { skin: 'Free', settings: { style: 'flyin-style-sky-blue', showGrip: true, savePosize: false } },
             'open-custom-svg': { 
                 skin: 'Free', 
                 settings: { 

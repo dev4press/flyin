@@ -240,7 +240,10 @@ export class Skin {
     overlay.style.backgroundColor = this.settings.overlayColor || '#ffffff';
     overlay.style.transition = `opacity ${this.settings.overlaySpeed}s`;
 
-    const container = document.querySelector(this.settings.containerSelector || 'body') || document.body;
+    const container = this.getContainer();
+    if (container !== document.body) {
+      overlay.style.position = 'absolute';
+    }
     container.appendChild(overlay);
     this.core.overlay = overlay;
   }
@@ -331,7 +334,7 @@ export class Skin {
     const content = document.createElement('div');
     content.className = this.css('content');
     if (this.settings.attrContent) this.setAttributes(content, this.settings.attrContent);
-    content.innerHTML = this.core.element ? this.core.element.innerHTML : '';
+    content.innerHTML = this.settings.content || (this.core.element ? this.core.element.innerHTML : '');
     wrapper.appendChild(content);
 
     // Footer
@@ -345,7 +348,13 @@ export class Skin {
         btnFooter.type = 'button';
         btnFooter.innerHTML = this.settings.buttonFooterContent || 'Close';
         btnFooter.setAttribute('aria-label', this.settings.buttonFooterContent || 'Close');
-        btnFooter.addEventListener('click', () => this.close());
+        btnFooter.addEventListener('click', () => {
+          if (typeof this.settings.buttonAction === 'function') {
+            this.settings.buttonAction.call(this, this.core);
+          } else {
+            this.close();
+          }
+        });
         footer.appendChild(btnFooter);
       }
 
@@ -358,7 +367,10 @@ export class Skin {
     }
 
     dialog.appendChild(wrapper);
-    const container = document.querySelector(this.settings.containerSelector || 'body') || document.body;
+    const container = this.getContainer();
+    if (container !== document.body) {
+      dialog.style.position = 'absolute';
+    }
     container.appendChild(dialog);
     this.core.dialog = dialog;
 
@@ -403,33 +415,45 @@ export class Skin {
     // TODO: Implement intersection observer or similar
   }
 
+  protected getContainer(): HTMLElement {
+    return (document.querySelector(this.settings.containerSelector || 'body') || document.body) as HTMLElement;
+  }
+
+  protected getContainerDimensions(): { width: number; height: number } {
+    const container = this.getContainer();
+    const isBody = container === document.body;
+    return {
+      width: isBody ? window.innerWidth : container.clientWidth,
+      height: isBody ? window.innerHeight : container.clientHeight,
+    };
+  }
+
   protected calculatePosition(_init = false): void {
     if (!this.core.dialog) return;
 
     const dialog = this.core.dialog;
     const rect = dialog.getBoundingClientRect();
-    const winW = window.innerWidth;
-    const winH = window.innerHeight;
+    const dims = this.getContainerDimensions();
 
     let x: number;
     let y: number;
 
     if (this.settings.positionX === 'center') {
-      x = (winW - rect.width) / 2;
+      x = (dims.width - rect.width) / 2;
     } else if (this.settings.positionX === 'left') {
       x = 0;
     } else if (this.settings.positionX === 'right') {
-      x = winW - rect.width;
+      x = dims.width - rect.width;
     } else {
       x = parseInt(this.settings.positionX as string, 10);
     }
 
     if (this.settings.positionY === 'center') {
-      y = (winH - rect.height) / 2;
+      y = (dims.height - rect.height) / 2;
     } else if (this.settings.positionY === 'top') {
       y = 0;
     } else if (this.settings.positionY === 'bottom') {
-      y = winH - rect.height;
+      y = dims.height - rect.height;
     } else {
       y = parseInt(this.settings.positionY as string, 10);
     }
@@ -565,6 +589,17 @@ export class Skin {
 
   public resize(_size: any): void {
     // Implementation for resize
+  }
+
+  public setContent(content: string): void {
+    this.settings.content = content;
+    if (this.core.dialog) {
+      const contentEl = this.core.dialog.querySelector(`.${this.css('content')}`);
+      if (contentEl) {
+        contentEl.innerHTML = content;
+        this.calculatePosition();
+      }
+    }
   }
 
   protected finishDialog(): void {

@@ -2,42 +2,70 @@
   // Z-index
   --flyin-z-index: 1000000;
 
-  // Colors
-  --flyin-white: #ffffff;
-  --flyin-black: #000000;
-  --flyin-gray-dark: #444444;
-  --flyin-gray: #888888;
-  --flyin-gray-light: #dddddd;
-  --flyin-shadow-color: rgba(32, 32, 32, 0.3);
-
   // Overlay
   --flyin-overlay-opacity: 0.7;
   --flyin-overlay-speed: 0.07s;
 
   // Dialog
   --flyin-dialog-speed: 0.7s;
-  --flyin-border-radius: 4px;
 
   // Skin Variables (Base Defaults)
-  --flyin-bg: var(--flyin-white);
+  --flyin-wrapper-bg: #ffffff;
+  --flyin-wrapper-border-radius: 4px;
+  --flyin-wrapper-border: none;
+  --flyin-wrapper-shadow: 1px 1px 4px rgba(32, 32, 32, 0.3);
+
   --flyin-header-bg: transparent;
-  --flyin-header-border-color: var(--flyin-gray-light);
-  --flyin-title-color: var(--flyin-gray-dark);
+  --flyin-header-border-bottom: 1px solid #dddddd;
+
+  --flyin-title-color: #444444;
   --flyin-title-size: 18px;
   --flyin-title-weight: normal;
   --flyin-title-transform: none;
   --flyin-title-shadow: none;
-  --flyin-close-btn-color: var(--flyin-gray);
+  --flyin-title-margin: 0;
+  --flyin-title-padding: 0;
+  --flyin-title-line-height: 24px;
+
+  --flyin-close-btn-color: #888888;
+  --flyin-close-btn-bg: transparent;
+  --flyin-close-btn-shadow: none;
+  --flyin-close-btn-width: 24px;
+  --flyin-close-btn-height: 24px;
+  --flyin-close-btn-fill: currentColor;
+
+  --flyin-close-btn-alt-bg: #888888;
+  --flyin-close-btn-alt-color: #ffffff;
+  --flyin-close-btn-alt-shadow: 1px 1px 4px rgba(32, 32, 32, 0.3);
+
   --flyin-content-color: inherit;
+  --flyin-content-size: inherit;
+  --flyin-content-line-height: inherit;
+
   --flyin-footer-bg: transparent;
-  --flyin-footer-border-color: var(--flyin-gray-light);
+  --flyin-footer-border-top: 1px solid #dddddd;
+  --flyin-footer-text-align: center;
+
   --flyin-footer-btn-color: inherit;
   --flyin-footer-btn-size: inherit;
   --flyin-footer-btn-transform: none;
   --flyin-footer-btn-letter-spacing: normal;
   --flyin-footer-btn-weight: normal;
-  --flyin-padding: 10px;
-  --flyin-border: none;
-  --flyin-shadow: 1px 1px 4px var(--flyin-shadow-color);
-  --flyin-title-border-bottom: none;
+  --flyin-footer-btn-outline: 1px solid transparent;
+  --flyin-footer-btn-padding: 0;
+  --flyin-footer-btn-margin: 0;
+  --flyin-footer-btn-border: none;
+  --flyin-footer-btn-background: none;
+  --flyin-footer-btn-border-radius: 4px;
+  --flyin-footer-btn-shadow: none;
+
+  --flyin-header-padding: 10px;
+  --flyin-content-padding: 10px;
+  --flyin-footer-padding: 10px;
+  --flyin-close-btn-top: 10px;
+  --flyin-close-btn-right: 10px;
+
+  --flyin-grip-color: rgba(0, 0, 0, 0.2);
+  --flyin-grip-width: 20px;
+  --flyin-grip-height: 20px;
 }

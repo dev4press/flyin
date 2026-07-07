@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin Documentation - Settings Parameters</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin Documentation</h1>
+    <p>Settings Parameters</p>
+</header>
+
+<main>
+    <section id="settings">
+        <h2>Initialization Settings</h2>
+        <p>When initializing Flyin, you can pass a settings object to customize the behavior and appearance of your popup.</p>
+        
+        <pre><code>new Flyin("#my-popup", {
+    settings: {
+        // parameters here
+    },
+    callbacks: {
+        // callbacks here
+    }
+});</code></pre>
+
+        <h3>Core Settings</h3>
+        <ul>
+            <li><code>style</code> (string): CSS class for the popup skin. Default: <code>'sanp-style-plain-white'</code>.</li>
+            <li><code>effect</code> (string): Entry effect. Use <code>'random'</code> or specific effect name. Default: <code>'random'</code>.</li>
+            <li><code>effectSpeed</code> (number): Duration of the effect in seconds. Default: <code>0.7</code>.</li>
+            <li><code>modal</code> (boolean): Whether to show a modal overlay. Default: <code>true</code>.</li>
+            <li><code>zIndex</code> (number): Base z-index for the popup. Default: <code>1000000</code>.</li>
+        </ul>
+
+        <h3>Position and Size</h3>
+        <ul>
+            <li><code>width</code> (string): Width of the popup (e.g., <code>'40%'</code>, <code>'500px'</code>). Default: <code>'40%'</code>.</li>
+            <li><code>height</code> (string): Height of the popup. Default: <code>'auto'</code>.</li>
+            <li><code>positionX</code> (string): Horizontal position (<code>'center'</code>, <code>'left'</code>, <code>'right'</code>). Default: <code>'center'</code>.</li>
+            <li><code>positionY</code> (string): Vertical position (<code>'center'</code>, <code>'top'</code>, <code>'bottom'</code>). Default: <code>'center'</code>.</li>
+            <li><code>offsetX</code> (string): Horizontal offset. Default: <code>'10px'</code>.</li>
+            <li><code>offsetY</code> (string): Vertical offset. Default: <code>'10px'</code>.</li>
+            <li><code>minWidth</code> / <code>maxWidth</code> (string): Constraints for width.</li>
+            <li><code>minHeight</code> / <code>maxHeight</code> (string): Constraints for height.</li>
+        </ul>
+
+        <h3>Triggers</h3>
+        <ul>
+            <li><code>onLoad</code> (boolean): Open automatically when page loads. Default: <code>true</code>.</li>
+            <li><code>onLoadDelay</code> (number): Delay in milliseconds before auto-opening. Default: <code>500</code>.</li>
+            <li><code>onLeaveTop</code> (boolean): Open when mouse leaves the top of the viewport. Default: <code>false</code>.</li>
+            <li><code>onLeaveViewport</code> (boolean): Open when mouse leaves the viewport. Default: <code>false</code>.</li>
+        </ul>
+
+        <h3>Closing Options</h3>
+        <ul>
+            <li><code>closeEscape</code> (boolean): Close on Escape key press. Default: <code>true</code>.</li>
+            <li><code>closeOverlay</code> (boolean): Close when clicking on the overlay. Default: <code>true</code>.</li>
+            <li><code>closeAuto</code> (boolean): Automatically close after a delay. Default: <code>false</code>.</li>
+            <li><code>closeAutoDelay</code> (number): Delay in milliseconds for auto-closing.</li>
+        </ul>
+
+        <h3>Header and Footer</h3>
+        <ul>
+            <li><code>header</code> (boolean): Show popup header. Default: <code>true</code>.</li>
+            <li><code>headerContent</code> (string|boolean): Custom HTML for header.</li>
+            <li><code>footer</code> (boolean): Show popup footer. Default: <code>true</code>.</li>
+            <li><code>footerContent</code> (string|boolean): Custom HTML for footer.</li>
+            <li><code>buttonX</code> (boolean): Show close button in header. Default: <code>true</code>.</li>
+            <li><code>buttonFooter</code> (boolean): Show close button in footer. Default: <code>true</code>.</li>
+            <li><code>buttonFooterContent</code> (string): Text for footer close button. Default: <code>'Close'</code>.</li>
+        </ul>
+
+        <h3>Callbacks</h3>
+        <ul>
+            <li><code>prepared</code>: Triggered when popup is prepared.</li>
+            <li><code>ready</code>: Triggered when popup is ready.</li>
+            <li><code>beforeOpen</code> / <code>afterOpen</code>: Lifecycle events for opening.</li>
+            <li><code>beforeClose</code> / <code>afterClose</code>: Lifecycle events for closing.</li>
+        </ul>
+    </section>
+
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+        <a href="variables.html">Next: CSS Variables</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+    <p>Licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
+</footer>
+
+</body>
+</html>

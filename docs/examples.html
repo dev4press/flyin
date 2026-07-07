@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin Documentation - Code Examples</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin Documentation</h1>
+    <p>Code Examples</p>
+</header>
+
+<main>
+    <section id="init-div">
+        <h2>Initialization with DIV</h2>
+        <p>The most common way to use Flyin is to have a hidden DIV in your HTML and initialize it.</p>
+        <pre><code>&lt;!-- HTML --&gt;
+&lt;div id="my-popup" data-title="My Popup Title" style="display: none;"&gt;
+    &lt;p&gt;This is the content of my popup.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- JavaScript --&gt;
+&lt;script&gt;
+    new Flyin("#my-popup", {
+        settings: {
+            style: 'flyin-style-sky-blue',
+            effect: 'fade-in-down'
+        }
+    });
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <section id="init-predefined">
+        <h2>Custom Content in Settings</h2>
+        <p>You can create a popup with content defined directly in the settings instead of an existing element.</p>
+        <pre><code>&lt;script&gt;
+    new Flyin(null, {
+        settings: {
+            title: "Dynamic Popup",
+            content: "&lt;div&gt;&lt;p&gt;This content is passed via settings.&lt;/p&gt;&lt;/div&gt;",
+            onLoad: true
+        }
+    });
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <section id="init-element">
+        <h2>Initialization with HTMLElement</h2>
+        <p>You can pass a DOM element directly to the constructor.</p>
+        <pre><code>&lt;script&gt;
+    const myElement = document.createElement('div');
+    myElement.innerHTML = "&lt;p&gt;Created programmatically.&lt;/p&gt;";
+
+    new Flyin(myElement, {
+        settings: {
+            title: "HTMLElement Example"
+        }
+    });
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <section id="callbacks">
+        <h2>Using Callbacks</h2>
+        <p>Monitor the lifecycle of your popup using callbacks.</p>
+        <pre><code>&lt;script&gt;
+    new Flyin("#my-popup", {
+        callbacks: {
+            beforeOpen: function(core) {
+                console.log("Popup is about to open");
+            },
+            afterOpen: function(core) {
+                console.log("Popup is now open");
+            },
+            afterClose: function(core) {
+                console.log("Popup has been closed");
+            }
+        }
+    });
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <section id="advanced-settings">
+        <h2>Advanced Settings Example</h2>
+        <p>Combining multiple settings for a highly customized experience.</p>
+        <pre><code>&lt;script&gt;
+    var myFlyin = new Flyin("#my-popup", {
+        settings: {
+            modal: true,
+            width: '600px',
+            effect: 'bounce',
+            closeAuto: true,
+            closeAutoDelay: 5000, // 5 seconds
+            headerContent: "&lt;h3&gt;Important Alert&lt;/h3&gt;",
+            footerContent: "&lt;p&gt;Please read carefully.&lt;/p&gt;",
+            overlayColor: "#000000",
+            overlayOpacity: 0.8
+        }
+    });
+
+    // You can also control the popup manually
+    // myFlyin.open();
+    // myFlyin.close();
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+        <a href="settings.html">Settings Parameters</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+    <p>Licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
+</footer>
+
+</body>
+</html>

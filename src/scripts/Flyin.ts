@@ -16,9 +16,11 @@ export class Flyin {
   public settings: Options['settings'] = {};
   public callbacks: Callbacks = {};
 
-  constructor(element: HTMLElement | string, options: Options = {}) {
+  constructor(element: HTMLElement | string | null, options: Options = {}) {
     this.id = flyinIDSequence++;
-    this.element = typeof element === 'string' ? document.querySelector(element) : element;
+    if (element) {
+      this.element = typeof element === 'string' ? document.querySelector(element) : element;
+    }
 
     this.skinName = options.skin || 'Base';
     this.settings = options.settings || {};
@@ -59,6 +61,10 @@ export class Flyin {
 
   resize(size: any): void {
     this.skinInstance?.resize(size);
+  }
+
+  setContent(content: string): void {
+    this.skinInstance?.setContent(content);
   }
 
   randomFromArray(input: any[]): any {

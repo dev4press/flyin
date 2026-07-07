@@ -69,12 +69,13 @@ export class FreeSkin extends Skin {
       this.settings.cWidth = 'auto';
       this.settings.cHeight = 'auto';
 
-      if (window.innerWidth < (this.settings.positionX as number) + this.cookiePosize.width) {
-        this.settings.positionX = window.innerWidth - this.cookiePosize.width;
+      const dims = this.getContainerDimensions();
+      if (dims.width < (this.settings.positionX as number) + this.cookiePosize.width) {
+        this.settings.positionX = dims.width - this.cookiePosize.width;
       }
 
-      if (window.innerHeight < (this.settings.positionY as number) + this.cookiePosize.height) {
-        this.settings.positionY = window.innerHeight - this.cookiePosize.height;
+      if (dims.height < (this.settings.positionY as number) + this.cookiePosize.height) {
+        this.settings.positionY = dims.height - this.cookiePosize.height;
       }
     }
   }
@@ -208,8 +209,9 @@ export class FreeSkin extends Skin {
     this.moverState.width = rect.width;
     this.moverState.height = rect.height;
 
-    this.moverState.maxLeft = window.innerWidth - this.moverState.width;
-    this.moverState.maxTop = window.innerHeight - this.moverState.height;
+    const dims = this.getContainerDimensions();
+    this.moverState.maxLeft = dims.width - this.moverState.width;
+    this.moverState.maxTop = dims.height - this.moverState.height;
 
     this.moverState.posX = rect.left + this.moverState.width - pos.pageX;
     this.moverState.posY = rect.top + this.moverState.height - pos.pageY;
@@ -222,8 +224,16 @@ export class FreeSkin extends Skin {
     if (this.moverState.dr) {
       if (e.cancelable) e.preventDefault();
 
+      const containerRect = this.getContainer().getBoundingClientRect();
+      const isBody = this.getContainer() === document.body;
+
       let left = pos.pageX + this.moverState.posX - this.moverState.width;
       let top = pos.pageY + this.moverState.posY - this.moverState.height;
+
+      if (!isBody) {
+        left -= containerRect.left;
+        top -= containerRect.top;
+      }
 
       left = Math.max(0, Math.min(left, this.moverState.maxLeft));
       top = Math.max(0, Math.min(top, this.moverState.maxTop));
@@ -281,19 +291,24 @@ export class FreeSkin extends Skin {
         this.moverState.rmY = pos.pageY;
 
         const dRect = dialog.getBoundingClientRect();
+        const containerRect = this.getContainer().getBoundingClientRect();
+        const isBody = this.getContainer() === document.body;
 
         if (relY !== 0) {
           if (this.moverState.resizeTop) {
             let actualRelY = relY;
-            if (dRect.top + actualRelY < 0) actualRelY = -dRect.top;
+            const topLimit = isBody ? 0 : containerRect.top;
+            if (dRect.top + actualRelY < topLimit) actualRelY = topLimit - dRect.top;
             if (dRect.height - actualRelY > (this.settings.sizeMinHeight || 100)) {
               dialog.style.height = `${dRect.height - actualRelY}px`;
-              dialog.style.top = `${dRect.top + actualRelY}px`;
+              dialog.style.top = `${(isBody ? dRect.top : dRect.top - containerRect.top) + actualRelY}px`;
             }
           }
           if (this.moverState.resizeBottom) {
             let actualRelY = relY;
-            if (dRect.bottom + actualRelY > window.innerHeight) actualRelY = window.innerHeight - dRect.bottom;
+            const dims = this.getContainerDimensions();
+            const bottomLimit = isBody ? dims.height : containerRect.bottom;
+            if (dRect.bottom + actualRelY > bottomLimit) actualRelY = bottomLimit - dRect.bottom;
             if (dRect.height + actualRelY > (this.settings.sizeMinHeight || 100)) {
               dialog.style.height = `${dRect.height + actualRelY}px`;
             }
@@ -303,15 +318,18 @@ export class FreeSkin extends Skin {
         if (relX !== 0) {
           if (this.moverState.resizeLeft) {
             let actualRelX = relX;
-            if (dRect.left + actualRelX < 0) actualRelX = -dRect.left;
+            const leftLimit = isBody ? 0 : containerRect.left;
+            if (dRect.left + actualRelX < leftLimit) actualRelX = leftLimit - dRect.left;
             if (dRect.width - actualRelX > (this.settings.sizeMinWidth || 90)) {
               dialog.style.width = `${dRect.width - actualRelX}px`;
-              dialog.style.left = `${dRect.left + actualRelX}px`;
+              dialog.style.left = `${(isBody ? dRect.left : dRect.left - containerRect.left) + actualRelX}px`;
             }
           }
           if (this.moverState.resizeRight) {
             let actualRelX = relX;
-            if (dRect.right + actualRelX > window.innerWidth) actualRelX = window.innerWidth - dRect.right;
+            const dims = this.getContainerDimensions();
+            const rightLimit = isBody ? dims.width : containerRect.right;
+            if (dRect.right + actualRelX > rightLimit) actualRelX = rightLimit - dRect.right;
             if (dRect.width + actualRelX > (this.settings.sizeMinWidth || 90)) {
               dialog.style.width = `${dRect.width + actualRelX}px`;
             }
@@ -357,10 +375,12 @@ export class FreeSkin extends Skin {
 
     const rect = dialog.getBoundingClientRect();
     const cRect = content.getBoundingClientRect();
+    const containerRect = this.getContainer().getBoundingClientRect();
+    const isBody = this.getContainer() === document.body;
 
     return {
-      left: rect.left,
-      top: rect.top,
+      left: isBody ? rect.left : rect.left - containerRect.left,
+      top: isBody ? rect.top : rect.top - containerRect.top,
       width: rect.width,
       height: rect.height,
       cWidth: cRect.width,

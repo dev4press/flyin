@@ -6,24 +6,8 @@
     perspective: 1500px;
   }
 
-  &.flyin-effect-roll,
-  &.flyin-effect-bounce,
-  &.flyin-effect-slit,
-  &.flyin-effect-slithor {
-    &.flyin-inactive {
-      animation: flyin-slit-hide var(--flyin-dialog-speed) forwards;
-    }
-  }
 }
 
-@keyframes flyin-slit-hide {
-  0% {
-    visibility: visible;
-  }
-  100% {
-    visibility: hidden;
-  }
-}
 
 /* roll */
 .flyin-effect-roll {

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Predefined Content Example</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Predefined Content Example</p>
+</header>
+
+<main>
+    <section>
+        <h2>Predefined Content</h2>
+        <p>This example demonstrates how to initialize Flyin with predefined HTML content instead of an existing element in the page, and how to replace that content later.</p>
+        
+        <div style="text-align: center; margin: 2rem 0;">
+            <button id="open-popup" class="cta-button">Open Popup</button>
+            <button id="open-element-popup" class="cta-button" style="background-color: #007bff; margin-left: 10px;">Open HTMLElement Popup</button>
+            <button id="change-content" class="cta-button" style="background-color: #666; margin-left: 10px;">Change Content</button>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Flyin with null as the first argument (no target element)
+        // and provide predefined content in the settings
+        var flyin = new Flyin(null, {
+            settings: {
+                content: '<p>This popup was created using <strong>predefined HTML content</strong> instead of an existing DIV in the page.</p>',
+                onLoad: false,
+                style: 'flyin-style-plain-white',
+                headerContent: 'Dynamic Content'
+            }
+        });
+
+        // Initialize Flyin with an HTMLElement
+        var myElement = document.createElement('div');
+        myElement.innerHTML = '<p>This popup was initialized by passing a <strong>direct HTMLElement</strong> to the constructor.</p>';
+        
+        var flyinElement = new Flyin(myElement, {
+            settings: {
+                title: "HTMLElement Initialization",
+                onLoad: false
+            }
+        });
+
+        // Open popup on button click
+        document.getElementById('open-popup').addEventListener('click', function() {
+            flyin.open();
+        });
+
+        // Open HTMLElement popup on button click
+        document.getElementById('open-element-popup').addEventListener('click', function() {
+            flyinElement.open();
+        });
+
+        // Change content dynamically
+        document.getElementById('change-content').addEventListener('click', function() {
+            flyin.setContent('<p>The content has been <strong>successfully replaced</strong> with this new HTML!</p><p>This is useful for updating the popup content without recreating it.</p>');
+            flyin.open(); // Make sure it's open to see the change
+        });
+
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

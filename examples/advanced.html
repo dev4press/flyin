@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Advanced Settings</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+    <style>
+        .custom-popup-class .flyin-wrapper {
+            border: 5px solid #007bff;
+            transform: rotate(-1deg);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" aria-hidden="true"><path d="M560 144L560 496L80 496L80 144L560 144zM80 128L64 128L64 512L576 512L576 128L80 128zM128 416L128 432L240 432L240 416L128 416zM304 416L304 432L512 432L512 416L304 416zM504 336L400 336L400 352L512 352L512 336L504 336zM328 336L128 336L128 352L336 352L336 336L328 336z"/></svg>
+    </div>
+    <h1>Flyin</h1>
+    <p>Advanced Settings</p>
+</header>
+
+<main>
+    <section>
+        <h2>Expert Configuration</h2>
+        <p>This example showcases advanced settings like custom persistence, deep customization, and draggable states.</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 2rem 0;">
+            <div class="example-card" style="background: #fff; padding: 1.5rem; border-radius: 8px; border: 1px solid #eee; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <h3>Custom Persistence</h3>
+                <p>Separate cookies for different popups to track views independently.</p>
+                <button id="open-persistent-1" class="cta-button">Popup A</button>
+                <button id="open-persistent-2" class="cta-button">Popup B</button>
+                <p><small>Check your browser cookies for <code>flyin-a</code> and <code>flyin-b</code>.</small></p>
+            </div>
+
+            <div class="example-card" style="background: #fff; padding: 1.5rem; border-radius: 8px; border: 1px solid #eee; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <h3>Aesthetic Overrides</h3>
+                <p>Custom overlay colors, extra CSS classes, and ARIA attributes.</p>
+                <button id="open-customized" class="cta-button">Open Customized</button>
+            </div>
+
+            <div class="example-card" style="background: #fff; padding: 1.5rem; border-radius: 8px; border: 1px solid #eee; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <h3>Custom Footer Action</h3>
+                <p>Redirect the footer button to a custom function instead of just closing.</p>
+                <button id="open-action" class="cta-button">Open with Action</button>
+            </div>
+
+            <div class="example-card" style="background: #fff; padding: 1.5rem; border-radius: 8px; border: 1px solid #eee; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                <h3>Draggable Persistence</h3>
+                <p>Save position and size in a custom cookie for the Free skin.</p>
+                <button id="open-draggable" class="cta-button">Open Draggable</button>
+            </div>
+        </div>
+
+        <div id="content-draggable" data-title="Draggable & Persistent" style="display: none;">
+            <p>I am a draggable popup with persistent position and size.</p>
+            <p>If you move or resize me, and then refresh the page, I will remember my last state thanks to cookies.</p>
+        </div>
+
+        <div id="content-persistent-a" data-title="Persistence A" style="display: none;">
+            <p>I use the cookie <code>flyin-a</code>.</p>
+        </div>
+
+        <div id="content-persistent-b" data-title="Persistence B" style="display: none;">
+            <p>I use the cookie <code>flyin-b</code>.</p>
+        </div>
+
+        <div id="content-customized" data-title="Deeply Customized" style="display: none;">
+            <p>This popup has a custom border (via <code>extraClass</code>), a purple overlay, and custom data attributes.</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/js.cookie.min.js"></script>
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // 1. Custom Persistence
+        var flyinA = new Flyin("#content-persistent-a", {
+            settings: {
+                onLoad: false,
+                cookieCode: 'flyin-a',
+                style: 'flyin-style-mint-green'
+            }
+        });
+        var flyinB = new Flyin("#content-persistent-b", {
+            settings: {
+                onLoad: false,
+                cookieCode: 'flyin-b',
+                style: 'flyin-style-sunny-orange'
+            }
+        });
+        document.getElementById('open-persistent-1').addEventListener('click', function() { flyinA.open(); });
+        document.getElementById('open-persistent-2').addEventListener('click', function() { flyinB.open(); });
+
+        // 2. Deep Customization
+        var customFlyin = new Flyin("#content-customized", {
+            settings: {
+                onLoad: false,
+                extraClass: 'custom-popup-class',
+                overlayColor: '#4b0082',
+                overlayOpacity: 0.5,
+                overlaySpeed: 0.5,
+                attrWrapper: 'data-custom="true" aria-describedby="custom-desc"',
+                titleTag: 'h2',
+                effect: 'newspaper'
+            }
+        });
+        document.getElementById('open-customized').addEventListener('click', function() {
+            customFlyin.open();
+        });
+
+        // 3. Custom Footer Action
+        var actionFlyin = new Flyin("#content-customized", {
+            settings: {
+                onLoad: false,
+                style: 'flyin-style-vibrant-orange',
+                buttonFooterContent: 'Alert & Close',
+                buttonAction: function(core) {
+                    alert('Custom action triggered!');
+                    core.close();
+                }
+            }
+        });
+        document.getElementById('open-action').addEventListener('click', function() {
+            actionFlyin.open();
+        });
+
+        // 4. Draggable Persistence
+        var draggableFlyin = new Flyin("#content-draggable", {
+            skin: 'Free',
+            settings: {
+                onLoad: false,
+                style: 'flyin-style-midnight-blue',
+                showGrip: true,
+                savePosize: true,
+                cookiePosizeCode: 'custom-posize',
+                width: 300,
+                height: 200
+            }
+        });
+        document.getElementById('open-draggable').addEventListener('click', function() {
+            draggableFlyin.open();
+        });
+
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

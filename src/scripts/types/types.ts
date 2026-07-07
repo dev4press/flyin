@@ -47,6 +47,7 @@ export interface Settings {
   buttonXSVG?: string;
   buttonFooter?: boolean;
   buttonFooterContent?: string;
+  buttonAction?: (this: any, core: any) => void;
   ariaCloseLabel?: string;
   cookieCode?: string;
   cookiePosizeCode?: string;
@@ -65,6 +66,7 @@ export interface Settings {
   sizeMinWidth?: number;
   sizeMinHeight?: number;
   resizeMargin?: number;
+  content?: string;
 }
 
 export interface Callbacks {
