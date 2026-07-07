@@ -1,17 +1,17 @@
 @use 'variables' as *;
 
-.#{$flyin-prefix}-dialog {
-  &.#{$flyin-prefix}-effect-slit,
-  &.#{$flyin-prefix}-effect-slithor {
+.flyin-dialog {
+  &.flyin-effect-slit,
+  &.flyin-effect-slithor {
     perspective: 1500px;
   }
 
-  &.#{$flyin-prefix}-effect-roll,
-  &.#{$flyin-prefix}-effect-bounce,
-  &.#{$flyin-prefix}-effect-slit,
-  &.#{$flyin-prefix}-effect-slithor {
-    &.#{$flyin-prefix}-inactive {
-      animation: flyin-slit-hide $flyin-dialog-speed forwards;
+  &.flyin-effect-roll,
+  &.flyin-effect-bounce,
+  &.flyin-effect-slit,
+  &.flyin-effect-slithor {
+    &.flyin-inactive {
+      animation: flyin-slit-hide var(--flyin-dialog-speed) forwards;
     }
   }
 }
@@ -26,13 +26,13 @@
 }
 
 /* roll */
-.#{$flyin-prefix}-effect-roll {
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
-    animation: flyin-roll-in $flyin-dialog-speed;
+.flyin-effect-roll {
+  &.flyin-active .flyin-wrapper {
+    animation: flyin-roll-in var(--flyin-dialog-speed);
   }
 
-  &.#{$flyin-prefix}-inactive .#{$flyin-prefix}-wrapper {
-    animation: flyin-roll-out $flyin-dialog-speed;
+  &.flyin-inactive .flyin-wrapper {
+    animation: flyin-roll-out var(--flyin-dialog-speed);
   }
 }
 
@@ -58,13 +58,13 @@
 }
 
 /* bounce */
-.#{$flyin-prefix}-effect-bounce {
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
-    animation: flyin-bounce-in $flyin-dialog-speed;
+.flyin-effect-bounce {
+  &.flyin-active .flyin-wrapper {
+    animation: flyin-bounce-in var(--flyin-dialog-speed);
   }
 
-  &.#{$flyin-prefix}-inactive .#{$flyin-prefix}-wrapper {
-    animation: flyin-bounce-out $flyin-dialog-speed;
+  &.flyin-inactive .flyin-wrapper {
+    animation: flyin-bounce-out var(--flyin-dialog-speed);
   }
 }
 
@@ -116,20 +116,20 @@
 }
 
 /* slit */
-.#{$flyin-prefix}-effect-slit {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-slit {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     opacity: 1;
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: translateZ(-3000px) rotateY(90deg);
-    animation: flyin-slit $flyin-dialog-speed forwards ease-out;
+    animation: flyin-slit var(--flyin-dialog-speed) forwards ease-out;
   }
 
-  &.#{$flyin-prefix}-inactive .#{$flyin-prefix}-wrapper {
+  &.flyin-inactive .flyin-wrapper {
     transform: translateZ(0) rotateY(0deg);
-    animation: flyin-slit-out $flyin-dialog-speed forwards ease-in;
+    animation: flyin-slit-out var(--flyin-dialog-speed) forwards ease-in;
   }
 }
 
@@ -158,20 +158,20 @@
 }
 
 /* slithor */
-.#{$flyin-prefix}-effect-slithor {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-slithor {
+  .flyin-wrapper {
     transform: translateZ(-3000px) rotateX(90deg);
     transform-style: preserve-3d;
     opacity: 1;
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
-    animation: flyin-slithor $flyin-dialog-speed forwards ease-out;
+  &.flyin-active .flyin-wrapper {
+    animation: flyin-slithor var(--flyin-dialog-speed) forwards ease-out;
   }
 
-  &.#{$flyin-prefix}-inactive .#{$flyin-prefix}-wrapper {
+  &.flyin-inactive .flyin-wrapper {
     transform: translateZ(0) rotateX(0deg);
-    animation: flyin-slithor-out $flyin-dialog-speed forwards ease-out;
+    animation: flyin-slithor-out var(--flyin-dialog-speed) forwards ease-out;
   }
 }
 

@@ -3,7 +3,7 @@
 @use 'partials/transitions';
 @use 'partials/skins';
 
-.#{$flyin-prefix}-sr-only {
+.flyin-sr-only {
   position: absolute !important;
   width: 1px;
   height: 1px;
@@ -15,7 +15,7 @@
   border-width: 0;
 }
 
-.#{$flyin-prefix}-overlay {
+.flyin-overlay {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -23,17 +23,21 @@
   top: 0;
   opacity: 0;
   left: 0;
+  background: var(--flyin-black);
+  transition: visibility 0s var(--flyin-overlay-speed), opacity var(--flyin-overlay-speed);
 
-  &.#{$flyin-prefix}-active {
+  &.flyin-active {
     visibility: visible;
+    opacity: var(--flyin-overlay-opacity);
+    transition: opacity var(--flyin-overlay-speed);
   }
 }
 
-.#{$flyin-prefix}-active body {
+.flyin-active body {
   overflow: hidden;
 }
 
-.#{$flyin-prefix}-dialog {
+.flyin-dialog {
   position: fixed;
   backface-visibility: hidden;
   visibility: hidden;
@@ -43,33 +47,34 @@
     box-sizing: border-box;
   }
 
-  &.#{$flyin-prefix}-inactive,
-  &.#{$flyin-prefix}-active {
+  &.flyin-inactive,
+  &.flyin-active {
     visibility: visible;
   }
 
-  &.#{$flyin-prefix}-skin-free {
-    .#{$flyin-prefix}-header {
+  &.flyin-skin-free {
+    .flyin-header {
       cursor: move;
     }
   }
 
-  &.#{$flyin-prefix}-drag {
+  &.flyin-drag {
     cursor: move !important;
 
-    .#{$flyin-prefix}-header {
+    .flyin-header {
       cursor: move !important;
     }
   }
 
-  .#{$flyin-prefix}-wrapper {
+  .flyin-wrapper {
     position: relative;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     height: 100%;
+    max-width: 100%;
 
-    .#{$flyin-prefix}-content {
+    .flyin-content {
       overflow: auto;
       position: relative;
       flex: 1;
@@ -80,7 +85,7 @@
       }
     }
 
-    .#{$flyin-prefix}-button-close {
+    .flyin-button-close {
       z-index: 200;
       margin: 0;
       padding: 0;
@@ -90,6 +95,7 @@
       border: none;
       cursor: pointer;
       float: right;
+      transition: all var(--flyin-dialog-speed);
 
       svg {
         width: 16px;
@@ -100,10 +106,10 @@
     }
   }
 
-  .#{$flyin-prefix}-footer {
+  .flyin-footer {
     position: relative;
 
-    .#{$flyin-prefix}-grip {
+    .flyin-grip {
       position: absolute;
       right: 0;
       bottom: 0;
@@ -121,8 +127,8 @@
   }
 }
 
-.#{$flyin-prefix}-button-alt {
-  .#{$flyin-prefix}-wrapper .#{$flyin-prefix}-button-close {
+.flyin-button-alt {
+  .flyin-wrapper .flyin-button-close {
     border-radius: 50% !important;
     font-size: 16px !important;
     line-height: 16px !important;

@@ -1,271 +1,271 @@
 @use 'variables' as *;
 
-.#{$flyin-prefix}-dialog {
-  &.#{$flyin-prefix}-effect-rotatebottom,
-  &.#{$flyin-prefix}-effect-rotatetop,
-  &.#{$flyin-prefix}-effect-rotateleft,
-  &.#{$flyin-prefix}-effect-rotateright,
-  &.#{$flyin-prefix}-effect-flipverbottom,
-  &.#{$flyin-prefix}-effect-flipvertop,
-  &.#{$flyin-prefix}-effect-fliphorright,
-  &.#{$flyin-prefix}-effect-fliphorleft,
-  &.#{$flyin-prefix}-effect-flipsign,
-  &.#{$flyin-prefix}-effect-flipsignfront,
-  &.#{$flyin-prefix}-effect-fallcenter,
-  &.#{$flyin-prefix}-effect-fallleft,
-  &.#{$flyin-prefix}-effect-fallright {
+.flyin-dialog {
+  &.flyin-effect-rotatebottom,
+  &.flyin-effect-rotatetop,
+  &.flyin-effect-rotateleft,
+  &.flyin-effect-rotateright,
+  &.flyin-effect-flipverbottom,
+  &.flyin-effect-flipvertop,
+  &.flyin-effect-fliphorright,
+  &.flyin-effect-fliphorleft,
+  &.flyin-effect-flipsign,
+  &.flyin-effect-flipsignfront,
+  &.flyin-effect-fallcenter,
+  &.flyin-effect-fallleft,
+  &.flyin-effect-fallright {
     perspective: 1500px;
   }
 
-  .#{$flyin-prefix}-wrapper {
+  .flyin-wrapper {
     opacity: 0;
-    transition: all $flyin-dialog-speed;
+    transition: all var(--flyin-dialog-speed);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     opacity: 1;
   }
 }
 
 /* scale */
-.#{$flyin-prefix}-effect-scale {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-scale {
+  .flyin-wrapper {
     transform: scale(2);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: scale(1);
   }
 }
 
 /* zoomfade */
-.#{$flyin-prefix}-effect-zoomfade {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-zoomfade {
+  .flyin-wrapper {
     transform: scale(0.2);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: scale(1);
   }
 }
 
 /* slideinright */
-.#{$flyin-prefix}-effect-slideinright {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-slideinright {
+  .flyin-wrapper {
     transition-timing-function: cubic-bezier(0.3, 0.6, 0.6, 0.9);
     transform: translateX(50%);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: translateX(0);
   }
 }
 
 /* slideinleft */
-.#{$flyin-prefix}-effect-slideinleft {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-slideinleft {
+  .flyin-wrapper {
     transition-timing-function: cubic-bezier(0.3, 0.6, 0.6, 0.9);
     transform: translateX(-50%);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: translateX(0);
   }
 }
 
 /* slideinbottom */
-.#{$flyin-prefix}-effect-slideinbottom {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-slideinbottom {
+  .flyin-wrapper {
     transition-timing-function: cubic-bezier(0.3, 0.6, 0.6, 0.9);
     transform: translateY(50%);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: translateY(0);
   }
 }
 
 /* slideintop */
-.#{$flyin-prefix}-effect-slideintop {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-slideintop {
+  .flyin-wrapper {
     transition-timing-function: cubic-bezier(0.3, 0.6, 0.6, 0.9);
     transform: translateY(-50%);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: translateY(0);
   }
 }
 
 /* newspaper */
-.#{$flyin-prefix}-effect-newspaper {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-newspaper {
+  .flyin-wrapper {
     transform: scale(0) rotate(720deg);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: scale(1) rotate(0deg);
   }
 }
 
 /* fallcenter */
-.#{$flyin-prefix}-effect-fallcenter {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-fallcenter {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: translateZ(600px) rotateX(20deg);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: translateZ(0px) rotateX(0deg);
   }
 }
 
 /* fallleft */
-.#{$flyin-prefix}-effect-fallleft {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-fallleft {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: translateZ(600px) rotateX(20deg) rotateY(10deg);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: translateZ(0px) rotateX(0deg) rotateY(0deg);
   }
 }
 
 /* fallright */
-.#{$flyin-prefix}-effect-fallright {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-fallright {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: translateZ(600px) rotateX(20deg) rotateY(-10deg);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: translateZ(0px) rotateX(0deg) rotateY(0deg);
   }
 }
 
 /* fliphorleft */
-.#{$flyin-prefix}-effect-fliphorleft {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-fliphorleft {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: rotateY(-70deg);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: rotateY(0deg);
   }
 }
 
 /* fliphorright */
-.#{$flyin-prefix}-effect-fliphorright {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-fliphorright {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: rotateY(70deg);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: rotateY(0deg);
   }
 }
 
 /* flipvertop */
-.#{$flyin-prefix}-effect-flipvertop {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-flipvertop {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: rotateX(-70deg);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: rotateX(0deg);
   }
 }
 
 /* flipverbottom */
-.#{$flyin-prefix}-effect-flipverbottom {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-flipverbottom {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: rotateX(70deg);
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: rotateX(0deg);
   }
 }
 
 /* flipsign */
-.#{$flyin-prefix}-effect-flipsign {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-flipsign {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: rotateX(-60deg);
     transform-origin: 50% 0%;
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: rotateX(0deg);
   }
 }
 
 /* flipsignfront */
-.#{$flyin-prefix}-effect-flipsignfront {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-flipsignfront {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: rotateY(-60deg);
     transform-origin: 0% 50%;
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: rotateY(0deg);
   }
 }
 
 /* rotatebottom */
-.#{$flyin-prefix}-effect-rotatebottom {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-rotatebottom {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: translateY(100%) rotateX(90deg);
     transform-origin: 0% 100%;
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: translateY(0%) rotateX(0deg);
   }
 }
 
 /* rotatetop */
-.#{$flyin-prefix}-effect-rotatetop {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-rotatetop {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: translateY(-100%) rotateX(-90deg);
     transform-origin: 0% 0%;
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: translateY(0%) rotateX(0deg);
   }
 }
 
 /* rotateleft */
-.#{$flyin-prefix}-effect-rotateleft {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-rotateleft {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: translateX(-100%) rotateY(90deg);
     transform-origin: 0% 100%;
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: translateX(0%) rotateY(0deg);
   }
 }
 
 /* rotateright */
-.#{$flyin-prefix}-effect-rotateright {
-  .#{$flyin-prefix}-wrapper {
+.flyin-effect-rotateright {
+  .flyin-wrapper {
     transform-style: preserve-3d;
     transform: translateX(100%) rotateY(-90deg);
     transform-origin: 100% 0%;
   }
 
-  &.#{$flyin-prefix}-active .#{$flyin-prefix}-wrapper {
+  &.flyin-active .flyin-wrapper {
     transform: translateX(0%) rotateY(0deg);
   }
 }

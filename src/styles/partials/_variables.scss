@@ -1,27 +1,43 @@
-// Base Prefix
-$flyin-prefix: 'flyin';
+:root {
+  // Z-index
+  --flyin-z-index: 1000000;
 
-// Z-index
-$flyin-z-index: 1000000;
+  // Colors
+  --flyin-white: #ffffff;
+  --flyin-black: #000000;
+  --flyin-gray-dark: #444444;
+  --flyin-gray: #888888;
+  --flyin-gray-light: #dddddd;
+  --flyin-shadow-color: rgba(32, 32, 32, 0.3);
 
-// Colors
-$flyin-white: #ffffff;
-$flyin-black: #000000;
-$flyin-gray-dark: #444444;
-$flyin-gray: #888888;
-$flyin-gray-light: #dddddd;
-$flyin-shadow-color: rgba(32, 32, 32, 0.3);
+  // Overlay
+  --flyin-overlay-opacity: 0.7;
+  --flyin-overlay-speed: 0.07s;
 
-// Overlay
-$flyin-overlay-opacity: 0.7;
-$flyin-overlay-speed: 0.07s;
+  // Dialog
+  --flyin-dialog-speed: 0.7s;
+  --flyin-border-radius: 4px;
 
-// Dialog
-$flyin-dialog-speed: 0.7s;
-$flyin-border-radius: 4px;
-
-// Skins
-$flyin-plain-white-bg: $flyin-white;
-$flyin-plain-white-header-border: $flyin-gray-light;
-$flyin-plain-white-title-color: $flyin-gray-dark;
-$flyin-plain-white-btn-color: $flyin-gray;
+  // Skin Variables (Base Defaults)
+  --flyin-bg: var(--flyin-white);
+  --flyin-header-bg: transparent;
+  --flyin-header-border-color: var(--flyin-gray-light);
+  --flyin-title-color: var(--flyin-gray-dark);
+  --flyin-title-size: 18px;
+  --flyin-title-weight: normal;
+  --flyin-title-transform: none;
+  --flyin-title-shadow: none;
+  --flyin-close-btn-color: var(--flyin-gray);
+  --flyin-content-color: inherit;
+  --flyin-footer-bg: transparent;
+  --flyin-footer-border-color: var(--flyin-gray-light);
+  --flyin-footer-btn-color: inherit;
+  --flyin-footer-btn-size: inherit;
+  --flyin-footer-btn-transform: none;
+  --flyin-footer-btn-letter-spacing: normal;
+  --flyin-footer-btn-weight: normal;
+  --flyin-padding: 10px;
+  --flyin-border: none;
+  --flyin-shadow: 1px 1px 4px var(--flyin-shadow-color);
+  --flyin-title-border-bottom: none;
+}
