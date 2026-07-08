@@ -15,26 +15,44 @@ body {
 }
 
 header {
-    background-color: #003366;
+    background-color: #0F172A;
     color: #fff;
-    padding: 2rem 1rem;
+    padding: 1rem 1rem 2rem;
     text-align: center;
 }
 
-.logo-container {
-    margin-bottom: 1rem;
+header .subtitle {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 1px;
 }
 
-.logo-container img, .logo-container svg {
-    width: 80px;
-    height: 80px;
+header a {
+    text-decoration: none;
+    color: #fff;
+}
+
+header a:hover {
+    text-decoration: none;
+    color: #fff;
+}
+
+.logo-container svg {
+    width: 200px;
+    height: 200px;
+}
+
+header .logo-container svg {
     fill: #fff;
 }
 
 header h1 {
-    margin: 0;
-    font-size: 2.5rem;
-    font-weight: 300;
+    margin: -60px 0 0;
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 main {
@@ -86,7 +104,7 @@ pre {
 }
 
 footer {
-    background-color: #002244;
+    background-color: #0F172A;
     color: #88aacc;
     padding: 2rem 1rem;
     text-align: center;
@@ -109,7 +127,7 @@ footer a:hover {
 
 .cta-links a, .cta-button {
     display: inline-block;
-    background-color: #0059b3;
+    background-color: #6366F1;
     color: #fff;
     padding: 0.8rem 1.5rem;
     border-radius: 6px;
@@ -123,7 +141,7 @@ footer a:hover {
 }
 
 .cta-links a:hover, .cta-button:hover {
-    background-color: #004080;
+    background-color: #6366F1;
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
