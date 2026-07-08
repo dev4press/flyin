@@ -1,13 +1,12 @@
-import Cookies from 'js-cookie';
 import type { Flyin } from './Flyin';
 import type { Settings } from './types/types';
 
 export class Skin {
   protected skinCode = '';
   protected core: Flyin;
-  protected cookieValue = 1;
-  protected cookieUsed = false;
-  protected cookiePosize: Record<string, any> = {};
+  protected storageValue = 1;
+  protected storageUsed = false;
+  protected storagePositionSize: Record<string, any> = {};
   protected enabled = true;
   protected status = 'closed';
   protected statusModal = 'closed';
@@ -52,6 +51,7 @@ export class Skin {
     overlayIDPrefix: 'flyin-overlay-',
     overlayActive: 'flyin-active',
     skinPrefix: 'flyin-skin-',
+    stylePrefix: 'flyin-style-',
     titleIDPrefix: 'flyin-dialog-title-',
     dialog: 'flyin-dialog',
     dialogIDPrefix: 'flyin-dialog-',
@@ -74,7 +74,7 @@ export class Skin {
     zIndex: 1000000,
     title: true,
     titleTag: 'h5',
-    style: 'flyin-style-plain-white',
+    style: 'plain-white',
     containerSelector: 'body',
     extraClass: '',
     effect: 'random',
@@ -102,7 +102,7 @@ export class Skin {
     positionY: 'center',
     offsetX: '10px',
     offsetY: '10px',
-    minWidth: '200px',
+    minWidth: 'min(200px, 90%)',
     maxWidth: '95%',
     minHeight: null,
     maxHeight: null,
@@ -116,9 +116,9 @@ export class Skin {
     buttonFooter: true,
     buttonFooterContent: 'Close',
     ariaCloseLabel: 'Close this dialog',
-    cookieCode: 'flyin',
-    cookiePosizeCode: 'flyin-posize',
-    cookiePosizeExpiration: 365,
+    storeCode: '',
+    storePositionSizeCode: 'flyin-position-size',
+    storePositionSizeExpiration: 365,
     autoShowLimit: false,
     autoShowCounter: 5,
     autoShowDelay: 7,
@@ -127,7 +127,7 @@ export class Skin {
     attrContent: '',
     attrFooter: '',
     xContentSize: false,
-    savePosize: true,
+    savePositionSize: true,
     gripSVG: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M424.9139,518.6134c-6.2444,6.2444 -16.3837,6.2444 -22.628,-0c-6.2444,-6.2444 -6.2444,-16.3837 0,-22.628l93.0923,-93.0923c6.2444,-6.2444 16.3837,-6.2444 22.628,-0c6.2444,6.2444 6.2444,16.3837 -0,22.628l-93.0923,93.0923Zm-93.6009,0.5566c-6.2442,6.2442 -16.3832,6.2442 -22.6274,-0c-6.2442,-6.2442 -6.2442,-16.3832 0,-22.6274l187.2995,-187.2995c6.2442,-6.2442 16.3832,-6.2442 22.6274,0c6.2442,6.2442 6.2442,16.3832 -0,22.6274l-187.2995,187.2995Zm-93.6484,-0.2911c-6.2447,6.2447 -16.3846,6.2447 -22.6293,-0c-6.2447,-6.2447 -6.2447,-16.3846 -0,-22.6293l281.2145,-281.2145c6.2447,-6.2447 16.3846,-6.2447 22.6293,0c6.2447,6.2447 6.2447,16.3846 -0,22.6293l-281.2145,281.2145Zm-93.6509,-0.266c-6.2442,6.2442 -16.3832,6.2442 -22.6274,-0c-6.2442,-6.2442 -6.2442,-16.3832 0,-22.6274l374.599,-374.599c6.2442,-6.2442 16.3832,-6.2442 22.6274,-0c6.2442,6.2442 6.2442,16.3832 -0,22.6274l-374.599,374.599Z"/></svg>',
   };
 
@@ -140,10 +140,10 @@ export class Skin {
     }
 
     this.setMode();
-    this.cookieInit();
+    this.storageInit();
     this.prepareDialog();
 
-    // Re-apply explicit options and data attributes to ensure they take precedence over cookie
+    // Re-apply explicit options and data attributes to ensure they take precedence over storage
     this.setOptions(options);
     this.processDataAttributes();
 
@@ -192,17 +192,17 @@ export class Skin {
     this.mode = this.animations.includes(this.settings.effect || '') ? 'animation' : 'transition';
   }
 
-  protected cookieInit(): void {
-    if (this.core.useCookie && this.settings.cookieCode) {
-      const cookie = Cookies.get(this.settings.cookieCode);
-      if (cookie !== undefined) {
-        this.cookieValue = parseInt(cookie, 10);
+  protected storageInit(): void {
+    if (this.core.useStorage && this.settings.storeCode) {
+      const storage = localStorage.getItem(this.settings.storeCode);
+      if (storage !== null) {
+        this.storageValue = parseInt(storage, 10);
       }
     }
   }
 
   protected prepareDialog(): void {
-    this.loadPosizeCookie();
+    this.loadPositionSizeStorage();
   }
 
   protected processDataAttributes(): void {
@@ -268,7 +268,12 @@ export class Skin {
 
   createDialog(): void {
     const dialog = document.createElement('div');
-    dialog.className = `${this.css('dialog')} ${this.css('dialogIDPrefix')}${this.core.id} ${this.css('dialogEffectPrefix')}${this.settings.effect} ${this.settings.style} ${this.settings.extraClass} ${this.skinCode ? this.css('skinPrefix') + this.skinCode : ''}`.trim();
+    const stylePrefix = this.css('stylePrefix');
+    const styleClass = this.settings.style?.startsWith(stylePrefix)
+      ? this.settings.style
+      : stylePrefix + this.settings.style;
+
+    dialog.className = `${this.css('dialog')} ${this.css('dialogIDPrefix')}${this.core.id} ${this.css('dialogEffectPrefix')}${this.settings.effect} ${styleClass} ${this.settings.extraClass} ${this.skinCode ? this.css('skinPrefix') + this.skinCode : ''}`.trim();
     dialog.style.zIndex = (this.settings.zIndex || 1000000).toString();
 
     dialog.setAttribute('role', this.settings.role || 'dialog');
@@ -428,38 +433,56 @@ export class Skin {
     };
   }
 
+  protected parseOffset(value: string | number | undefined): number {
+    if (typeof value === 'number') return value;
+    if (typeof value === 'string') return parseInt(value, 10) || 0;
+    return 0;
+  }
+
   protected calculatePosition(_init = false): void {
     if (!this.core.dialog) return;
 
     const dialog = this.core.dialog;
     const rect = dialog.getBoundingClientRect();
     const dims = this.getContainerDimensions();
-
-    let x: number;
-    let y: number;
+    const offsetX = this.parseOffset(this.settings.offsetX);
+    const offsetY = this.parseOffset(this.settings.offsetY);
 
     if (this.settings.positionX === 'center') {
-      x = (dims.width - rect.width) / 2;
+      let x = (dims.width - rect.width) / 2;
+      x = Math.max(offsetX, Math.min(x, dims.width - rect.width - offsetX));
+      dialog.style.left = `${x}px`;
+      dialog.style.right = 'auto';
     } else if (this.settings.positionX === 'left') {
-      x = 0;
+      dialog.style.left = this.formatUnit(this.settings.offsetX || 0);
+      dialog.style.right = 'auto';
     } else if (this.settings.positionX === 'right') {
-      x = dims.width - rect.width;
+      dialog.style.right = this.formatUnit(this.settings.offsetX || 0);
+      dialog.style.left = 'auto';
     } else {
-      x = parseInt(this.settings.positionX as string, 10);
+      let x = typeof this.settings.positionX === 'number' ? this.settings.positionX : parseInt(this.settings.positionX as string, 10);
+      x = Math.max(offsetX, Math.min(x, dims.width - rect.width - offsetX));
+      dialog.style.left = `${x}px`;
+      dialog.style.right = 'auto';
     }
 
     if (this.settings.positionY === 'center') {
-      y = (dims.height - rect.height) / 2;
+      let y = (dims.height - rect.height) / 2;
+      y = Math.max(offsetY, Math.min(y, dims.height - rect.height - offsetY));
+      dialog.style.top = `${y}px`;
+      dialog.style.bottom = 'auto';
     } else if (this.settings.positionY === 'top') {
-      y = 0;
+      dialog.style.top = this.formatUnit(this.settings.offsetY || 0);
+      dialog.style.bottom = 'auto';
     } else if (this.settings.positionY === 'bottom') {
-      y = dims.height - rect.height;
+      dialog.style.bottom = this.formatUnit(this.settings.offsetY || 0);
+      dialog.style.top = 'auto';
     } else {
-      y = parseInt(this.settings.positionY as string, 10);
+      let y = typeof this.settings.positionY === 'number' ? this.settings.positionY : parseInt(this.settings.positionY as string, 10);
+      y = Math.max(offsetY, Math.min(y, dims.height - rect.height - offsetY));
+      dialog.style.top = `${y}px`;
+      dialog.style.bottom = 'auto';
     }
-
-    dialog.style.left = `${x}px`;
-    dialog.style.top = `${y}px`;
   }
 
   setOptions(options: Settings): void {
@@ -530,6 +553,14 @@ export class Skin {
     setTimeout(() => {
       this.callback(this.core.callbacks.afterOpen, this.core);
     }, (this.settings.effectSpeed || 0.7) * 1000);
+
+    if (this.settings.closeAuto && (this.settings.closeAutoDelay || 0) > 0) {
+      setTimeout(() => {
+        if (this.status === 'opened') {
+          this.close();
+        }
+      }, this.settings.closeAutoDelay || 0);
+    }
   }
 
   close(): void {
@@ -570,13 +601,20 @@ export class Skin {
   }
 
   public save(): void {
-    if (this.settings.savePosize && this.core.useCookie) {
-      const poSize = this.genPosizeCookie();
-      Cookies.set(this.settings.cookiePosizeCode || 'flyin-posize', JSON.stringify(poSize), {
-        expires: this.settings.cookiePosizeExpiration,
-        path: '/',
-      });
+    if (this.settings.savePositionSize && this.core.useStorage) {
+      const key = this.getPositionSizeStorageKey();
+      if (key) {
+        const poSize = this.genPositionSizeStorage();
+        localStorage.setItem(key, JSON.stringify(poSize));
+      }
     }
+  }
+
+  protected getPositionSizeStorageKey(): string | null {
+    if (!this.settings.storeCode) {
+      return null;
+    }
+    return `${this.settings.storePositionSizeCode || 'flyin-position-size'}-${this.settings.storeCode}`;
   }
 
   public mod(_data: any): void {
@@ -606,29 +644,32 @@ export class Skin {
     this.save();
   }
 
-  protected loadPosizeCookie(): void {
-    if (this.settings.savePosize && this.core.useCookie) {
-      const cookie = Cookies.get(this.settings.cookiePosizeCode || 'flyin-posize');
-      if (cookie !== undefined) {
-        try {
-          this.cookiePosize = JSON.parse(cookie);
-          this.cookieUsed = true;
-          this.applyPosizeCookie();
-        } catch {
-          console.error('Failed to parse posize cookie');
+  protected loadPositionSizeStorage(): void {
+    if (this.settings.savePositionSize && this.core.useStorage) {
+      const key = this.getPositionSizeStorageKey();
+      if (key) {
+        const storage = localStorage.getItem(key);
+        if (storage !== null) {
+          try {
+            this.storagePositionSize = JSON.parse(storage);
+            this.storageUsed = true;
+            this.applyPositionSizeStorage();
+          } catch {
+            console.error('Failed to parse position storage');
+          }
         }
       }
     }
   }
 
-  protected applyPosizeCookie(): void {
-    if (this.cookieUsed) {
-      Object.assign(this.settings, this.cookiePosize);
+  protected applyPositionSizeStorage(): void {
+    if (this.storageUsed) {
+      Object.assign(this.settings, this.storagePositionSize);
     }
   }
 
 
-  protected genPosizeCookie(): Record<string, any> {
+  protected genPositionSizeStorage(): Record<string, any> {
     return {
       positionX: this.settings.positionX,
       positionY: this.settings.positionY,

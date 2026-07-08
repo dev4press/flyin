@@ -50,8 +50,8 @@
     <section id="documentation">
         <h2>Documentation</h2>
         <p>For detailed information on settings, CSS variables, and more examples, please check our documentation.</p>
-        <div class="cta-links" style="text-align: left; margin-top: 1rem;">
-            <a href="../docs/index.html" class="cta-button" style="margin-left: 0;">Browse Documentation</a>
+        <div class="cta-links">
+            <a href="../docs/index.html" class="cta-button">Browse Documentation</a>
         </div>
     </section>
 
@@ -68,7 +68,7 @@
 &lt;link rel="stylesheet" href="dist/flyin.css"&gt;
 
 &lt;!-- Load Scripts --&gt;
-&lt;script src="dist/js.cookie.min.js"&gt;&lt;/script&gt;
+
 &lt;script src="dist/flyin.umd.js"&gt;&lt;/script&gt;</code></pre>
 
         <p><strong>3. Initialize Flyin:</strong> Initialize the popup in your JavaScript:</p>
@@ -77,7 +77,7 @@
         new Flyin("#my-popup", {
             settings: {
                 effect: 'bounce',
-                style: 'flyin-style-plain-white'
+                style: 'plain-white'
             }
         });
     });
@@ -159,7 +159,7 @@
 </footer>
 
 <!-- Dist JS files linked -->
-<script src="../dist/js.cookie.min.js"></script>
+
 <script src="../dist/flyin.umd.js"></script>
 
 <script>
@@ -168,13 +168,14 @@
             settings: {
                 onLoad: false,
                 effect: 'fade-in-down',
-                style: 'flyin-style-sky-blue',
+                style: 'sky-blue',
                 modal: true,
                 footer: true,
                 footerContent: '<small>Flyin Library Example Footer</small>',
                 buttonFooter: true,
                 buttonFooterContent: 'Close Demo',
-                width: 500
+                width: '90%',
+                maxWidth: 500
             }
         });
 

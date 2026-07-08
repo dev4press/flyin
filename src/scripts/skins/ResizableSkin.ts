@@ -1,16 +1,17 @@
-import Cookies from 'js-cookie';
 import { Skin } from '../Skin';
 import type { Flyin } from '../Flyin';
 import type { Settings } from '../types/types';
 
-export class FreeSkin extends Skin {
-  protected override skinCode = 'free';
+export class ResizableSkin extends Skin {
+  protected override skinCode = 'resizable';
 
   private moverState = {
     dr: null as HTMLElement | null,
     width: 0,
     height: 0,
+    minLeft: 0,
     maxLeft: 0,
+    minTop: 0,
     maxTop: 0,
     posX: 0,
     posY: 0,
@@ -27,7 +28,7 @@ export class FreeSkin extends Skin {
 
   constructor(core: Flyin, options: Settings = {}) {
     super(core, options);
-    // Initialize FreeSkin defaults if not provided in options
+    // Initialize ResizableSkin defaults if not provided in options
     this.settings.showGrip = options.showGrip ?? false;
     this.settings.sizeMinWidth = options.sizeMinWidth ?? 200;
     this.settings.sizeMinHeight = options.sizeMinHeight ?? 100;
@@ -35,12 +36,13 @@ export class FreeSkin extends Skin {
   }
 
   protected override prepareDialog(): void {
-    if (this.settings.savePosize) {
-      const cookie = Cookies.get(this.settings.cookiePosizeCode || 'flyin-posize');
-      if (cookie !== undefined) {
+    if (this.settings.savePositionSize) {
+      const key = this.getPositionSizeStorageKey();
+      const storage = key ? localStorage.getItem(key) : null;
+      if (storage !== null) {
         try {
-          const data = JSON.parse(cookie);
-          this.cookiePosize = {
+          const data = JSON.parse(storage);
+          this.storagePositionSize = {
             left: 0,
             top: 0,
             width: 0,
@@ -49,33 +51,42 @@ export class FreeSkin extends Skin {
             cHeight: 0,
             ...data,
           };
-          this.cookieUsed = true;
+          this.storageUsed = true;
         } catch {
-          console.error('Failed to parse FreeSkin posize cookie');
+          console.error('Failed to parse ResizableSkin position storage');
         }
       }
     }
 
-    if (this.cookieUsed) {
-      if (this.cookiePosize.cHeight === 0) {
-        this.cookiePosize.cHeight = this.cookiePosize.height;
+    if (this.storageUsed) {
+      if (this.storagePositionSize.cHeight === 0) {
+        this.storagePositionSize.cHeight = this.storagePositionSize.height;
       }
 
-      this.settings.positionX = this.cookiePosize.left;
-      this.settings.positionY = this.cookiePosize.top;
-      this.settings.width = `${this.cookiePosize.width}px`;
-      this.settings.height = `${this.cookiePosize.height}px`;
+      this.settings.positionX = this.storagePositionSize.left;
+      this.settings.positionY = this.storagePositionSize.top;
+      this.settings.width = `${this.storagePositionSize.width}px`;
+      this.settings.height = `${this.storagePositionSize.height}px`;
 
       this.settings.cWidth = 'auto';
       this.settings.cHeight = 'auto';
 
       const dims = this.getContainerDimensions();
-      if (dims.width < (this.settings.positionX as number) + this.cookiePosize.width) {
-        this.settings.positionX = dims.width - this.cookiePosize.width;
+      const offsetX = this.parseOffset(this.settings.offsetX);
+      const offsetY = this.parseOffset(this.settings.offsetY);
+
+      if (dims.width < (this.settings.positionX as number) + this.storagePositionSize.width + offsetX) {
+        this.settings.positionX = dims.width - this.storagePositionSize.width - offsetX;
+      }
+      if ((this.settings.positionX as number) < offsetX) {
+        this.settings.positionX = offsetX;
       }
 
-      if (dims.height < (this.settings.positionY as number) + this.cookiePosize.height) {
-        this.settings.positionY = dims.height - this.cookiePosize.height;
+      if (dims.height < (this.settings.positionY as number) + this.storagePositionSize.height + offsetY) {
+        this.settings.positionY = dims.height - this.storagePositionSize.height - offsetY;
+      }
+      if ((this.settings.positionY as number) < offsetY) {
+        this.settings.positionY = offsetY;
       }
     }
   }
@@ -209,9 +220,25 @@ export class FreeSkin extends Skin {
     this.moverState.width = rect.width;
     this.moverState.height = rect.height;
 
+    const containerRect = this.getContainer().getBoundingClientRect();
+    const isBody = this.getContainer() === document.body;
+
+    const currentLeft = isBody ? rect.left : rect.left - containerRect.left;
+    const currentTop = isBody ? rect.top : rect.top - containerRect.top;
+
+    dialog.style.left = `${currentLeft}px`;
+    dialog.style.top = `${currentTop}px`;
+    dialog.style.right = 'auto';
+    dialog.style.bottom = 'auto';
+
     const dims = this.getContainerDimensions();
-    this.moverState.maxLeft = dims.width - this.moverState.width;
-    this.moverState.maxTop = dims.height - this.moverState.height;
+    const offsetX = this.parseOffset(this.settings.offsetX);
+    const offsetY = this.parseOffset(this.settings.offsetY);
+
+    this.moverState.minLeft = offsetX;
+    this.moverState.maxLeft = dims.width - this.moverState.width - offsetX;
+    this.moverState.minTop = offsetY;
+    this.moverState.maxTop = dims.height - this.moverState.height - offsetY;
 
     this.moverState.posX = rect.left + this.moverState.width - pos.pageX;
     this.moverState.posY = rect.top + this.moverState.height - pos.pageY;
@@ -235,8 +262,8 @@ export class FreeSkin extends Skin {
         top -= containerRect.top;
       }
 
-      left = Math.max(0, Math.min(left, this.moverState.maxLeft));
-      top = Math.max(0, Math.min(top, this.moverState.maxTop));
+      left = Math.max(this.moverState.minLeft, Math.min(left, this.moverState.maxLeft));
+      top = Math.max(this.moverState.minTop, Math.min(top, this.moverState.maxTop));
 
       this.moverState.dr.style.left = `${left}px`;
       this.moverState.dr.style.top = `${top}px`;
@@ -294,10 +321,13 @@ export class FreeSkin extends Skin {
         const containerRect = this.getContainer().getBoundingClientRect();
         const isBody = this.getContainer() === document.body;
 
+        const offsetX = this.parseOffset(this.settings.offsetX);
+        const offsetY = this.parseOffset(this.settings.offsetY);
+
         if (relY !== 0) {
           if (this.moverState.resizeTop) {
             let actualRelY = relY;
-            const topLimit = isBody ? 0 : containerRect.top;
+            const topLimit = (isBody ? 0 : containerRect.top) + offsetY;
             if (dRect.top + actualRelY < topLimit) actualRelY = topLimit - dRect.top;
             if (dRect.height - actualRelY > (this.settings.sizeMinHeight || 100)) {
               dialog.style.height = `${dRect.height - actualRelY}px`;
@@ -307,7 +337,7 @@ export class FreeSkin extends Skin {
           if (this.moverState.resizeBottom) {
             let actualRelY = relY;
             const dims = this.getContainerDimensions();
-            const bottomLimit = isBody ? dims.height : containerRect.bottom;
+            const bottomLimit = (isBody ? dims.height : containerRect.bottom) - offsetY;
             if (dRect.bottom + actualRelY > bottomLimit) actualRelY = bottomLimit - dRect.bottom;
             if (dRect.height + actualRelY > (this.settings.sizeMinHeight || 100)) {
               dialog.style.height = `${dRect.height + actualRelY}px`;
@@ -318,7 +348,7 @@ export class FreeSkin extends Skin {
         if (relX !== 0) {
           if (this.moverState.resizeLeft) {
             let actualRelX = relX;
-            const leftLimit = isBody ? 0 : containerRect.left;
+            const leftLimit = (isBody ? 0 : containerRect.left) + offsetX;
             if (dRect.left + actualRelX < leftLimit) actualRelX = leftLimit - dRect.left;
             if (dRect.width - actualRelX > (this.settings.sizeMinWidth || 90)) {
               dialog.style.width = `${dRect.width - actualRelX}px`;
@@ -328,7 +358,7 @@ export class FreeSkin extends Skin {
           if (this.moverState.resizeRight) {
             let actualRelX = relX;
             const dims = this.getContainerDimensions();
-            const rightLimit = isBody ? dims.width : containerRect.right;
+            const rightLimit = (isBody ? dims.width : containerRect.right) - offsetX;
             if (dRect.right + actualRelX > rightLimit) actualRelX = rightLimit - dRect.right;
             if (dRect.width + actualRelX > (this.settings.sizeMinWidth || 90)) {
               dialog.style.width = `${dRect.width + actualRelX}px`;
@@ -368,7 +398,7 @@ export class FreeSkin extends Skin {
     }
   }
 
-  protected override genPosizeCookie(): Record<string, any> {
+  protected override genPositionSizeStorage(): Record<string, any> {
     const dialog = this.core.dialog;
     const content = dialog?.querySelector(`.${this.css('content')}`) as HTMLElement;
     if (!dialog || !content) return {};

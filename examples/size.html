@@ -23,7 +23,7 @@
         <h2>Size and Dimensions</h2>
         <p>You can control the width, height, and boundary constraints of the popup using pixels, percentages, or other CSS units.</p>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 2rem 0;">
+        <div class="button-grid">
             <button id="size-default" class="cta-button">Default (40%)</button>
             <button id="size-fixed" class="cta-button">Fixed (600x400)</button>
             <button id="size-narrow" class="cta-button">Narrow (250px)</button>
@@ -50,17 +50,17 @@
 </footer>
 
 <!-- Dist JS files linked -->
-<script src="../dist/js.cookie.min.js"></script>
+
 <script src="../dist/flyin.umd.js"></script>
 
 <script id="example-js">
     document.addEventListener('DOMContentLoaded', function() {
         var configs = {
             'size-default': { width: '40%', height: 'auto' },
-            'size-fixed': { width: '600px', height: '400px' },
-            'size-narrow': { width: '250px' },
-            'size-wide': { width: '80%' },
-            'size-min-max': { width: '50%', minWidth: '400px', maxWidth: '800px' }
+            'size-fixed': { width: 'min(600px, 90%)', height: 'min(400px, 80vh)' },
+            'size-narrow': { width: 'min(250px, 90%)' },
+            'size-wide': { width: '90%' },
+            'size-min-max': { width: '50%', minWidth: 'min(400px, 90%)', maxWidth: '800px' }
         };
 
         Object.keys(configs).forEach(function(id) {
@@ -68,7 +68,7 @@
                 var flyin = new Flyin("#popup-content", {
                     settings: Object.assign({
                         onLoad: false,
-                        style: 'flyin-style-plain-white'
+                        style: 'plain-white'
                     }, configs[id])
                 });
                 flyin.open();

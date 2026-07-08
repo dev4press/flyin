@@ -43,6 +43,13 @@
   visibility: hidden;
   transition: visibility 0s var(--flyin-dialog-speed);
   box-sizing: border-box;
+  max-width: 95vw;
+  max-height: 95vh;
+
+  @media (max-width: 768px) {
+    max-width: 98vw;
+    max-height: 98vh;
+  }
 
   *, *::before, *::after {
     box-sizing: border-box;
@@ -53,7 +60,7 @@
     transition: none;
   }
 
-  &.flyin-skin-free {
+  &.flyin-skin-resizable {
     .flyin-header {
       cursor: move;
     }

@@ -49,9 +49,9 @@ export interface Settings {
   buttonFooterContent?: string;
   buttonAction?: (this: any, core: any) => void;
   ariaCloseLabel?: string;
-  cookieCode?: string;
-  cookiePosizeCode?: string;
-  cookiePosizeExpiration?: number;
+  storeCode?: string;
+  storePositionSizeCode?: string;
+  storePositionSizeExpiration?: number;
   autoShowLimit?: boolean;
   autoShowCounter?: number;
   autoShowDelay?: number;
@@ -60,7 +60,7 @@ export interface Settings {
   attrContent?: string;
   attrFooter?: string;
   xContentSize?: boolean;
-  savePosize?: boolean;
+  savePositionSize?: boolean;
   showGrip?: boolean;
   gripSVG?: string;
   sizeMinWidth?: number;

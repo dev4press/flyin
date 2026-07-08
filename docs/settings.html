@@ -21,6 +21,8 @@
         <h2>Initialization Settings</h2>
         <p>When initializing Flyin, you can pass a settings object to customize the behavior and appearance of your popup.</p>
         
+        <p><strong>Note:</strong> Many settings can be overridden by <code>data-*</code> attributes on the popup element. Data attributes take precedence over initialization settings.</p>
+
         <pre><code>new Flyin("#my-popup", {
     settings: {
         // parameters here
@@ -30,9 +32,18 @@
     }
 });</code></pre>
 
+        <h3>Data Attribute Overrides</h3>
+        <ul>
+            <li><code>data-title</code>: Overrides <code>headerContent</code> and enables title.</li>
+            <li><code>data-title-tag</code>: Overrides <code>titleTag</code>.</li>
+            <li><code>data-modal</code>: Overrides <code>modal</code> (true/false).</li>
+            <li><code>data-on-load</code>: Overrides <code>onLoad</code> (true/false).</li>
+            <li><code>data-on-load-delay</code>: Overrides <code>onLoadDelay</code> (number in ms).</li>
+        </ul>
+
         <h3>Core Settings</h3>
         <ul>
-            <li><code>style</code> (string): CSS class for the popup skin. Default: <code>'sanp-style-plain-white'</code>.</li>
+            <li><code>style</code> (string): CSS class for the popup skin. Default: <code>'plain-white'</code>.</li>
             <li><code>effect</code> (string): Entry effect. Use <code>'random'</code> or specific effect name. Default: <code>'random'</code>.</li>
             <li><code>effectSpeed</code> (number): Duration of the effect in seconds. Default: <code>0.7</code>.</li>
             <li><code>modal</code> (boolean): Whether to show a modal overlay. Default: <code>true</code>.</li>
@@ -64,7 +75,22 @@
             <li><code>closeEscape</code> (boolean): Close on Escape key press. Default: <code>true</code>.</li>
             <li><code>closeOverlay</code> (boolean): Close when clicking on the overlay. Default: <code>true</code>.</li>
             <li><code>closeAuto</code> (boolean): Automatically close after a delay. Default: <code>false</code>.</li>
-            <li><code>closeAutoDelay</code> (number): Delay in milliseconds for auto-closing.</li>
+            <li><code>closeAutoDelay</code> (number): Delay in milliseconds for auto-closing. Default: <code>0</code>.</li>
+        </ul>
+
+        <h3>Overlay Settings</h3>
+        <ul>
+            <li><code>overlayActive</code> (boolean): Enable/disable overlay. Default: <code>true</code>.</li>
+            <li><code>overlayColor</code> (string): CSS color for overlay. Default: <code>'#ffffff'</code>.</li>
+            <li><code>overlayOpacity</code> (number): Opacity from 0 to 1. Default: <code>0.7</code>.</li>
+            <li><code>overlaySpeed</code> (number): Transition speed in seconds. Default: <code>0.07</code>.</li>
+        </ul>
+
+        <h3>Storage Settings</h3>
+        <ul>
+            <li><code>savePositionSize</code> (boolean): Save position and size for next visit. Default: <code>true</code>.</li>
+            <li><code>storeCode</code> (string): Unique code for the popup storage. Default: <code>''</code> (empty). If empty, storage is disabled.</li>
+            <li><code>storePositionSizeCode</code> (string): Base key for position/size storage. Default: <code>'flyin-positionsize'</code>. The full key used is <code>storePositionSizeCode</code> + <code>'-'</code> + <code>storeCode</code>.</li>
         </ul>
 
         <h3>Header and Footer</h3>

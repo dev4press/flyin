@@ -23,7 +23,7 @@
         <h2>Supported Animations and Effects</h2>
         <p>Flyin supports many CSS3 animations and transitions. Click the buttons below to open the popup with different effects.</p>
         
-        <div id="animation-buttons" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin: 2rem 0;">
+        <div id="animation-buttons" class="button-grid">
             <!-- Buttons will be generated here -->
         </div>
 
@@ -46,7 +46,7 @@
 </footer>
 
 <!-- Dist JS files linked -->
-<script src="../dist/js.cookie.min.js"></script>
+
 <script src="../dist/flyin.umd.js"></script>
 
 <script id="example-js">
@@ -71,7 +71,7 @@
                     settings: {
                         onLoad: false,
                         effect: effect,
-                        style: 'flyin-style-plain-white'
+                        style: 'plain-white'
                     }
                 });
                 flyin.open();

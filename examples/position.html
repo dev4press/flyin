@@ -23,7 +23,7 @@
         <h2>Position and Offset</h2>
         <p>You can position the popup anywhere on the screen using keywords (center, left, right, top, bottom) or specific pixel values, combined with offsets.</p>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 2rem 0;">
+        <div class="button-grid">
             <button id="pos-center" class="cta-button">Center (Default)</button>
             <button id="pos-top-left" class="cta-button">Top Left</button>
             <button id="pos-top-right" class="cta-button">Top Right</button>
@@ -50,7 +50,7 @@
 </footer>
 
 <!-- Dist JS files linked -->
-<script src="../dist/js.cookie.min.js"></script>
+
 <script src="../dist/flyin.umd.js"></script>
 
 <script id="example-js">
@@ -71,7 +71,7 @@
                         onLoad: false,
                         modal: false,
                         overlayActive: false,
-                        style: 'flyin-style-plain-white'
+                        style: 'plain-white'
                     }, configs[id])
                 });
                 flyin.open();

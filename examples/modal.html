@@ -23,7 +23,7 @@
         <h2>Modal vs Non-Modal Popups</h2>
         <p>A <strong>modal</strong> popup disables interaction with the rest of the page, while a <strong>non-modal</strong> popup allows the user to continue interacting with the page content.</p>
         
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 2rem 0;">
+        <div class="button-grid">
             <div style="text-align: center;">
                 <button id="open-modal" class="cta-button">Open Modal Popup</button>
                 <p><small>Disables page scrolling and background interaction.</small></p>
@@ -56,7 +56,7 @@
 </footer>
 
 <!-- Dist JS files linked -->
-<script src="../dist/js.cookie.min.js"></script>
+
 <script src="../dist/flyin.umd.js"></script>
 
 <script id="example-js">
@@ -67,7 +67,7 @@
                     onLoad: false,
                     modal: true,
                     overlayActive: true,
-                    style: 'flyin-style-plain-white'
+                    style: 'plain-white'
                 }
             });
             flyin.open();
@@ -79,7 +79,7 @@
                     onLoad: false,
                     modal: false,
                     overlayActive: false, // Usually disabled for non-modal
-                    style: 'flyin-style-plain-white',
+                    style: 'plain-white',
                     positionX: 'right',
                     positionY: 'bottom'
                 }

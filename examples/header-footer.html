@@ -23,7 +23,7 @@
         <h2>Header and Footer Configuration</h2>
         <p>You can enable or disable the header and footer, customize their content, and control the visibility of the close buttons.</p>
         
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 2rem 0;">
+        <div class="button-grid">
             <button id="config-full" class="cta-button">Full Header & Footer</button>
             <button id="config-no-header" class="cta-button">No Header</button>
             <button id="config-no-footer" class="cta-button">No Footer</button>
@@ -49,7 +49,7 @@
 </footer>
 
 <!-- Dist JS files linked -->
-<script src="../dist/js.cookie.min.js"></script>
+
 <script src="../dist/flyin.umd.js"></script>
 
 <script id="example-js">
@@ -71,7 +71,7 @@
                 var flyin = new Flyin("#popup-content", {
                     settings: Object.assign({
                         onLoad: false,
-                        style: 'flyin-style-plain-white'
+                        style: 'plain-white'
                     }, configs[id])
                 });
                 flyin.open();

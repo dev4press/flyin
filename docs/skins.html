@@ -34,13 +34,13 @@
             </div>
 
             <div class="skin-item">
-                <h3>Free Skin</h3>
-                <p>The <strong>Free</strong> skin is an advanced implementation that adds interactivity to your popups. It allows users to manually move and resize the popup on the screen.</p>
+                <h3>Resizable Skin</h3>
+                <p>The <strong>Resizable</strong> skin is an advanced implementation that adds interactivity to your popups. It allows users to manually move and resize the popup on the screen.</p>
                 <ul>
                     <li><strong>Draggable:</strong> Users can move the popup by clicking and dragging the header.</li>
                     <li><strong>Resizable:</strong> Users can resize the popup from edges or corners.</li>
                     <li><strong>Grip Support:</strong> Optional visual grip in the footer for easier resizing.</li>
-                    <li><strong>Persistence:</strong> Can save the last position and size in cookies, so the popup appears exactly where the user left it on the next visit.</li>
+                    <li><strong>Persistence:</strong> Can save the last position and size in local storage, so the popup appears exactly where the user left it on the next visit.</li>
                 </ul>
             </div>
         </div>
@@ -48,17 +48,17 @@
 
     <section id="using-skins">
         <h2>How to Use</h2>
-        <p>By default, Flyin uses the <code>Base</code> skin. You can specify the <code>Free</code> skin during initialization.</p>
+        <p>By default, Flyin uses the <code>Base</code> skin. You can specify the <code>Resizable</code> skin during initialization.</p>
         <pre><code>&lt;script&gt;
     // Using the default Base skin
     new Flyin('#my-popup');
 
-    // Using the Free skin for a draggable/resizable popup
+    // Using the Resizable Skin for a draggable/resizable popup
     new Flyin('#my-free-popup', {
-        skin: 'Free',
+        skin: 'resizable',
         settings: {
             showGrip: true,
-            savePosize: true
+            savePositionSize: true
         }
     });
 &lt;/script&gt;</code></pre>

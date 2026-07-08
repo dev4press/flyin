@@ -24,7 +24,7 @@
         <p>Flyin supports different skins and visual styles. Skins (like 'Base' and 'Free') control functionality, while styles control the CSS look.</p>
         
         <h3>Legacy Styles</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 1rem 0;">
+        <div class="button-grid">
             <button id="open-plain-white" class="cta-button">Plain White</button>
             <button id="open-plain-black" class="cta-button">Plain Black</button>
             <button id="open-clean-gray" class="cta-button">Clean Gray</button>
@@ -32,7 +32,7 @@
         </div>
 
         <h3>Modern Styles</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 1rem 0;">
+        <div class="button-grid">
             <button id="open-sky-blue" class="cta-button">Sky Blue</button>
             <button id="open-midnight-blue" class="cta-button">Midnight Blue</button>
             <button id="open-mint-green" class="cta-button">Mint Green</button>
@@ -42,14 +42,14 @@
         </div>
 
         <h3>Skins & Customization</h3>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 1rem 0;">
-            <button id="open-free-skin" class="cta-button">Free Skin (Draggable)</button>
+        <div class="button-grid">
+            <button id="open-free-skin" class="cta-button">Resizable Skin (Draggable)</button>
             <button id="open-custom-svg" class="cta-button">Custom SVG Icons</button>
         </div>
 
         <div id="popup-content" data-title="Skin Demo" style="display: none;">
             <p>This popup demonstrates the selected skin and style.</p>
-            <p>If you opened the <strong>Free Skin</strong>, you can drag the popup by the header and resize it from the corners/edges!</p>
+            <p>If you opened the <strong>Resizable Skin</strong>, you can drag the popup by the header and resize it from the corners/edges!</p>
         </div>
 
         <h3>JavaScript Code</h3>
@@ -66,29 +66,29 @@
 </footer>
 
 <!-- Dist JS files linked -->
-<script src="../dist/js.cookie.min.js"></script>
+
 <script src="../dist/flyin.umd.js"></script>
 
 <script id="example-js">
     document.addEventListener('DOMContentLoaded', function() {
         var configurations = {
-            'open-plain-white': { skin: 'Base', settings: { style: 'flyin-style-plain-white' } },
-            'open-plain-black': { skin: 'Base', settings: { style: 'flyin-style-plain-black' } },
-            'open-clean-gray': { skin: 'Base', settings: { style: 'flyin-style-clean-gray' } },
-            'open-box-red': { skin: 'Base', settings: { style: 'flyin-style-box-red' } },
-            'open-sky-blue': { skin: 'Base', settings: { style: 'flyin-style-sky-blue' } },
-            'open-midnight-blue': { skin: 'Base', settings: { style: 'flyin-style-midnight-blue' } },
-            'open-mint-green': { skin: 'Base', settings: { style: 'flyin-style-mint-green' } },
-            'open-forest-green': { skin: 'Base', settings: { style: 'flyin-style-forest-green' } },
-            'open-sunny-orange': { skin: 'Base', settings: { style: 'flyin-style-sunny-orange' } },
-            'open-vibrant-orange': { skin: 'Base', settings: { style: 'flyin-style-vibrant-orange' } },
-            'open-free-skin': { skin: 'Free', settings: { style: 'flyin-style-sky-blue', showGrip: true, savePosize: false } },
+            'open-plain-white': { skin: 'Base', settings: { style: 'plain-white' } },
+            'open-plain-black': { skin: 'Base', settings: { style: 'plain-black' } },
+            'open-clean-gray': { skin: 'Base', settings: { style: 'clean-gray' } },
+            'open-box-red': { skin: 'Base', settings: { style: 'box-red' } },
+            'open-sky-blue': { skin: 'Base', settings: { style: 'sky-blue' } },
+            'open-midnight-blue': { skin: 'Base', settings: { style: 'midnight-blue' } },
+            'open-mint-green': { skin: 'Base', settings: { style: 'mint-green' } },
+            'open-forest-green': { skin: 'Base', settings: { style: 'forest-green' } },
+            'open-sunny-orange': { skin: 'Base', settings: { style: 'sunny-orange' } },
+            'open-vibrant-orange': { skin: 'Base', settings: { style: 'vibrant-orange' } },
+            'open-free-skin': { skin: 'resizable', settings: { style: 'sky-blue', showGrip: true, savePositionSize: false } },
             'open-custom-svg': { 
-                skin: 'Free', 
+                skin: 'resizable', 
                 settings: { 
-                    style: 'flyin-style-plain-white', 
+                    style: 'plain-white', 
                     showGrip: true, 
-                    savePosize: false,
+                    savePositionSize: false,
                     buttonXSVG: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
                     gripSVG: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="blue" stroke-width="2" stroke-linecap="round"><circle cx="15" cy="15" r="2"/><circle cx="10" cy="15" r="2"/><circle cx="15" cy="10" r="2"/></svg>'
                 } 

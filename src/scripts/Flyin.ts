@@ -1,11 +1,11 @@
 import { Skin } from './Skin';
-import { FreeSkin } from './skins/FreeSkin';
+import { ResizableSkin } from './skins/ResizableSkin';
 import type { Options, Callbacks } from './types/types';
 
 let flyinIDSequence = 1;
 
 export class Flyin {
-  public useCookie = true;
+  public useStorage = true;
   public skinInstance: Skin | null = null;
   public element: HTMLElement | null = null;
   public overlay: HTMLElement | null = null;
@@ -42,8 +42,8 @@ export class Flyin {
   }
 
   get(name: string): any {
-    if (name === 'cookie') {
-      name = 'cookieValue';
+    if (name === 'cookie' || name === 'storage') {
+      name = 'storageValue';
     } else if (name === 'status') {
       name = 'status';
     }
@@ -73,8 +73,9 @@ export class Flyin {
   }
 
   private loadSkin(name: string, options: any): Skin {
-    if (name.toLowerCase() === 'free') {
-      return new FreeSkin(this, options);
+    const skinName = name.toLowerCase();
+    if (skinName === 'resizable' || skinName === 'free') {
+      return new ResizableSkin(this, options);
     }
     return new Skin(this, options);
   }

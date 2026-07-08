@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
@@ -69,6 +73,8 @@ code, pre {
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
     font-family: 'Courier New', Courier, monospace;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 pre {
@@ -149,7 +155,7 @@ footer a:hover {
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
     gap: 1.5rem;
     margin-top: 1rem;
 }
@@ -175,9 +181,82 @@ footer a:hover {
 /* Examples Grid Styling */
 .examples-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     gap: 1.2rem;
     margin-top: 1.5rem;
+}
+
+/* Button Grid for Examples */
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+    gap: 10px;
+    margin: 2rem 0;
+}
+
+@media (max-width: 640px) {
+    header {
+        padding: 1.5rem 1rem;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    main {
+        margin: 1rem auto;
+        padding: 0 0.8rem;
+    }
+
+    section {
+        padding: 1.2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .cta-links a, .cta-button {
+        display: block;
+        margin: 0.5rem 0;
+        text-align: center;
+        width: 100%;
+    }
+    
+    pre {
+        padding: 0.8rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    main {
+        padding: 0 0.5rem;
+    }
+
+    section {
+        padding: 1rem;
+    }
+    
+    .logo-container img, .logo-container svg {
+        width: 60px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 360px) {
+    header h1 {
+        font-size: 1.3rem;
+    }
+    
+    section {
+        padding: 0.8rem;
+    }
+    
+    body {
+        font-size: 0.95rem;
+    }
 }
 
 .example-item {
