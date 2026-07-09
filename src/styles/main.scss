@@ -24,7 +24,9 @@
   opacity: 0;
   left: 0;
   background: #000000;
-  transition: visibility 0s var(--flyin-overlay-speed), opacity var(--flyin-overlay-speed);
+  transition:
+    visibility 0s var(--flyin-overlay-speed),
+    opacity var(--flyin-overlay-speed);
 
   &.flyin-active {
     visibility: visible;
@@ -51,7 +53,9 @@
     max-height: 98vh;
   }
 
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
   }
 

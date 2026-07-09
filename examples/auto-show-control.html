@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Auto-Show Control Example</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <a href="../index.html">
+        <div class="logo-container">
+            <svg viewBox="0 0 640 640" aria-hidden="true">
+                <use href="../assets/img/logo.svg#logo"></use>
+            </svg>
+        </div>
+        <h1>Flyin</h1>
+    </a>
+    <div class="subtitle">Auto-Show Control Example</div>
+</header>
+
+<main>
+    <section>
+        <h2>Limiting Auto-Open Frequency</h2>
+        <p>This example demonstrates how to use <code>autoShowLimit</code>, <code>autoShowCounter</code>, and <code>autoShowDelay</code> to control how often a popup appears automatically to the same user.</p>
+        
+        <div style="background: #e6f7ff; padding: 1rem; border: 1px solid #91d5ff; margin-bottom: 2rem;">
+            <strong>How it works:</strong> 
+            <ul>
+                <li>The popup is set to show at most <strong>3 times</strong> (<code>autoShowCounter</code>).</li>
+                <li>Once the limit is reached, it won't show again for <strong>1 day</strong> (<code>autoShowDelay</code>).</li>
+                <li>This requires <code>storeCode</code> to be set so Flyin can track the count in Local Storage.</li>
+            </ul>
+            <p>Try refreshing the page several times. After the 3rd time, the popup will no longer appear automatically.</p>
+            <button id="reset-storage" class="button">Reset Local Storage</button>
+        </div>
+
+        <div id="auto-show-popup" data-title="Limited Appearance" style="display: none;">
+            <p>This popup only shows up to 3 times per day automatically.</p>
+            <p id="counter-display">Loading counter...</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Examples</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        const popup = new Flyin("#auto-show-popup", {
+            settings: {
+                onLoad: true,
+                style: 'plain-white',
+                storeCode: 'demo-auto-show', // Required for persistence
+                autoShowLimit: true,
+                autoShowCounter: 3,
+                autoShowDelay: 1, // 1 day
+            },
+            callbacks: {
+                ready: function(instance) {
+                    // Access the internal counter from the instance data if available
+                    // Note: This is a demo-specific way to show what's happening
+                    const storeKey = 'flyin-data-demo-auto-show';
+                    const storedData = JSON.parse(localStorage.getItem(storeKey) || '{}');
+                    const count = storedData.autoShowCount || 0;
+                    document.getElementById('counter-display').textContent = 
+                        'This popup has been shown ' + count + ' time(s) automatically.';
+                }
+            }
+        });
+
+        // Helper for the demo to reset the counter
+        document.getElementById('reset-storage').addEventListener('click', function() {
+            localStorage.removeItem('flyin-data-demo-auto-show');
+            alert('Local storage cleared. Refresh the page to see the popup again.');
+            location.reload();
+        });
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

@@ -48,23 +48,33 @@
 
         <h3>Core Settings</h3>
         <ul>
+            <li><code>name</code> (string|null): Unique name for the popup instance. Default: <code>null</code>.</li>
+            <li><code>role</code> (string): WAI-ARIA role for the dialog. Default: <code>'dialog'</code>.</li>
             <li><code>style</code> (string): CSS class for the popup skin. Default: <code>'plain-white'</code>.</li>
             <li><code>effect</code> (string): Entry effect. Use <code>'random'</code> or specific effect name. Default: <code>'random'</code>.</li>
             <li><code>effectSpeed</code> (number): Duration of the effect in seconds. Default: <code>0.7</code>.</li>
             <li><code>modal</code> (boolean): Whether to show a modal overlay. Default: <code>true</code>.</li>
             <li><code>zIndex</code> (number): Base z-index for the popup. Default: <code>1000000</code>.</li>
+            <li><code>containerSelector</code> (string): Selector for the container element where the popup will be appended. Default: <code>'body'</code>.</li>
+            <li><code>extraClass</code> (string): Additional CSS class for the popup wrapper. Default: <code>''</code>.</li>
+            <li><code>title</code> (boolean|string): Whether to show a title. If string, it's used as title text. Default: <code>true</code>.</li>
+            <li><code>titleTag</code> (string): HTML tag for the title. Default: <code>'h5'</code>.</li>
+            <li><code>copy</code> (boolean): Whether to copy the element instead of moving it. Default: <code>false</code>.</li>
+            <li><code>content</code> (string|HTMLElement): HTML content for the popup. Default: <code>''</code>.</li>
         </ul>
 
         <h3>Position and Size</h3>
         <ul>
-            <li><code>width</code> (string): Width of the popup (e.g., <code>'40%'</code>, <code>'500px'</code>). Default: <code>'40%'</code>.</li>
-            <li><code>height</code> (string): Height of the popup. Default: <code>'auto'</code>.</li>
-            <li><code>positionX</code> (string): Horizontal position (<code>'center'</code>, <code>'left'</code>, <code>'right'</code>). Default: <code>'center'</code>.</li>
-            <li><code>positionY</code> (string): Vertical position (<code>'center'</code>, <code>'top'</code>, <code>'bottom'</code>). Default: <code>'center'</code>.</li>
-            <li><code>offsetX</code> (string): Horizontal offset. Default: <code>'10px'</code>.</li>
-            <li><code>offsetY</code> (string): Vertical offset. Default: <code>'10px'</code>.</li>
-            <li><code>minWidth</code> / <code>maxWidth</code> (string): Constraints for width.</li>
-            <li><code>minHeight</code> / <code>maxHeight</code> (string): Constraints for height.</li>
+            <li><code>width</code> (string|number): Width of the popup (e.g., <code>'40%'</code>, <code>'500px'</code>, <code>600</code>). Default: <code>'40%'</code>.</li>
+            <li><code>height</code> (string|number): Height of the popup. Default: <code>'auto'</code>.</li>
+            <li><code>positionX</code> (string|number): Horizontal position (<code>'center'</code>, <code>'left'</code>, <code>'right'</code>, or numeric offset). Default: <code>'center'</code>.</li>
+            <li><code>positionY</code> (string|number): Vertical position (<code>'center'</code>, <code>'top'</code>, <code>'bottom'</code>, or numeric offset). Default: <code>'center'</code>.</li>
+            <li><code>offsetX</code> (string|number): Horizontal offset. Default: <code>'10px'</code>.</li>
+            <li><code>offsetY</code> (string|number): Vertical offset. Default: <code>'10px'</code>.</li>
+            <li><code>minWidth</code> (string|null): Minimum width constraint. Default: <code>'min(200px, 90%)'</code>.</li>
+            <li><code>maxWidth</code> (string|null): Maximum width constraint. Default: <code>'95%'</code>.</li>
+            <li><code>minHeight</code> (string|null): Minimum height constraint. Default: <code>null</code>.</li>
+            <li><code>maxHeight</code> (string|null): Maximum height constraint. Default: <code>null</code>.</li>
         </ul>
 
         <h3>Triggers</h3>
@@ -72,6 +82,7 @@
             <li><code>onLoad</code> (boolean): Open automatically when page loads. Default: <code>true</code>.</li>
             <li><code>onLoadDelay</code> (number): Delay in milliseconds before auto-opening. Default: <code>500</code>.</li>
             <li><code>onLeaveTop</code> (boolean): Open when mouse leaves the top of the viewport. Default: <code>false</code>.</li>
+            <li><code>onLeaveTopOffset</code> (number): Distance from the top edge in pixels to trigger <code>onLeaveTop</code>. Default: <code>3</code>.</li>
             <li><code>onLeaveViewport</code> (boolean): Open when mouse leaves the viewport. Default: <code>false</code>.</li>
         </ul>
 
@@ -81,6 +92,13 @@
             <li><code>closeOverlay</code> (boolean): Close when clicking on the overlay. Default: <code>true</code>.</li>
             <li><code>closeAuto</code> (boolean): Automatically close after a delay. Default: <code>false</code>.</li>
             <li><code>closeAutoDelay</code> (number): Delay in milliseconds for auto-closing. Default: <code>0</code>.</li>
+            <li><code>ariaCloseLabel</code> (string): ARIA label for close buttons. Default: <code>'Close this dialog'</code>.</li>
+        </ul>
+
+        <h3>Keyboard Shortcuts</h3>
+        <ul>
+            <li><code>keysOpen</code> (string|null): Keyboard shortcut to open the popup. Default: <code>null</code>.</li>
+            <li><code>keysClose</code> (string|null): Keyboard shortcut to close the popup. Default: <code>null</code>.</li>
         </ul>
 
         <h3>Overlay Settings</h3>
@@ -95,18 +113,43 @@
         <ul>
             <li><code>savePositionSize</code> (boolean): Save position and size for next visit. Default: <code>true</code>.</li>
             <li><code>storeCode</code> (string): Unique code for the popup storage. Default: <code>''</code> (empty). If empty, storage is disabled.</li>
-            <li><code>storePositionSizeCode</code> (string): Base key for position/size storage. Default: <code>'flyin-positionsize'</code>. The full key used is <code>storePositionSizeCode</code> + <code>'-'</code> + <code>storeCode</code>.</li>
+            <li><code>storePositionSizeCode</code> (string): Base key for position/size storage. Default: <code>'flyin-position-size'</code>. The full key used is <code>storePositionSizeCode</code> + <code>'-'</code> + <code>storeCode</code>.</li>
+            <li><code>storePositionSizeExpiration</code> (number): Days until the saved position and size expire. Default: <code>365</code>.</li>
+            <li><code>save</code> (Record&lt;string, any&gt;): Additional data to save in the popup storage. Default: <code>{}</code>.</li>
+        </ul>
+
+        <h3>Auto-Show Settings</h3>
+        <ul>
+            <li><code>autoShowLimit</code> (boolean): Limit the number of times the popup is shown automatically. Default: <code>false</code>.</li>
+            <li><code>autoShowCounter</code> (number): Maximum number of times to show. Default: <code>5</code>.</li>
+            <li><code>autoShowDelay</code> (number): Days before the counter resets. Default: <code>7</code>.</li>
         </ul>
 
         <h3>Header and Footer</h3>
         <ul>
             <li><code>header</code> (boolean): Show popup header. Default: <code>true</code>.</li>
-            <li><code>headerContent</code> (string|boolean): Custom HTML for header.</li>
+            <li><code>headerContent</code> (string|boolean|HTMLElement): Custom content for header. Default: <code>false</code>.</li>
             <li><code>footer</code> (boolean): Show popup footer. Default: <code>true</code>.</li>
-            <li><code>footerContent</code> (string|boolean): Custom HTML for footer.</li>
+            <li><code>footerContent</code> (string|boolean|HTMLElement): Custom content for footer. Default: <code>false</code>.</li>
             <li><code>buttonX</code> (boolean): Show close button in header. Default: <code>true</code>.</li>
+            <li><code>buttonXContent</code> (string|null): Custom HTML/text for the header close button (overrides SVG). Default: <code>null</code>.</li>
+            <li><code>buttonXSVG</code> (string): SVG code for the header close button icon.</li>
             <li><code>buttonFooter</code> (boolean): Show close button in footer. Default: <code>true</code>.</li>
             <li><code>buttonFooterContent</code> (string): Text for footer close button. Default: <code>'Close'</code>.</li>
+            <li><code>buttonAction</code> (function): Custom callback function for the close buttons.</li>
+        </ul>
+
+        <h3>Advanced and Skin Settings</h3>
+        <ul>
+            <li><code>attrWrapper</code> (string): Additional attributes for the wrapper element.</li>
+            <li><code>attrHeader</code> (string): Additional attributes for the header element.</li>
+            <li><code>attrContent</code> (string): Additional attributes for the content element.</li>
+            <li><code>attrFooter</code> (string): Additional attributes for the footer element.</li>
+            <li><code>showGrip</code> (boolean): Show resize grip (requires <code>resizable</code> skin). Default: <code>false</code>.</li>
+            <li><code>gripSVG</code> (string): SVG code for the resize grip icon.</li>
+            <li><code>sizeMinWidth</code> (number): Minimum width for resizing. Default: <code>200</code>.</li>
+            <li><code>sizeMinHeight</code> (number): Minimum height for resizing. Default: <code>100</code>.</li>
+            <li><code>resizeMargin</code> (number): Margin in pixels around the edge for resize detection. Default: <code>5</code>.</li>
         </ul>
 
         <h3>Callbacks</h3>
@@ -115,6 +158,8 @@
             <li><code>ready</code>: Triggered when popup is ready.</li>
             <li><code>beforeOpen</code> / <code>afterOpen</code>: Lifecycle events for opening.</li>
             <li><code>beforeClose</code> / <code>afterClose</code>: Lifecycle events for closing.</li>
+            <li><code>beforeMove</code> / <code>afterMove</code>: Lifecycle events for movement.</li>
+            <li><code>beforeResize</code> / <code>afterResize</code>: Lifecycle events for resizing.</li>
         </ul>
     </section>
 

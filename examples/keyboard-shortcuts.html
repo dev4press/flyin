@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Keyboard Shortcuts Example</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <a href="../index.html">
+        <div class="logo-container">
+            <svg viewBox="0 0 640 640" aria-hidden="true">
+                <use href="../assets/img/logo.svg#logo"></use>
+            </svg>
+        </div>
+        <h1>Flyin</h1>
+    </a>
+    <div class="subtitle">Keyboard Shortcuts Example</div>
+</header>
+
+<main>
+    <section>
+        <h2>Keyboard Shortcuts</h2>
+        <p>This example demonstrates how to use keyboard shortcuts to open and close the popup using the <code>keysOpen</code> and <code>keysClose</code> settings.</p>
+        
+        <div style="text-align: center; margin: 2rem 0; padding: 2rem; border: 2px dashed #ccc; border-radius: 8px;">
+            <p style="font-size: 1.2rem; margin-bottom: 1rem;">Try the following shortcuts:</p>
+            <div style="display: flex; justify-content: center; gap: 2rem;">
+                <div>
+                    <kbd style="background-color: #eee; border-radius: 3px; border: 1px solid #b4b4b4; box-shadow: 0 1px 1px rgba(0,0,0,.2), 0 2px 0 0 rgba(255,255,255,.7) inset; color: #333; display: inline-block; font-size: .85em; font-weight: 700; line-height: 1; padding: 2px 4px; white-space: nowrap;">Control</kbd> + 
+                    <kbd style="background-color: #eee; border-radius: 3px; border: 1px solid #b4b4b4; box-shadow: 0 1px 1px rgba(0,0,0,.2), 0 2px 0 0 rgba(255,255,255,.7) inset; color: #333; display: inline-block; font-size: .85em; font-weight: 700; line-height: 1; padding: 2px 4px; white-space: nowrap;">Shift</kbd> + 
+                    <kbd style="background-color: #eee; border-radius: 3px; border: 1px solid #b4b4b4; box-shadow: 0 1px 1px rgba(0,0,0,.2), 0 2px 0 0 rgba(255,255,255,.7) inset; color: #333; display: inline-block; font-size: .85em; font-weight: 700; line-height: 1; padding: 2px 4px; white-space: nowrap;">F</kbd>
+                    <p style="margin-top: 0.5rem; color: #666;">to <strong>Open</strong></p>
+                </div>
+                <div>
+                    <kbd style="background-color: #eee; border-radius: 3px; border: 1px solid #b4b4b4; box-shadow: 0 1px 1px rgba(0,0,0,.2), 0 2px 0 0 rgba(255,255,255,.7) inset; color: #333; display: inline-block; font-size: .85em; font-weight: 700; line-height: 1; padding: 2px 4px; white-space: nowrap;">Control</kbd> + 
+                    <kbd style="background-color: #eee; border-radius: 3px; border: 1px solid #b4b4b4; box-shadow: 0 1px 1px rgba(0,0,0,.2), 0 2px 0 0 rgba(255,255,255,.7) inset; color: #333; display: inline-block; font-size: .85em; font-weight: 700; line-height: 1; padding: 2px 4px; white-space: nowrap;">Shift</kbd> + 
+                    <kbd style="background-color: #eee; border-radius: 3px; border: 1px solid #b4b4b4; box-shadow: 0 1px 1px rgba(0,0,0,.2), 0 2px 0 0 rgba(255,255,255,.7) inset; color: #333; display: inline-block; font-size: .85em; font-weight: 700; line-height: 1; padding: 2px 4px; white-space: nowrap;">C</kbd>
+                    <p style="margin-top: 0.5rem; color: #666;">to <strong>Close</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="example-popup" data-title="Keyboard Shortcuts" style="display: none;">
+            <p>This popup can be opened and closed using keyboard shortcuts!</p>
+            <p>We are using the <code>tinykeys</code> library internally to handle these bindings.</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Home</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Flyin with keyboard shortcuts
+        var flyin = new Flyin("#example-popup", {
+            settings: {
+                onLoad: false,
+                style: 'plain-white',
+                keysOpen: "Control+Shift+f",
+                keysClose: "Control+Shift+c"
+            }
+        });
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

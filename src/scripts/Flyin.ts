@@ -1,11 +1,10 @@
 import { Skin } from './Skin';
 import { ResizableSkin } from './skins/ResizableSkin';
-import type { Options, Callbacks } from './types/types';
+import type { Callbacks, MoveOptions, Options, ResizeOptions, Settings } from './types/types';
 
 let flyinIDSequence = 1;
 
 export class Flyin {
-  public useStorage = true;
   public skinInstance: Skin | null = null;
   public element: HTMLElement | null = null;
   public overlay: HTMLElement | null = null;
@@ -18,8 +17,14 @@ export class Flyin {
 
   constructor(element: HTMLElement | string | null, options: Options = {}) {
     this.id = flyinIDSequence++;
+
     if (element) {
-      this.element = typeof element === 'string' ? document.querySelector(element) : element;
+      if (typeof element === 'string') {
+        this.element = document.querySelector(element);
+      } else {
+        const el = element as any;
+        this.element = el.jquery && el.length > 0 ? el[0] : el;
+      }
     }
 
     this.skinName = options.skin || 'Base';
@@ -27,6 +32,8 @@ export class Flyin {
     this.callbacks = options.callbacks || {};
 
     this.skinInstance = this.loadSkin(this.skinName, this.settings);
+
+    this.callback(this.callbacks.ready, this);
   }
 
   open(): void {
@@ -42,25 +49,33 @@ export class Flyin {
   }
 
   get(name: string): any {
-    if (name === 'cookie' || name === 'storage') {
-      name = 'storageValue';
-    } else if (name === 'status') {
-      name = 'status';
-    }
-
-    return this.skinInstance ? (this.skinInstance as any)[name] : undefined;
+    return this.skinInstance
+      ? (this.skinInstance as Skin).settings[name as keyof Settings]
+      : undefined;
   }
 
-  mod(data: any): void {
+  skin(): Skin | null {
+    return this.skinInstance;
+  }
+
+  mod(data: Partial<Settings>): void {
     this.skinInstance?.mod(data);
   }
 
-  move(location: any): void {
+  move(location: MoveOptions): void {
+    this.callback(this.callbacks.beforeMove, this);
+
     this.skinInstance?.move(location);
+
+    this.callback(this.callbacks.afterMove, this);
   }
 
-  resize(size: any): void {
+  resize(size: ResizeOptions): void {
+    this.callback(this.callbacks.beforeResize, this);
+
     this.skinInstance?.resize(size);
+
+    this.callback(this.callbacks.afterResize, this);
   }
 
   setContent(content: string): void {
@@ -69,14 +84,23 @@ export class Flyin {
 
   randomFromArray(input: any[]): any {
     const idx = Math.floor(Math.random() * input.length);
+
     return input[idx];
+  }
+
+  private callback(method: ((...args: any[]) => void) | any, ...args: any[]): void {
+    if (typeof method === 'function') {
+      method.apply(this, args);
+    }
   }
 
   private loadSkin(name: string, options: any): Skin {
     const skinName = name.toLowerCase();
+
     if (skinName === 'resizable' || skinName === 'free') {
       return new ResizableSkin(this, options);
     }
+
     return new Skin(this, options);
   }
 }
