@@ -1,7 +1,14 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import dts from 'vite-plugin-dts';
 
 export default defineConfig({
+  plugins: [
+    dts({
+      insertTypesEntry: true,
+      include: ['src'],
+    }),
+  ],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
@@ -9,12 +16,8 @@ export default defineConfig({
       fileName: (format) => `flyin.${format}.js`,
     },
     rollupOptions: {
-      external: ['js-cookie'],
       output: {
         exports: 'default',
-        globals: {
-          'js-cookie': 'Cookies',
-        },
       },
     },
   },

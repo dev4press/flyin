@@ -1,3 +1,26 @@
+:root {
+    --primary-color: #003366;
+    --secondary-color: #0F172A;
+    --accent-color: #6366F1;
+    --action-color: #007bff;
+    --action-hover: #0056b3;
+    --text-color: #333;
+    --text-muted: #556677;
+    --text-light: #88aacc;
+    --white: #ffffff;
+    --body-bg: #f4f7f9;
+    --section-bg: #ffffff;
+    --item-bg: #f9fbfe;
+    --code-bg: #f0f4f8;
+    --demo-bg: #f4f7f6;
+    --border-color: #e0e6ed;
+    --heading-feature: #004080;
+    --link-color: #0059b3;
+    --shadow-sm: rgba(0, 0, 0, 0.05);
+    --shadow-md: rgba(0, 0, 0, 0.15);
+    --shadow-lg: rgba(0, 0, 0, 0.06);
+}
+
 * {
     box-sizing: border-box;
 }
@@ -5,8 +28,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f4f7f9;
+    color: var(--text-color);
+    background-color: var(--body-bg);
     margin: 0;
     padding: 0;
     display: flex;
@@ -15,8 +38,8 @@ body {
 }
 
 header {
-    background-color: #0F172A;
-    color: #fff;
+    background-color: var(--secondary-color);
+    color: var(--white);
     padding: 1rem 1rem 2rem;
     text-align: center;
 }
@@ -30,12 +53,12 @@ header .subtitle {
 
 header a {
     text-decoration: none;
-    color: #fff;
+    color: var(--white);
 }
 
 header a:hover {
     text-decoration: none;
-    color: #fff;
+    color: var(--white);
 }
 
 .logo-container svg {
@@ -44,7 +67,7 @@ header a:hover {
 }
 
 header .logo-container svg {
-    fill: #fff;
+    fill: var(--white);
 }
 
 header h1 {
@@ -63,16 +86,16 @@ main {
 }
 
 section {
-    background: #fff;
+    background: var(--section-bg);
     padding: 2rem;
     margin-bottom: 2rem;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 6px var(--shadow-sm);
 }
 
 h2 {
-    color: #003366;
-    border-bottom: 2px solid #e0e6ed;
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--border-color);
     padding-bottom: 0.5rem;
     margin-top: 0;
 }
@@ -86,8 +109,8 @@ li {
 }
 
 code, pre {
-    background-color: #f0f4f8;
-    color: #003366;
+    background-color: var(--code-bg);
+    color: var(--primary-color);
     padding: 0.2rem 0.4rem;
     border-radius: 4px;
     font-family: 'Courier New', Courier, monospace;
@@ -98,21 +121,21 @@ code, pre {
 pre {
     padding: 1rem;
     overflow-x: auto;
-    border-left: 4px solid #003366;
+    border-left: 4px solid var(--primary-color);
     display: block;
     white-space: pre-wrap;
 }
 
 footer {
-    background-color: #0F172A;
-    color: #88aacc;
+    background-color: var(--secondary-color);
+    color: var(--text-light);
     padding: 2rem 1rem;
     text-align: center;
     font-size: 0.9rem;
 }
 
 footer a {
-    color: #fff;
+    color: var(--white);
     text-decoration: none;
 }
 
@@ -127,8 +150,8 @@ footer a:hover {
 
 .cta-links a, .cta-button {
     display: inline-block;
-    background-color: #6366F1;
-    color: #fff;
+    background-color: var(--accent-color);
+    color: var(--white);
     padding: 0.8rem 1.5rem;
     border-radius: 6px;
     margin: 0.5rem;
@@ -141,9 +164,9 @@ footer a:hover {
 }
 
 .cta-links a:hover, .cta-button:hover {
-    background-color: #6366F1;
+    background-color: var(--accent-color);
     transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 8px var(--shadow-md);
 }
 
 .cta-button:active {
@@ -167,7 +190,7 @@ footer a:hover {
 }
 
 .popup-welcome h3 {
-    color: #003366;
+    color: var(--primary-color);
     margin-top: 0;
 }
 
@@ -179,15 +202,15 @@ footer a:hover {
 }
 
 .feature-item {
-    background: #f9fbfe;
+    background: var(--item-bg);
     padding: 1.5rem;
     border-radius: 6px;
-    border: 1px solid #e0e6ed;
+    border: 1px solid var(--border-color);
 }
 
 .feature-item h3 {
     margin-top: 0;
-    color: #004080;
+    color: var(--heading-feature);
     font-size: 1.1rem;
 }
 
@@ -246,7 +269,8 @@ footer a:hover {
 
 @media (max-width: 480px) {
     header h1 {
-        font-size: 1.5rem;
+        font-size: 3rem;
+        margin-top: -40px;
     }
     
     main {
@@ -256,18 +280,14 @@ footer a:hover {
     section {
         padding: 1rem;
     }
-    
+
     .logo-container img, .logo-container svg {
-        width: 60px;
-        height: 60px;
+        width: 160px;
+        height: 160px;
     }
 }
 
 @media (max-width: 360px) {
-    header h1 {
-        font-size: 1.3rem;
-    }
-    
     section {
         padding: 0.8rem;
     }
@@ -278,10 +298,10 @@ footer a:hover {
 }
 
 .example-item {
-    background: #f9fbfe;
+    background: var(--item-bg);
     padding: 1.2rem;
     border-radius: 8px;
-    border: 1px solid #e0e6ed;
+    border: 1px solid var(--border-color);
     transition: all 0.2s ease-in-out;
     display: flex;
     flex-direction: column;
@@ -289,12 +309,12 @@ footer a:hover {
 
 .example-item:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0,0,0,0.06);
-    border-color: #007bff;
+    box-shadow: 0 8px 15px var(--shadow-lg);
+    border-color: var(--action-color);
 }
 
 .example-item a {
-    color: #0059b3;
+    color: var(--link-color);
     font-weight: 700;
     text-decoration: none;
     font-size: 1.1rem;
@@ -306,14 +326,14 @@ footer a:hover {
 }
 
 .example-item span {
-    color: #556677;
+    color: var(--text-muted);
     font-size: 0.9rem;
     line-height: 1.4;
 }
 
 /* Demo Landing Page Styles */
 .demo-section {
-    background: #f4f7f6;
+    background: var(--demo-bg);
     padding: 3rem 1rem;
     text-align: center;
     border-radius: 8px;
@@ -322,8 +342,8 @@ footer a:hover {
 
 .demo-button {
     display: inline-block;
-    background: #007bff;
-    color: white;
+    background: var(--action-color);
+    color: var(--white);
     padding: 12px 24px;
     text-decoration: none;
     border-radius: 4px;
@@ -334,5 +354,5 @@ footer a:hover {
 }
 
 .demo-button:hover {
-    background: #0056b3;
+    background: var(--action-hover);
 }
