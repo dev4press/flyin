@@ -90,6 +90,19 @@
 &lt;/script&gt;</code></pre>
     </section>
 
+    <section id="keyboard-shortcuts">
+        <h2>Keyboard Shortcuts</h2>
+        <p>Bind specific key combinations to open or close the popup.</p>
+        <pre><code>&lt;script&gt;
+    new Flyin("#my-popup", {
+        settings: {
+            keysOpen: "Control+Shift+f", // Open with Ctrl+Shift+F
+            keysClose: "Control+Shift+c"  // Close with Ctrl+Shift+C
+        }
+    });
+&lt;/script&gt;</code></pre>
+    </section>
+
     <section id="advanced-settings">
         <h2>Advanced Settings Example</h2>
         <p>Combining multiple settings for a highly customized experience.</p>
@@ -111,6 +124,54 @@
     // You can also control the popup manually
     // myFlyin.open();
     // myFlyin.close();
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <section id="auto-show-control">
+        <h2>Auto-Show Control</h2>
+        <p>Limit how many times a popup appears automatically using persistence.</p>
+        <pre><code>&lt;script&gt;
+    new Flyin("#my-popup", {
+        settings: {
+            onLoad: true,
+            storeCode: 'promo-popup',
+            autoShowLimit: true,
+            autoShowCounter: 3, // Show max 3 times
+            autoShowDelay: 7    // Reset counter after 7 days
+        }
+    });
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <section id="custom-ui">
+        <h2>Custom Close Button & Header</h2>
+        <p>Replace the default close icon with custom text or SVG, and add custom header HTML.</p>
+        <pre><code>&lt;script&gt;
+    new Flyin("#my-popup", {
+        settings: {
+            headerContent: "&lt;div class='custom-header'&gt;🌟 Premium&lt;/div&gt;",
+            buttonXContent: "CLOSE",
+            buttonAction: function(instance) {
+                if (confirm("Close this?")) {
+                    instance.close();
+                }
+            }
+        }
+    });
+&lt;/script&gt;</code></pre>
+    </section>
+
+    <section id="accessibility">
+        <h2>Accessible Popup</h2>
+        <p>Enhance accessibility with ARIA roles, labels, and custom attributes.</p>
+        <pre><code>&lt;script&gt;
+    new Flyin("#my-popup", {
+        settings: {
+            role: "alertdialog",
+            ariaCloseLabel: "Close notification",
+            attrWrapper: 'aria-describedby="popup-desc"'
+        }
+    });
 &lt;/script&gt;</code></pre>
     </section>
 

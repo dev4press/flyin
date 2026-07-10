@@ -28,66 +28,42 @@ export class ResizableSkin extends Skin {
 
   constructor(core: Flyin, options: Settings = {}) {
     super(core, options);
-    // Initialize ResizableSkin defaults if not provided in options
-    this.settings.showGrip = options.showGrip ?? false;
-    this.settings.sizeMinWidth = options.sizeMinWidth ?? 200;
-    this.settings.sizeMinHeight = options.sizeMinHeight ?? 100;
-    this.settings.resizeMargin = options.resizeMargin ?? 5;
   }
 
   protected override prepareDialog(): void {
-    if (this.settings.savePositionSize) {
-      const key = this.getPositionSizeStorageKey();
-      const storage = key ? localStorage.getItem(key) : null;
-      if (storage !== null) {
-        try {
-          const data = JSON.parse(storage);
-          this.storagePositionSize = {
-            left: 0,
-            top: 0,
-            width: 0,
-            height: 0,
-            cWidth: 0,
-            cHeight: 0,
-            ...data,
-          };
-          this.storageUsed = true;
-        } catch {
-          console.error('Failed to parse ResizableSkin position storage');
-        }
-      }
+    if (!this.settings.savePositionSize) {
+      return;
     }
 
-    if (this.storageUsed) {
-      if (this.storagePositionSize.cHeight === 0) {
-        this.storagePositionSize.cHeight = this.storagePositionSize.height;
-      }
+    this.settings.positionX = this.storagePositionSize.left;
+    this.settings.positionY = this.storagePositionSize.top;
+    this.settings.width = `${this.storagePositionSize.width}px`;
+    this.settings.height = `${this.storagePositionSize.height}px`;
 
-      this.settings.positionX = this.storagePositionSize.left;
-      this.settings.positionY = this.storagePositionSize.top;
-      this.settings.width = `${this.storagePositionSize.width}px`;
-      this.settings.height = `${this.storagePositionSize.height}px`;
+    const dims = this.getContainerDimensions();
+    const offsetX = this.parseOffset(this.settings.offsetX);
+    const offsetY = this.parseOffset(this.settings.offsetY);
 
-      this.settings.cWidth = 'auto';
-      this.settings.cHeight = 'auto';
+    if (
+      dims.width <
+      (this.settings.positionX as number) + this.storagePositionSize.width + offsetX
+    ) {
+      this.settings.positionX = dims.width - this.storagePositionSize.width - offsetX;
+    }
 
-      const dims = this.getContainerDimensions();
-      const offsetX = this.parseOffset(this.settings.offsetX);
-      const offsetY = this.parseOffset(this.settings.offsetY);
+    if ((this.settings.positionX as number) < offsetX) {
+      this.settings.positionX = offsetX;
+    }
 
-      if (dims.width < (this.settings.positionX as number) + this.storagePositionSize.width + offsetX) {
-        this.settings.positionX = dims.width - this.storagePositionSize.width - offsetX;
-      }
-      if ((this.settings.positionX as number) < offsetX) {
-        this.settings.positionX = offsetX;
-      }
+    if (
+      dims.height <
+      (this.settings.positionY as number) + this.storagePositionSize.height + offsetY
+    ) {
+      this.settings.positionY = dims.height - this.storagePositionSize.height - offsetY;
+    }
 
-      if (dims.height < (this.settings.positionY as number) + this.storagePositionSize.height + offsetY) {
-        this.settings.positionY = dims.height - this.storagePositionSize.height - offsetY;
-      }
-      if ((this.settings.positionY as number) < offsetY) {
-        this.settings.positionY = offsetY;
-      }
+    if ((this.settings.positionY as number) < offsetY) {
+      this.settings.positionY = offsetY;
     }
   }
 
@@ -96,9 +72,11 @@ export class ResizableSkin extends Skin {
 
     if (this.settings.showGrip) {
       const grip = document.createElement('div');
+
       grip.className = this.css('grip');
       grip.setAttribute('aria-hidden', 'true');
       grip.innerHTML = this.settings.gripSVG || '';
+
       this.core.dialog?.querySelector(`.${this.css('footer')}`)?.appendChild(grip);
     }
 
@@ -138,15 +116,21 @@ export class ResizableSkin extends Skin {
     } else if (e.touches && e.touches.length > 0) {
       return { pageX: e.touches[0].clientX, pageY: e.touches[0].clientY, touch: true };
     }
+
     return null;
   }
 
   private mouseDownWrapper(e: MouseEvent | TouchEvent): void {
     const pos = this.mousePos(e);
-    if (!pos) return;
+
+    if (!pos) {
+      return;
+    }
 
     this.updateRM(pos);
-    if (this.moverState.rm === '') return;
+    if (this.moverState.rm === '') {
+      return;
+    }
 
     this.moverState.resizing = true;
     this.moverState.rmX = pos.pageX;
@@ -156,7 +140,10 @@ export class ResizableSkin extends Skin {
 
   private updateRM(pos: { pageX: number; pageY: number; touch: boolean }): void {
     const dialog = this.core.dialog;
-    if (!dialog) return;
+
+    if (!dialog) {
+      return;
+    }
 
     const rect = dialog.getBoundingClientRect();
     const mod = pos.touch ? 20 : 0;
@@ -168,6 +155,7 @@ export class ResizableSkin extends Skin {
 
     let inGrip = false;
     const grip = dialog.querySelector(`.${this.css('grip')}`) as HTMLElement;
+
     if (this.settings.showGrip && grip) {
       const gRect = grip.getBoundingClientRect();
       if (
@@ -188,14 +176,17 @@ export class ResizableSkin extends Skin {
         this.moverState.resizeTop = true;
         this.moverState.rm += 'n';
       }
+
       if (pos.pageY <= rect.bottom && pos.pageY > rect.bottom - (this.settings.resizeMargin || 5)) {
         this.moverState.resizeBottom = true;
         this.moverState.rm += 's';
       }
+
       if (pos.pageX >= rect.left && pos.pageX < rect.left + (this.settings.resizeMargin || 5)) {
         this.moverState.resizeLeft = true;
         this.moverState.rm += 'w';
       }
+
       if (pos.pageX <= rect.right && pos.pageX > rect.right - (this.settings.resizeMargin || 5)) {
         this.moverState.resizeRight = true;
         this.moverState.rm += 'e';
@@ -204,14 +195,25 @@ export class ResizableSkin extends Skin {
   }
 
   private mouseDown(e: MouseEvent | TouchEvent): void {
-    if (this.moverState.rm !== '') return;
+    if (this.moverState.rm !== '') {
+      return;
+    }
+
     const pos = this.mousePos(e);
-    if (!pos) return;
+
+    if (!pos) {
+      return;
+    }
 
     this.moverState.moving = true;
+
     e.stopPropagation();
+
     const dialog = this.core.dialog;
-    if (!dialog) return;
+
+    if (!dialog) {
+      return;
+    }
 
     dialog.classList.add(this.css('drag'));
     this.moverState.dr = dialog;
@@ -228,8 +230,8 @@ export class ResizableSkin extends Skin {
 
     dialog.style.left = `${currentLeft}px`;
     dialog.style.top = `${currentTop}px`;
-    dialog.style.right = 'auto';
-    dialog.style.bottom = 'auto';
+    dialog.style.right = '';
+    dialog.style.bottom = '';
 
     const dims = this.getContainerDimensions();
     const offsetX = this.parseOffset(this.settings.offsetX);
@@ -246,10 +248,15 @@ export class ResizableSkin extends Skin {
 
   private mouseMove(e: MouseEvent | TouchEvent): void {
     const pos = this.mousePos(e);
-    if (!pos) return;
+
+    if (!pos) {
+      return;
+    }
 
     if (this.moverState.dr) {
-      if (e.cancelable) e.preventDefault();
+      if (e.cancelable) {
+        e.preventDefault();
+      }
 
       const containerRect = this.getContainer().getBoundingClientRect();
       const isBody = this.getContainer() === document.body;
@@ -274,7 +281,10 @@ export class ResizableSkin extends Skin {
 
     if (this.status === 'opened') {
       const dialog = this.core.dialog;
-      if (!dialog) return;
+
+      if (!dialog) {
+        return;
+      }
 
       const wrapper = dialog.querySelector(`.${this.css('wrapper')}`) as HTMLElement;
       const header = dialog.querySelector(`.${this.css('header')}`) as HTMLElement;
@@ -302,14 +312,23 @@ export class ResizableSkin extends Skin {
               cs = 'nwse-resize';
               break;
           }
+
           wrapper.style.cursor = cs;
-          if (header) header.style.cursor = cs;
+
+          if (header) {
+            header.style.cursor = cs;
+          }
         } else {
           wrapper.style.cursor = '';
-          if (header) header.style.cursor = 'move';
+
+          if (header) {
+            header.style.cursor = 'move';
+          }
         }
       } else {
-        if (e.cancelable) e.preventDefault();
+        if (e.cancelable) {
+          e.preventDefault();
+        }
 
         const relX = pos.pageX - this.moverState.rmX;
         const relY = pos.pageY - this.moverState.rmY;
@@ -328,7 +347,9 @@ export class ResizableSkin extends Skin {
           if (this.moverState.resizeTop) {
             let actualRelY = relY;
             const topLimit = (isBody ? 0 : containerRect.top) + offsetY;
-            if (dRect.top + actualRelY < topLimit) actualRelY = topLimit - dRect.top;
+            if (dRect.top + actualRelY < topLimit) {
+              actualRelY = topLimit - dRect.top;
+            }
             if (dRect.height - actualRelY > (this.settings.sizeMinHeight || 100)) {
               dialog.style.height = `${dRect.height - actualRelY}px`;
               dialog.style.top = `${(isBody ? dRect.top : dRect.top - containerRect.top) + actualRelY}px`;
@@ -337,8 +358,10 @@ export class ResizableSkin extends Skin {
           if (this.moverState.resizeBottom) {
             let actualRelY = relY;
             const dims = this.getContainerDimensions();
-            const bottomLimit = (isBody ? dims.height : containerRect.bottom) - offsetY;
-            if (dRect.bottom + actualRelY > bottomLimit) actualRelY = bottomLimit - dRect.bottom;
+            const bottomLimit = (isBody ? 0 : containerRect.top) + dims.height - offsetY;
+            if (dRect.bottom + actualRelY > bottomLimit) {
+              actualRelY = bottomLimit - dRect.bottom;
+            }
             if (dRect.height + actualRelY > (this.settings.sizeMinHeight || 100)) {
               dialog.style.height = `${dRect.height + actualRelY}px`;
             }
@@ -349,7 +372,9 @@ export class ResizableSkin extends Skin {
           if (this.moverState.resizeLeft) {
             let actualRelX = relX;
             const leftLimit = (isBody ? 0 : containerRect.left) + offsetX;
-            if (dRect.left + actualRelX < leftLimit) actualRelX = leftLimit - dRect.left;
+            if (dRect.left + actualRelX < leftLimit) {
+              actualRelX = leftLimit - dRect.left;
+            }
             if (dRect.width - actualRelX > (this.settings.sizeMinWidth || 90)) {
               dialog.style.width = `${dRect.width - actualRelX}px`;
               dialog.style.left = `${(isBody ? dRect.left : dRect.left - containerRect.left) + actualRelX}px`;
@@ -358,8 +383,10 @@ export class ResizableSkin extends Skin {
           if (this.moverState.resizeRight) {
             let actualRelX = relX;
             const dims = this.getContainerDimensions();
-            const rightLimit = (isBody ? dims.width : containerRect.right) - offsetX;
-            if (dRect.right + actualRelX > rightLimit) actualRelX = rightLimit - dRect.right;
+            const rightLimit = (isBody ? 0 : containerRect.left) + dims.width - offsetX;
+            if (dRect.right + actualRelX > rightLimit) {
+              actualRelX = rightLimit - dRect.right;
+            }
             if (dRect.width + actualRelX > (this.settings.sizeMinWidth || 90)) {
               dialog.style.width = `${dRect.width + actualRelX}px`;
             }
@@ -377,17 +404,25 @@ export class ResizableSkin extends Skin {
     if (this.moverState.resizing) {
       this.moverState.rm = '';
       this.moverState.resizing = false;
+
       const dialog = this.core.dialog;
       const wrapper = dialog?.querySelector(`.${this.css('wrapper')}`) as HTMLElement;
       const header = dialog?.querySelector(`.${this.css('header')}`) as HTMLElement;
-      if (wrapper) wrapper.style.cursor = '';
-      if (header) header.style.cursor = 'move';
+
+      if (wrapper) {
+        wrapper.style.cursor = '';
+      }
+
+      if (header) {
+        header.style.cursor = 'move';
+      }
     }
 
     if (this.moverState.dr) {
       this.moverState.moving = false;
       this.moverState.dr.classList.remove(this.css('drag'));
       this.moverState.dr = null;
+
       this.save();
     }
   }
@@ -401,10 +436,12 @@ export class ResizableSkin extends Skin {
   protected override genPositionSizeStorage(): Record<string, any> {
     const dialog = this.core.dialog;
     const content = dialog?.querySelector(`.${this.css('content')}`) as HTMLElement;
-    if (!dialog || !content) return {};
+
+    if (!dialog || !content) {
+      return {};
+    }
 
     const rect = dialog.getBoundingClientRect();
-    const cRect = content.getBoundingClientRect();
     const containerRect = this.getContainer().getBoundingClientRect();
     const isBody = this.getContainer() === document.body;
 
@@ -413,8 +450,6 @@ export class ResizableSkin extends Skin {
       top: isBody ? rect.top : rect.top - containerRect.top,
       width: rect.width,
       height: rect.height,
-      cWidth: cRect.width,
-      cHeight: cRect.height,
     };
   }
 }

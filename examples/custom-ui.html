@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Custom Header & Close UI Example</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+    <style>
+        .custom-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1890ff;
+        }
+        .custom-close-btn {
+            background: #ff4d4f;
+            color: white;
+            border: none;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="../index.html">
+        <div class="logo-container">
+            <svg viewBox="0 0 640 640" aria-hidden="true">
+                <use href="../assets/img/logo.svg#logo"></use>
+            </svg>
+        </div>
+        <h1>Flyin</h1>
+    </a>
+    <div class="subtitle">Custom UI Example</div>
+</header>
+
+<main>
+    <section>
+        <h2>Customizing Header and Close Actions</h2>
+        <p>This example shows how to replace the default close button with custom text or SVGs and how to inject custom HTML into the header.</p>
+        
+        <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+            <button id="open-custom-text" class="button">Custom Close Text</button>
+            <button id="open-custom-svg" class="button">Custom SVG & Callback</button>
+            <button id="open-custom-header" class="button">Custom Header HTML</button>
+        </div>
+
+        <div id="popup-content" style="display: none;">
+            <p>This popup demonstrates various UI customization options available in Flyin.</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Examples</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4Press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Custom Close Text
+        document.getElementById('open-custom-text').addEventListener('click', function() {
+            new Flyin("#popup-content", {
+                settings: {
+                    onLoad: false,
+                    title: "Text Close Button",
+                    buttonXContent: "CLOSE ME",
+                    style: 'plain-white'
+                }
+            }).open();
+        });
+
+        // 2. Custom SVG & Callback
+        document.getElementById('open-custom-svg').addEventListener('click', function() {
+            new Flyin("#popup-content", {
+                settings: {
+                    onLoad: false,
+                    title: "SVG & Action Callback",
+                    // Simple circle SVG
+                    buttonXSVG: '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>',
+                    buttonAction: function(instance) {
+                        if (confirm("Are you sure you want to close this?")) {
+                            instance.close();
+                        }
+                    },
+                    style: 'box-blue'
+                }
+            }).open();
+        });
+
+        // 3. Custom Header HTML
+        document.getElementById('open-custom-header').addEventListener('click', function() {
+            new Flyin("#popup-content", {
+                settings: {
+                    onLoad: false,
+                    headerContent: '<div class="custom-header"><span>🌟</span> <strong>Premium Notification</strong></div>',
+                    buttonXContent: '<button class="custom-close-btn">Dismiss</button>',
+                    style: 'plain-white'
+                }
+            }).open();
+        });
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>

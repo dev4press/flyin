@@ -10,6 +10,7 @@
 
     .flyin-header {
       background: var(--flyin-header-bg);
+      color: var(--flyin-header-color);
       border-radius: var(--flyin-wrapper-border-radius) var(--flyin-wrapper-border-radius) 0 0;
       padding: var(--flyin-header-padding);
       border-bottom: var(--flyin-header-border-bottom);
@@ -80,7 +81,6 @@
         }
       }
     }
-
   }
 
   &.flyin-button-alt {
@@ -93,11 +93,8 @@
   }
 }
 
-/* Skins overrides */
-
 /* style: plain white */
 .flyin-style-plain-white {
-  // Uses defaults
 }
 
 /* style: plain black */
@@ -105,6 +102,7 @@
   --flyin-wrapper-bg: #111111;
   --flyin-header-border-bottom: 1px solid #555555;
   --flyin-title-color: #ffffff;
+  --flyin-header-color: #ffffff;
   --flyin-close-btn-color: #888888;
   --flyin-content-color: #ffffff;
   --flyin-footer-border-top: 1px solid #555555;
@@ -120,6 +118,7 @@
   --flyin-wrapper-shadow: 1px 1px 5px rgba(32, 32, 32, 0.6);
   --flyin-header-bg: #bbbbbb;
   --flyin-header-border-bottom: 1px solid transparent;
+  --flyin-header-color: #111;
   --flyin-title-color: #111;
   --flyin-title-shadow: 1px 1px 1px #eee;
   --flyin-close-btn-color: #666666;
@@ -143,6 +142,7 @@
   --flyin-wrapper-shadow: 1px 1px 5px rgba(32, 32, 32, 0.6);
   --flyin-header-bg: #c43636;
   --flyin-header-border-bottom: 1px solid transparent;
+  --flyin-header-color: #ffffff;
   --flyin-title-color: #ffffff;
   --flyin-title-weight: 900;
   --flyin-title-transform: uppercase;
@@ -166,6 +166,7 @@
   --flyin-wrapper-shadow: 0 10px 30px rgba(0, 100, 200, 0.15);
   --flyin-header-bg: #eef5ff;
   --flyin-header-border-bottom: 1px solid #d0e3ff;
+  --flyin-header-color: #0056b3;
   --flyin-title-color: #0056b3;
   --flyin-close-btn-color: #0056b3;
   --flyin-footer-bg: #f8fbff;
@@ -184,6 +185,7 @@
   --flyin-wrapper-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
   --flyin-header-bg: #242f4d;
   --flyin-header-border-bottom: 1px solid #303f66;
+  --flyin-header-color: #ffffff;
   --flyin-title-color: #ffffff;
   --flyin-close-btn-color: #a0aec0;
   --flyin-content-color: #e2e8f0;
@@ -202,6 +204,7 @@
   --flyin-wrapper-shadow: 0 10px 30px rgba(0, 150, 50, 0.1);
   --flyin-header-bg: #e6ffef;
   --flyin-header-border-bottom: 1px solid #c9f7d6;
+  --flyin-header-color: #1e7e34;
   --flyin-title-color: #1e7e34;
   --flyin-close-btn-color: #1e7e34;
   --flyin-footer-bg: #f6fff9;
@@ -220,6 +223,7 @@
   --flyin-wrapper-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
   --flyin-header-bg: #26412c;
   --flyin-header-border-bottom: 1px solid #365c3e;
+  --flyin-header-color: #ffffff;
   --flyin-title-color: #ffffff;
   --flyin-close-btn-color: #a0aec0;
   --flyin-content-color: #e8f5e9;
@@ -238,6 +242,7 @@
   --flyin-wrapper-shadow: 0 10px 30px rgba(200, 100, 0, 0.1);
   --flyin-header-bg: #fff5e0;
   --flyin-header-border-bottom: 1px solid #ffebc2;
+  --flyin-header-color: #d97706;
   --flyin-title-color: #d97706;
   --flyin-close-btn-color: #d97706;
   --flyin-footer-bg: #fffcf5;
@@ -256,6 +261,7 @@
   --flyin-wrapper-shadow: 0 15px 40px rgba(249, 115, 22, 0.15);
   --flyin-header-bg: #f97316;
   --flyin-header-border-bottom: 1px solid #f97316;
+  --flyin-header-color: #ffffff;
   --flyin-title-color: #ffffff;
   --flyin-close-btn-color: #ffffff;
   --flyin-content-color: #333333;
@@ -267,4 +273,18 @@
   --flyin-footer-btn-border-radius: 8px;
   --flyin-footer-btn-weight: 700;
   --flyin-footer-btn-transform: uppercase;
+}
+
+/* style: debugpress light */
+.flyin-style-debugpress-light {
+  --flyin-wrapper-bg: #FFFFFF;
+  --flyin-wrapper-border-radius: 0;
+  --flyin-wrapper-shadow: 1px 1px 5px rgb(32 32 32 / 60%);
+  --flyin-wrapper-border: 4px solid #23282D;
+  --flyin-header-bg: #23282D;
+  --flyin-header-padding: 5px 5px 0;
+  --flyin-header-color: #FFFFFF;
+  --flyin-content-padding: 0;
+  --flyin-footer-bg: #E0E0E0;
+  --flyin-footer-padding: 5px;
 }

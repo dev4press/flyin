@@ -62,6 +62,30 @@ const popup = new Flyin('#my-popup', {
 popup.open();
 ```
 
+## Configuration
+
+### Settings
+
+Flyin supports a wide range of settings to customize behavior and appearance.
+
+- **style** (string): Popup skin class. Default: `'plain-white'`.
+- **effect** (string): Entry effect. Default: `'random'`.
+- **modal** (boolean): Enable modal overlay. Default: `true`.
+- **onLoad** (boolean): Open automatically on page load. Default: `true`.
+- **width** / **height** (string): Dimensions of the popup.
+- **positionX** / **positionY** (string): Alignment of the popup.
+
+For a full list of settings, see the [Settings Documentation](https://dev4press.github.io/flyin/docs/settings.html).
+
+### Callbacks
+
+Hook into the popup lifecycle with callbacks:
+
+- **prepared**: Triggered when the popup is initialized.
+- **ready**: Triggered when the popup is ready in the DOM.
+- **beforeOpen** / **afterOpen**: Opening lifecycle events.
+- **beforeClose** / **afterClose**: Closing lifecycle events.
+
 ## License
 
 MIT

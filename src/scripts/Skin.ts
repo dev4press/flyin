@@ -1,135 +1,25 @@
 import type { Flyin } from './Flyin';
-import type { Settings } from './types/types';
+import type { MoveOptions, ResizeOptions, Settings } from './types/types';
+import { DEFAULT_CLASSES, DEFAULT_SETTINGS } from './utils/defaults';
+import { DATA_ANIMATIONS, DATA_EFFECTS } from './utils/data';
+import { tinykeys } from 'tinykeys';
 
 export class Skin {
-  protected skinCode = '';
   protected core: Flyin;
-  protected storageValue = 1;
-  protected storageUsed = false;
+  protected skinCode: string = '';
   protected storagePositionSize: Record<string, any> = {};
-  protected enabled = true;
-  protected status = 'closed';
-  protected statusModal = 'closed';
-  protected htmlClass = '';
-  protected mode = 'transition';
+  protected enabled: boolean = true;
+  protected mode: string = 'transition';
   protected lastActiveElement: HTMLElement | null = null;
   protected focusTrapListener: ((e: KeyboardEvent) => void) | null = null;
-  protected animations: string[] = ['slit', 'slithor', 'bounce', 'roll'];
-  protected effects: string[] = [
-    'none',
-    'fade',
-    'scale',
-    'zoomfade',
-    'slideinright',
-    'slideinleft',
-    'slideintop',
-    'slideinbottom',
-    'newspaper',
-    'fallcenter',
-    'fallleft',
-    'fallright',
-    'fliphorleft',
-    'fliphorright',
-    'flipvertop',
-    'flipverbottom',
-    'flipsign',
-    'flipsignfront',
-    'slit',
-    'slithor',
-    'bounce',
-    'roll',
-    'rotatebottom',
-    'rotatetop',
-    'rotateleft',
-    'rotateright',
-  ];
 
-  protected classes: Record<string, string> = {
-    html: 'flyin-active',
-    htmlEffectPrefix: 'flyin-effect-',
-    overlay: 'flyin-overlay',
-    overlayIDPrefix: 'flyin-overlay-',
-    overlayActive: 'flyin-active',
-    skinPrefix: 'flyin-skin-',
-    stylePrefix: 'flyin-style-',
-    titleIDPrefix: 'flyin-dialog-title-',
-    dialog: 'flyin-dialog',
-    dialogIDPrefix: 'flyin-dialog-',
-    dialogEffectPrefix: 'flyin-effect-',
-    dialogActive: 'flyin-active',
-    dialogInactive: 'flyin-inactive',
-    wrapper: 'flyin-wrapper',
-    header: 'flyin-header',
-    content: 'flyin-content',
-    footer: 'flyin-footer',
-    srOnly: 'flyin-sr-only',
-    closeButton: 'flyin-button-close',
-    drag: 'flyin-drag',
-    grip: 'flyin-grip',
-  };
+  protected animations: string[] = DATA_ANIMATIONS;
+  protected effects: string[] = DATA_EFFECTS;
+  protected classes: Record<string, string> = DEFAULT_CLASSES;
 
-  public settings: Settings = {
-    role: 'dialog',
-    modal: true,
-    zIndex: 1000000,
-    title: true,
-    titleTag: 'h5',
-    style: 'plain-white',
-    containerSelector: 'body',
-    extraClass: '',
-    effect: 'random',
-    effectSpeed: 0.7,
-    onLoad: true,
-    onLoadDelay: 500,
-    onLeaveTop: false,
-    onLeaveTopOffset: 3,
-    onLeaveViewport: false,
-    closeEscape: true,
-    closeOverlay: true,
-    closeAuto: false,
-    closeAutoDelay: 0,
-    overlayActive: true,
-    overlayColor: '#ffffff',
-    overlayOpacity: 0.7,
-    overlaySpeed: 0.07,
-    angle: 0,
-    cWidth: 'auto',
-    cHeight: 'auto',
-    save: {},
-    width: '40%',
-    height: 'auto',
-    positionX: 'center',
-    positionY: 'center',
-    offsetX: '10px',
-    offsetY: '10px',
-    minWidth: 'min(200px, 90%)',
-    maxWidth: '95%',
-    minHeight: null,
-    maxHeight: null,
-    header: true,
-    headerContent: false,
-    footer: true,
-    footerContent: false,
-    buttonX: true,
-    buttonXContent: '&#x2716;',
-    buttonXSVG: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M297.3722,319.9996l-175.9859,-175.9859c-6.2442,-6.2442 -6.2442,-16.3832 0,-22.6274c6.2442,-6.2442 16.3832,-6.2442 22.6274,0l175.9859,175.9859l175.9857,-175.9857c6.2442,-6.2442 16.3832,-6.2442 22.6274,-0c6.2442,6.2442 6.2442,16.3832 -0,22.6274l-175.9857,175.9857l175.9857,175.9857c6.2442,6.2442 6.2442,16.3832 0,22.6274c-6.2442,6.2442 -16.3832,6.2442 -22.6274,0l-175.9857,-175.9857l-175.9859,175.9859c-6.2442,6.2442 -16.3832,6.2442 -22.6274,-0c-6.2442,-6.2442 -6.2442,-16.3832 0,-22.6274l175.9859,-175.9859Z"/></svg>',
-    buttonFooter: true,
-    buttonFooterContent: 'Close',
-    ariaCloseLabel: 'Close this dialog',
-    storeCode: '',
-    storePositionSizeCode: 'flyin-position-size',
-    storePositionSizeExpiration: 365,
-    autoShowLimit: false,
-    autoShowCounter: 5,
-    autoShowDelay: 7,
-    attrWrapper: '',
-    attrHeader: '',
-    attrContent: '',
-    attrFooter: '',
-    xContentSize: false,
-    savePositionSize: true,
-    gripSVG: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M424.9139,518.6134c-6.2444,6.2444 -16.3837,6.2444 -22.628,-0c-6.2444,-6.2444 -6.2444,-16.3837 0,-22.628l93.0923,-93.0923c6.2444,-6.2444 16.3837,-6.2444 22.628,-0c6.2444,6.2444 6.2444,16.3837 -0,22.628l-93.0923,93.0923Zm-93.6009,0.5566c-6.2442,6.2442 -16.3832,6.2442 -22.6274,-0c-6.2442,-6.2442 -6.2442,-16.3832 0,-22.6274l187.2995,-187.2995c6.2442,-6.2442 16.3832,-6.2442 22.6274,0c6.2442,6.2442 6.2442,16.3832 -0,22.6274l-187.2995,187.2995Zm-93.6484,-0.2911c-6.2447,6.2447 -16.3846,6.2447 -22.6293,-0c-6.2447,-6.2447 -6.2447,-16.3846 -0,-22.6293l281.2145,-281.2145c6.2447,-6.2447 16.3846,-6.2447 22.6293,0c6.2447,6.2447 6.2447,16.3846 -0,22.6293l-281.2145,281.2145Zm-93.6509,-0.266c-6.2442,6.2442 -16.3832,6.2442 -22.6274,-0c-6.2442,-6.2442 -6.2442,-16.3832 0,-22.6274l374.599,-374.599c6.2442,-6.2442 16.3832,-6.2442 22.6274,-0c6.2442,6.2442 6.2442,16.3832 -0,22.6274l-374.599,374.599Z"/></svg>',
-  };
+  public settings: Settings = DEFAULT_SETTINGS;
+  public status: string = 'closed';
+  public statusModal: string = 'closed';
 
   constructor(core: Flyin, options: Settings = {}) {
     this.core = core;
@@ -140,17 +30,15 @@ export class Skin {
     }
 
     this.setMode();
-    this.storageInit();
+    this.loadAttributes();
+    this.loadStorage();
     this.prepareDialog();
 
-    // Re-apply explicit options and data attributes to ensure they take precedence over storage
-    this.setOptions(options);
-    this.processDataAttributes();
-
-    this.callback(this.core.callbacks.prepared, this.core);
+    this.callback(this.core.callbacks.prepared, this);
 
     if (this.settings.overlayActive) {
       this.createOverlay();
+
       if (this.settings.closeOverlay) {
         this.overlayClick();
       }
@@ -176,8 +64,10 @@ export class Skin {
       this.onLeaveViewport();
     }
 
-    window.addEventListener('resize', () => this.calculatePosition(false));
-    window.addEventListener('orientationchange', () => this.calculatePosition(false));
+    window.addEventListener('resize', () => this.calculatePosition());
+    window.addEventListener('orientationchange', () => this.calculatePosition());
+
+    this.tinykeysInit();
   }
 
   css(index: string): string {
@@ -188,52 +78,41 @@ export class Skin {
     return document.querySelector(`.${this.css('wrapper')}`);
   }
 
+  protected prepareDialog(): void {}
+
+  protected getElement(obj: any): HTMLElement | null {
+    if (!obj) {
+      return null;
+    }
+
+    if (obj instanceof HTMLElement || obj.nodeType === 1) {
+      return obj as HTMLElement;
+    }
+
+    if (obj.jquery && obj.length > 0 && obj[0].nodeType === 1) {
+      return obj[0] as HTMLElement;
+    }
+
+    return null;
+  }
+
+  protected ensureVisible(el: HTMLElement): void {
+    if (el.style.display === 'none') {
+      el.style.display = '';
+    }
+
+    if (window.getComputedStyle(el).display === 'none') {
+      el.style.display = 'block';
+    }
+  }
+
   protected setMode(): void {
     this.mode = this.animations.includes(this.settings.effect || '') ? 'animation' : 'transition';
   }
 
-  protected storageInit(): void {
-    if (this.core.useStorage && this.settings.storeCode) {
-      const storage = localStorage.getItem(this.settings.storeCode);
-      if (storage !== null) {
-        this.storageValue = parseInt(storage, 10);
-      }
-    }
-  }
-
-  protected prepareDialog(): void {
-    this.loadPositionSizeStorage();
-  }
-
-  protected processDataAttributes(): void {
-    if (!this.core.element) return;
-
-    const el = this.core.element;
-
-    if (el.dataset.title !== undefined) {
-      this.settings.headerContent = el.dataset.title;
-      this.settings.title = true;
-    }
-
-    if (el.dataset.titleTag !== undefined) {
-      this.settings.titleTag = el.dataset.titleTag;
-    }
-
-    if (el.dataset.modal !== undefined) {
-      this.settings.modal = el.dataset.modal !== 'false' && el.dataset.modal !== '0';
-    }
-
-    if (el.dataset.onLoad !== undefined) {
-      this.settings.onLoad = el.dataset.onLoad !== 'false' && el.dataset.onLoad !== '0';
-    }
-
-    if (el.dataset.onLoadDelay !== undefined) {
-      this.settings.onLoadDelay = parseInt(el.dataset.onLoadDelay, 10);
-    }
-  }
-
   createOverlay(): void {
     const overlay = document.createElement('div');
+
     overlay.className = `${this.css('overlay')} ${this.css('overlayIDPrefix')}${this.core.id}`;
     overlay.setAttribute('aria-hidden', 'true');
     overlay.style.zIndex = ((this.settings.zIndex || 1000000) - 1).toString();
@@ -241,10 +120,13 @@ export class Skin {
     overlay.style.transition = `opacity ${this.settings.overlaySpeed}s`;
 
     const container = this.getContainer();
+
     if (container !== document.body) {
       overlay.style.position = 'absolute';
     }
+
     container.appendChild(overlay);
+
     this.core.overlay = overlay;
   }
 
@@ -266,14 +148,26 @@ export class Skin {
     });
   }
 
-  createDialog(): void {
+  protected createDialog(): void {
     const dialog = document.createElement('div');
     const stylePrefix = this.css('stylePrefix');
     const styleClass = this.settings.style?.startsWith(stylePrefix)
       ? this.settings.style
       : stylePrefix + this.settings.style;
 
-    dialog.className = `${this.css('dialog')} ${this.css('dialogIDPrefix')}${this.core.id} ${this.css('dialogEffectPrefix')}${this.settings.effect} ${styleClass} ${this.settings.extraClass} ${this.skinCode ? this.css('skinPrefix') + this.skinCode : ''}`.trim();
+    const dialogClasses = [
+      this.css('dialog'),
+      `${this.css('dialogIDPrefix')}${this.core.id}`,
+      `${this.css('dialogEffectPrefix')}${this.settings.effect}`,
+      styleClass,
+      this.settings.extraClass,
+    ];
+
+    if (this.skinCode) {
+      dialogClasses.push(this.css('skinPrefix') + this.skinCode);
+    }
+
+    dialog.className = dialogClasses.filter(Boolean).join(' ');
     dialog.style.zIndex = (this.settings.zIndex || 1000000).toString();
 
     dialog.setAttribute('role', this.settings.role || 'dialog');
@@ -281,37 +175,63 @@ export class Skin {
       dialog.setAttribute('aria-modal', 'true');
     }
 
-    if (this.settings.width) dialog.style.width = this.formatUnit(this.settings.width);
-    if (this.settings.height) dialog.style.height = this.formatUnit(this.settings.height);
-    if (this.settings.minWidth) dialog.style.minWidth = this.formatUnit(this.settings.minWidth);
-    if (this.settings.maxWidth) dialog.style.maxWidth = this.formatUnit(this.settings.maxWidth);
-    if (this.settings.minHeight) dialog.style.minHeight = this.formatUnit(this.settings.minHeight);
-    if (this.settings.maxHeight) dialog.style.maxHeight = this.formatUnit(this.settings.maxHeight);
+    if (this.settings.width) {
+      dialog.style.width = this.formatUnit(this.settings.width);
+    }
+
+    if (this.settings.height) {
+      dialog.style.height = this.formatUnit(this.settings.height);
+    }
+
+    if (this.settings.minWidth) {
+      dialog.style.minWidth = this.formatUnit(this.settings.minWidth);
+    }
+
+    if (this.settings.maxWidth) {
+      dialog.style.maxWidth = this.formatUnit(this.settings.maxWidth);
+    }
+
+    if (this.settings.minHeight) {
+      dialog.style.minHeight = this.formatUnit(this.settings.minHeight);
+    }
+
+    if (this.settings.maxHeight) {
+      dialog.style.maxHeight = this.formatUnit(this.settings.maxHeight);
+    }
 
     const wrapper = document.createElement('div');
-    wrapper.className = this.css('wrapper');
-    if (this.settings.attrWrapper) this.setAttributes(wrapper, this.settings.attrWrapper);
 
-    // Close button X
+    wrapper.className = this.css('wrapper');
+
+    if (this.settings.attrWrapper) {
+      this.setAttributes(wrapper, this.settings.attrWrapper);
+    }
+
     let btnX: HTMLButtonElement | null = null;
+
     if (this.settings.buttonX) {
       btnX = document.createElement('button');
       btnX.type = 'button';
       btnX.className = this.css('closeButton');
-      btnX.innerHTML = this.settings.buttonXSVG || this.settings.buttonXContent || '&#x2716;';
+      btnX.innerHTML = this.settings.buttonXContent || this.settings.buttonXSVG || '&#x2716;';
+
       btnX.setAttribute('aria-label', this.settings.ariaCloseLabel || 'Close this dialog');
       btnX.addEventListener('click', (e) => {
         e.stopPropagation();
         this.close();
       });
+
       btnX.addEventListener('mousedown', (e) => e.stopPropagation());
     }
 
-    // Header
     if (this.settings.header) {
       const header = document.createElement('div');
+
       header.className = this.css('header');
-      if (this.settings.attrHeader) this.setAttributes(header, this.settings.attrHeader);
+
+      if (this.settings.attrHeader) {
+        this.setAttributes(header, this.settings.attrHeader);
+      }
 
       if (btnX) {
         header.appendChild(btnX);
@@ -319,14 +239,28 @@ export class Skin {
 
       if (this.settings.title) {
         const titleElement = document.createElement(this.settings.titleTag || 'h5');
+
         titleElement.id = `${this.css('titleIDPrefix')}${this.core.id}`;
-        let titleText = '';
-        if (typeof this.settings.headerContent === 'string') {
-          titleText = this.settings.headerContent;
-        } else if (typeof this.settings.title === 'string') {
-          titleText = this.settings.title;
+
+        const headerContentEl = this.getElement(this.settings.headerContent);
+        if (headerContentEl) {
+          const el = this.settings.copy
+            ? (headerContentEl.cloneNode(true) as HTMLElement)
+            : headerContentEl;
+          this.ensureVisible(el);
+          titleElement.appendChild(el);
+        } else {
+          let titleText = '';
+
+          if (typeof this.settings.headerContent === 'string') {
+            titleText = this.settings.headerContent;
+          } else if (typeof this.settings.title === 'string') {
+            titleText = this.settings.title;
+          }
+
+          titleElement.innerHTML = titleText;
         }
-        titleElement.innerHTML = titleText;
+
         header.appendChild(titleElement);
         dialog.setAttribute('aria-labelledby', titleElement.id);
       }
@@ -335,21 +269,45 @@ export class Skin {
       wrapper.appendChild(btnX);
     }
 
-    // Content
     const content = document.createElement('div');
+
     content.className = this.css('content');
-    if (this.settings.attrContent) this.setAttributes(content, this.settings.attrContent);
-    content.innerHTML = this.settings.content || (this.core.element ? this.core.element.innerHTML : '');
+
+    if (this.settings.attrContent) {
+      this.setAttributes(content, this.settings.attrContent);
+    }
+
+    const coreElement = this.getElement(this.core.element);
+    const settingsContentEl = this.getElement(this.settings.content);
+
+    if (coreElement) {
+      const el = this.settings.copy ? (coreElement.cloneNode(true) as HTMLElement) : coreElement;
+      this.ensureVisible(el);
+      content.appendChild(el);
+    } else if (settingsContentEl) {
+      const el = this.settings.copy
+        ? (settingsContentEl.cloneNode(true) as HTMLElement)
+        : settingsContentEl;
+      this.ensureVisible(el);
+      content.appendChild(el);
+    } else {
+      content.innerHTML = typeof this.settings.content === 'string' ? this.settings.content : '';
+    }
+
     wrapper.appendChild(content);
 
-    // Footer
     if (this.settings.footer) {
       const footer = document.createElement('div');
+
       footer.className = this.css('footer');
-      if (this.settings.attrFooter) this.setAttributes(footer, this.settings.attrFooter);
+
+      if (this.settings.attrFooter) {
+        this.setAttributes(footer, this.settings.attrFooter);
+      }
 
       if (this.settings.buttonFooter) {
         const btnFooter = document.createElement('button');
+
         btnFooter.type = 'button';
         btnFooter.innerHTML = this.settings.buttonFooterContent || 'Close';
         btnFooter.setAttribute('aria-label', this.settings.buttonFooterContent || 'Close');
@@ -363,24 +321,64 @@ export class Skin {
         footer.appendChild(btnFooter);
       }
 
-      if (typeof this.settings.footerContent === 'string') {
+      const footerContentEl = this.getElement(this.settings.footerContent);
+      if (footerContentEl) {
+        const el = this.settings.copy
+          ? (footerContentEl.cloneNode(true) as HTMLElement)
+          : footerContentEl;
+        this.ensureVisible(el);
+        footer.appendChild(el);
+      } else if (typeof this.settings.footerContent === 'string') {
         const footerText = document.createElement('div');
+
         footerText.innerHTML = this.settings.footerContent;
         footer.appendChild(footerText);
       }
+
       wrapper.appendChild(footer);
     }
 
     dialog.appendChild(wrapper);
+
     const container = this.getContainer();
+
     if (container !== document.body) {
       dialog.style.position = 'absolute';
     }
+
     container.appendChild(dialog);
+
     this.core.dialog = dialog;
 
-    this.calculatePosition(true);
-    this.callback(this.core.callbacks.ready, this.core);
+    this.calculatePosition();
+  }
+
+  protected tinykeysInit(): void {
+    if (this.settings.keysOpen || this.settings.keysClose) {
+      const keybindings: Record<string, (event: KeyboardEvent) => void> = {};
+
+      if (this.settings.keysOpen && typeof this.settings.keysOpen === 'string') {
+        keybindings[this.settings.keysOpen] = (event: KeyboardEvent) => {
+          if (this.status === 'closed') {
+            event.preventDefault();
+            this.open();
+          }
+        };
+      }
+
+      if (this.settings.keysClose && typeof this.settings.keysClose === 'string') {
+        keybindings[this.settings.keysClose] = (event: KeyboardEvent) => {
+          if (this.status === 'opened') {
+            event.preventDefault();
+            this.close();
+          }
+        };
+      }
+
+      if (Object.keys(keybindings).length > 0) {
+        tinykeys(window, keybindings);
+      }
+    }
   }
 
   protected formatUnit(value: string | number): string {
@@ -388,14 +386,19 @@ export class Skin {
   }
 
   protected getFocusableElements(): HTMLElement[] {
-    if (!this.core.dialog) return [];
-    const focusableSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    if (!this.core.dialog) {
+      return [];
+    }
+
+    const focusableSelectors =
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
     return Array.from(this.core.dialog.querySelectorAll(focusableSelectors)) as HTMLElement[];
   }
 
   protected setAttributes(el: HTMLElement, attrStr: string): void {
-    // Simple attribute parser
     const matches = attrStr.matchAll(/(\w+)="([^"]*)"/g);
+
     for (const match of matches) {
       el.setAttribute(match[1], match[2]);
     }
@@ -403,7 +406,9 @@ export class Skin {
 
   protected onLoad(): void {
     setTimeout(() => {
-      if (this.enabled) this.open();
+      if (this.enabled) {
+        this.open();
+      }
     }, this.settings.onLoadDelay);
   }
 
@@ -413,34 +418,50 @@ export class Skin {
         this.open();
       }
     };
+
     document.addEventListener('mouseleave', handleLeave);
   }
 
   protected onLeaveViewport(): void {
-    // TODO: Implement intersection observer or similar
+    document.addEventListener('mouseleave', () => {
+      if (this.status === 'closed' && this.enabled) {
+        this.open();
+        this.enabled = false;
+      }
+    });
   }
 
   protected getContainer(): HTMLElement {
-    return (document.querySelector(this.settings.containerSelector || 'body') || document.body) as HTMLElement;
+    return (document.querySelector(this.settings.containerSelector || 'body') ||
+      document.body) as HTMLElement;
   }
 
   protected getContainerDimensions(): { width: number; height: number } {
     const container = this.getContainer();
     const isBody = container === document.body;
+
     return {
-      width: isBody ? window.innerWidth : container.clientWidth,
-      height: isBody ? window.innerHeight : container.clientHeight,
+      width: isBody ? document.documentElement.clientWidth : container.clientWidth,
+      height: isBody ? document.documentElement.clientHeight : container.clientHeight,
     };
   }
 
   protected parseOffset(value: string | number | undefined): number {
-    if (typeof value === 'number') return value;
-    if (typeof value === 'string') return parseInt(value, 10) || 0;
+    if (typeof value === 'number') {
+      return value;
+    }
+
+    if (typeof value === 'string') {
+      return parseInt(value, 10) || 0;
+    }
+
     return 0;
   }
 
-  protected calculatePosition(_init = false): void {
-    if (!this.core.dialog) return;
+  protected calculatePosition(): void {
+    if (!this.core.dialog) {
+      return;
+    }
 
     const dialog = this.core.dialog;
     const rect = dialog.getBoundingClientRect();
@@ -452,63 +473,100 @@ export class Skin {
       let x = (dims.width - rect.width) / 2;
       x = Math.max(offsetX, Math.min(x, dims.width - rect.width - offsetX));
       dialog.style.left = `${x}px`;
-      dialog.style.right = 'auto';
+      dialog.style.right = '';
     } else if (this.settings.positionX === 'left') {
       dialog.style.left = this.formatUnit(this.settings.offsetX || 0);
-      dialog.style.right = 'auto';
+      dialog.style.right = '';
     } else if (this.settings.positionX === 'right') {
       dialog.style.right = this.formatUnit(this.settings.offsetX || 0);
-      dialog.style.left = 'auto';
+      dialog.style.left = '';
     } else {
-      let x = typeof this.settings.positionX === 'number' ? this.settings.positionX : parseInt(this.settings.positionX as string, 10);
+      let x =
+        typeof this.settings.positionX === 'number'
+          ? this.settings.positionX
+          : parseInt(this.settings.positionX as string, 10);
       x = Math.max(offsetX, Math.min(x, dims.width - rect.width - offsetX));
       dialog.style.left = `${x}px`;
-      dialog.style.right = 'auto';
+      dialog.style.right = '';
     }
 
     if (this.settings.positionY === 'center') {
       let y = (dims.height - rect.height) / 2;
       y = Math.max(offsetY, Math.min(y, dims.height - rect.height - offsetY));
       dialog.style.top = `${y}px`;
-      dialog.style.bottom = 'auto';
+      dialog.style.bottom = '';
     } else if (this.settings.positionY === 'top') {
       dialog.style.top = this.formatUnit(this.settings.offsetY || 0);
-      dialog.style.bottom = 'auto';
+      dialog.style.bottom = '';
     } else if (this.settings.positionY === 'bottom') {
       dialog.style.bottom = this.formatUnit(this.settings.offsetY || 0);
-      dialog.style.top = 'auto';
+      dialog.style.top = '';
     } else {
-      let y = typeof this.settings.positionY === 'number' ? this.settings.positionY : parseInt(this.settings.positionY as string, 10);
+      let y =
+        typeof this.settings.positionY === 'number'
+          ? this.settings.positionY
+          : parseInt(this.settings.positionY as string, 10);
       y = Math.max(offsetY, Math.min(y, dims.height - rect.height - offsetY));
       dialog.style.top = `${y}px`;
-      dialog.style.bottom = 'auto';
+      dialog.style.bottom = '';
     }
   }
 
-  setOptions(options: Settings): void {
+  protected setOptions(options: Settings): void {
     this.settings = { ...this.settings, ...options };
   }
 
-  callback(method: ((...args: any[]) => void) | any, ...args: any[]): void {
+  protected callback(method: ((...args: any[]) => void) | any, ...args: any[]): void {
     if (typeof method === 'function') {
       method.apply(this, args);
     }
   }
 
-  open(): void {
-    if (this.status === 'opened') return;
+  protected showModalOverlay(): void {
+    if (this.settings.modal && this.statusModal === 'closed') {
+      document.documentElement.classList.add(this.css('html'));
 
-    this.callback(this.core.callbacks.beforeOpen, this.core);
+      if (this.core.overlay) {
+        this.core.overlay.classList.add(this.css('overlayActive'));
+        this.core.overlay.style.opacity = (this.settings.overlayOpacity || 0.7).toString();
+      }
+
+      this.statusModal = 'opened';
+    }
+  }
+
+  protected hideModalOverlay(force = false): void {
+    if ((this.settings.modal || force) && this.statusModal === 'opened') {
+      document.documentElement.classList.remove(this.css('html'));
+
+      if (this.core.overlay) {
+        this.core.overlay.style.opacity = '0';
+
+        setTimeout(
+          () => {
+            if (this.statusModal === 'closed' || force) {
+              this.core.overlay?.classList.remove(this.css('overlayActive'));
+            }
+          },
+          (this.settings.overlaySpeed || 0.07) * 1000,
+        );
+      }
+
+      this.statusModal = 'closed';
+    }
+  }
+
+  public open(): void {
+    if (this.status === 'opened') {
+      return;
+    }
+
+    this.callback(this.core.callbacks.beforeOpen, this);
 
     this.lastActiveElement = document.activeElement as HTMLElement;
 
     this.status = 'opened';
-    if (this.settings.modal) document.documentElement.classList.add(this.css('html'));
-
-    if (this.core.overlay) {
-      this.core.overlay.classList.add(this.css('overlayActive'));
-      this.core.overlay.style.opacity = (this.settings.overlayOpacity || 0.7).toString();
-    }
+    this.showModalOverlay();
 
     if (this.core.dialog) {
       this.core.dialog.classList.remove(this.css('dialogInactive'));
@@ -546,13 +604,17 @@ export class Skin {
             }
           }
         };
+
         window.addEventListener('keydown', this.focusTrapListener);
       }
     }
 
-    setTimeout(() => {
-      this.callback(this.core.callbacks.afterOpen, this.core);
-    }, (this.settings.effectSpeed || 0.7) * 1000);
+    setTimeout(
+      () => {
+        this.callback(this.core.callbacks.afterOpen, this);
+      },
+      (this.settings.effectSpeed || 0.7) * 1000,
+    );
 
     if (this.settings.closeAuto && (this.settings.closeAutoDelay || 0) > 0) {
       setTimeout(() => {
@@ -563,10 +625,12 @@ export class Skin {
     }
   }
 
-  close(): void {
-    if (this.status === 'closed') return;
+  public close(): void {
+    if (this.status === 'closed') {
+      return;
+    }
 
-    this.callback(this.core.callbacks.beforeClose, this.core);
+    this.callback(this.core.callbacks.beforeClose, this);
 
     this.status = 'closed';
 
@@ -575,66 +639,104 @@ export class Skin {
       this.focusTrapListener = null;
     }
 
-    if (this.core.overlay) {
-      this.core.overlay.style.opacity = '0';
-      setTimeout(() => {
-        if (this.status === 'closed') {
-          this.core.overlay?.classList.remove(this.css('overlayActive'));
-        }
-      }, (this.settings.overlaySpeed || 0.07) * 1000);
-    }
+    this.hideModalOverlay();
 
     if (this.core.dialog) {
       this.core.dialog.classList.remove(this.css('dialogActive'));
       this.core.dialog.classList.add(this.css('dialogInactive'));
     }
 
-    if (this.settings.modal) document.documentElement.classList.remove(this.css('html'));
-
-    setTimeout(() => {
-      this.callback(this.core.callbacks.afterClose, this.core);
-      if (this.lastActiveElement) {
-        this.lastActiveElement.focus();
-      }
-      this.finishDialog();
-    }, (this.settings.effectSpeed || 0.7) * 1000);
+    setTimeout(
+      () => {
+        this.callback(this.core.callbacks.afterClose, this);
+        if (this.lastActiveElement) {
+          this.lastActiveElement.focus();
+        }
+        this.finishDialog();
+      },
+      (this.settings.effectSpeed || 0.7) * 1000,
+    );
   }
 
   public save(): void {
-    if (this.settings.savePositionSize && this.core.useStorage) {
+    if (this.settings.savePositionSize) {
       const key = this.getPositionSizeStorageKey();
+
       if (key) {
         const poSize = this.genPositionSizeStorage();
+
         localStorage.setItem(key, JSON.stringify(poSize));
       }
     }
   }
 
-  protected getPositionSizeStorageKey(): string | null {
-    if (!this.settings.storeCode) {
-      return null;
+  public mod(data: Partial<Settings>): void {
+    for (const key in data) {
+      if (key in this.settings) {
+        (this.settings as any)[key] = (data as any)[key];
+      }
     }
-    return `${this.settings.storePositionSizeCode || 'flyin-position-size'}-${this.settings.storeCode}`;
+
+    if (data.modal !== undefined) {
+      if (data.modal) {
+        this.showModalOverlay();
+      } else {
+        this.hideModalOverlay(true);
+      }
+    }
   }
 
-  public mod(_data: any): void {
-    // Implementation for mod if needed
+  public move(location: MoveOptions): void {
+    if (location.positionX !== undefined) {
+      this.settings.positionX = location.positionX;
+    }
+
+    if (location.positionY !== undefined) {
+      this.settings.positionY = location.positionY;
+    }
+
+    if (location.offsetX !== undefined) {
+      this.settings.offsetX = location.offsetX;
+    }
+
+    if (location.offsetY !== undefined) {
+      this.settings.offsetY = location.offsetY;
+    }
+
+    this.calculatePosition();
   }
 
-  public move(_location: any): void {
-    // Implementation for move
-  }
+  public resize(size: ResizeOptions): void {
+    if (size.width !== undefined) {
+      this.settings.width = size.width;
+    }
 
-  public resize(_size: any): void {
-    // Implementation for resize
+    if (size.height !== undefined) {
+      this.settings.height = size.height;
+    }
+
+    if (this.core.dialog) {
+      if (size.width !== undefined) {
+        this.core.dialog.style.width = this.formatUnit(size.width);
+      }
+
+      if (size.height !== undefined) {
+        this.core.dialog.style.height = this.formatUnit(size.height);
+      }
+    }
+
+    this.calculatePosition();
   }
 
   public setContent(content: string): void {
     this.settings.content = content;
+
     if (this.core.dialog) {
       const contentEl = this.core.dialog.querySelector(`.${this.css('content')}`);
+
       if (contentEl) {
         contentEl.innerHTML = content;
+
         this.calculatePosition();
       }
     }
@@ -644,16 +746,51 @@ export class Skin {
     this.save();
   }
 
-  protected loadPositionSizeStorage(): void {
-    if (this.settings.savePositionSize && this.core.useStorage) {
+  protected loadAttributes(): void {
+    const el = this.getElement(this.core.element);
+
+    if (!el) {
+      return;
+    }
+
+    if (el.dataset.title !== undefined) {
+      this.settings.headerContent = el.dataset.title;
+      this.settings.title = true;
+    }
+
+    if (el.dataset.titleTag !== undefined) {
+      this.settings.titleTag = el.dataset.titleTag;
+    }
+
+    if (el.dataset.modal !== undefined) {
+      this.settings.modal = el.dataset.modal !== 'false' && el.dataset.modal !== '0';
+    }
+
+    if (el.dataset.onLoad !== undefined) {
+      this.settings.onLoad = el.dataset.onLoad !== 'false' && el.dataset.onLoad !== '0';
+    }
+
+    if (el.dataset.onLoadDelay !== undefined) {
+      this.settings.onLoadDelay = parseInt(el.dataset.onLoadDelay, 10);
+    }
+
+    if (el.dataset.copy !== undefined) {
+      this.settings.copy = el.dataset.copy !== 'false' && el.dataset.copy !== '0';
+    }
+  }
+
+  protected loadStorage(): void {
+    if (this.settings.savePositionSize) {
       const key = this.getPositionSizeStorageKey();
+
       if (key) {
         const storage = localStorage.getItem(key);
+
         if (storage !== null) {
           try {
             this.storagePositionSize = JSON.parse(storage);
-            this.storageUsed = true;
-            this.applyPositionSizeStorage();
+
+            Object.assign(this.settings, this.storagePositionSize);
           } catch {
             console.error('Failed to parse position storage');
           }
@@ -662,12 +799,13 @@ export class Skin {
     }
   }
 
-  protected applyPositionSizeStorage(): void {
-    if (this.storageUsed) {
-      Object.assign(this.settings, this.storagePositionSize);
+  protected getPositionSizeStorageKey(): string | null {
+    if (!this.settings.storeCode) {
+      return null;
     }
-  }
 
+    return `${this.settings.storePositionSizeCode || 'flyin-position-size'}-${this.settings.storeCode}`;
+  }
 
   protected genPositionSizeStorage(): Record<string, any> {
     return {

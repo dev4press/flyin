@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flyin - Accessibility Example</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- Flyin Library CSS -->
+    <link rel="stylesheet" href="../dist/flyin.css">
+</head>
+<body>
+
+<header>
+    <a href="../index.html">
+        <div class="logo-container">
+            <svg viewBox="0 0 640 640" aria-hidden="true">
+                <use href="../assets/img/logo.svg#logo"></use>
+            </svg>
+        </div>
+        <h1>Flyin</h1>
+    </a>
+    <div class="subtitle">Accessibility Example</div>
+</header>
+
+<main>
+    <section>
+        <h2>Building Accessible Popups</h2>
+        <p>This example demonstrates how to use ARIA roles, labels, and custom attributes to ensure your popups are fully accessible to screen reader users.</p>
+        
+        <div style="background: #f6ffed; padding: 1rem; border: 1px solid #b7eb8f; margin-bottom: 2rem;">
+            <strong>Key Features:</strong> 
+            <ul>
+                <li><code>role: 'alertdialog'</code> for urgent notifications.</li>
+                <li><code>ariaCloseLabel</code> to provide descriptive text for close buttons.</li>
+                <li><code>attrWrapper</code> to link the dialog to its description using <code>aria-describedby</code>.</li>
+            </ul>
+            <button id="open-accessible-popup" class="button">Open Accessible Modal</button>
+        </div>
+
+        <div id="accessible-content" style="display: none;">
+            <p id="popup-description">This is a highly accessible modal dialog. It uses ARIA attributes to tell screen readers exactly what its purpose is and how to interact with it.</p>
+            <p>You can navigate this popup using the keyboard (Tab, Escape).</p>
+        </div>
+
+        <h3>JavaScript Code</h3>
+        <pre><code id="js-code"></code></pre>
+    </section>
+    
+    <div class="cta-links">
+        <a href="index.html">Back to Examples</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 <a href="https://www.dev4Press.com/">dev4Press.com</a>. All rights reserved. <a href="https://github.com/dev4press/flyin">GitHub Repository</a></p>
+</footer>
+
+<!-- Dist JS files linked -->
+<script src="../dist/flyin.umd.js"></script>
+
+<script id="example-js">
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('open-accessible-popup').addEventListener('click', function() {
+            new Flyin("#accessible-content", {
+                settings: {
+                    onLoad: false,
+                    title: "Accessible Notification",
+                    role: "alertdialog",
+                    ariaCloseLabel: "Close this important notification",
+                    // Link the wrapper to the description paragraph inside the content
+                    attrWrapper: 'aria-describedby="popup-description"',
+                    style: 'plain-white',
+                    modal: true
+                }
+            }).open();
+        });
+    });
+</script>
+<script>
+    document.getElementById('js-code').textContent = document.getElementById('example-js').textContent.trim();
+</script>
+
+</body>
+</html>
