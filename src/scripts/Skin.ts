@@ -354,25 +354,39 @@ export class Skin {
   }
 
   protected tinykeysInit(): void {
-    if (this.settings.keysOpen || this.settings.keysClose) {
+    const { keysOpen, keysClose } = this.settings;
+
+    if (keysOpen || keysClose) {
       const keybindings: Record<string, (event: KeyboardEvent) => void> = {};
 
-      if (this.settings.keysOpen && typeof this.settings.keysOpen === 'string') {
-        keybindings[this.settings.keysOpen] = (event: KeyboardEvent) => {
+      if (keysOpen === keysClose && typeof keysOpen === 'string') {
+        keybindings[keysOpen] = (event: KeyboardEvent) => {
           if (this.status === 'closed') {
             event.preventDefault();
             this.open();
-          }
-        };
-      }
-
-      if (this.settings.keysClose && typeof this.settings.keysClose === 'string') {
-        keybindings[this.settings.keysClose] = (event: KeyboardEvent) => {
-          if (this.status === 'opened') {
+          } else if (this.status === 'opened') {
             event.preventDefault();
             this.close();
           }
         };
+      } else {
+        if (keysOpen && typeof keysOpen === 'string') {
+          keybindings[keysOpen] = (event: KeyboardEvent) => {
+            if (this.status === 'closed') {
+              event.preventDefault();
+              this.open();
+            }
+          };
+        }
+
+        if (keysClose && typeof keysClose === 'string') {
+          keybindings[keysClose] = (event: KeyboardEvent) => {
+            if (this.status === 'opened') {
+              event.preventDefault();
+              this.close();
+            }
+          };
+        }
       }
 
       if (Object.keys(keybindings).length > 0) {

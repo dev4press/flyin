@@ -1,6 +1,10 @@
 # Changelog
 
-## 1.1.0 / 2026.07.13
+## 1.1.1 / 2026.07.13
+- New: version property for the Flyin object
+- Fixed: small issue with the keyboard shortcuts open/close support
+
+## 1.1.0 / 2026.07.10
 - New: dependency on Tinykeys for new keys events support
 - New: option to make the copy of the DOM element on popup construction
 - New: moved default settings and static data into own files

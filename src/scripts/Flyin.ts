@@ -5,6 +5,7 @@ import type { Callbacks, MoveOptions, Options, ResizeOptions, Settings } from '.
 let flyinIDSequence = 1;
 
 export class Flyin {
+  public version: string = __APP_VERSION__;
   public skinInstance: Skin | null = null;
   public element: HTMLElement | null = null;
   public overlay: HTMLElement | null = null;
