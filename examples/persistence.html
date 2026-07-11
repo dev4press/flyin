@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flyin - Persistence Example</title>
+    <link rel="stylesheet" href="../dist/flyin.css">
+    <style>
+        body { height: 1500px; width: 1500px; padding: 20px; font-family: sans-serif; }
+        .info { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="info">
+        <h1>Persistence Example</h1>
+        <p>Drag the popup or resize it, then reload the page. The state is saved in LocalStorage.</p>
+        <button id="launch-persistent">Launch Persistent Popup</button>
+    </div>
+    <script src="../dist/flyin.umd.js"></script>
+    <script>
+        document.getElementById('launch-persistent').addEventListener('click', function() {
+            window.flyinInstance = new Flyin(null, {
+                skin: 'Resizable',
+                settings: {
+                    storeCode: 'test-persistence',
+                    savePositionSize: true,
+                    title: 'Persistent Popup',
+                    content: 'This popup saves its state.',
+                    width: 300,
+                    height: 200,
+                    positionX: 100,
+                    positionY: 100,
+                    showGrip: true
+                }
+            });
+            window.flyinInstance.open();
+        });
+    </script>
+</body>
+</html>

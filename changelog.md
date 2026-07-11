@@ -1,7 +1,8 @@
 # Changelog
 
-## 1.1.1 / 2026.07.13
+## 1.2.0 / 2026.07.11
 - New: version property for the Flyin object
+- New: added unit, e2e and integration tests support
 - Fixed: small issue with the keyboard shortcuts open/close support
 
 ## 1.1.0 / 2026.07.10
