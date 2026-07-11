@@ -31,14 +31,25 @@ export class ResizableSkin extends Skin {
   }
 
   protected override prepareDialog(): void {
-    if (!this.settings.savePositionSize) {
+    if (!this.settings.savePositionSize || Object.keys(this.storagePositionSize).length === 0) {
       return;
     }
 
-    this.settings.positionX = this.storagePositionSize.left;
-    this.settings.positionY = this.storagePositionSize.top;
-    this.settings.width = `${this.storagePositionSize.width}px`;
-    this.settings.height = `${this.storagePositionSize.height}px`;
+    if (this.storagePositionSize.left !== undefined) {
+      this.settings.positionX = this.storagePositionSize.left;
+    }
+
+    if (this.storagePositionSize.top !== undefined) {
+      this.settings.positionY = this.storagePositionSize.top;
+    }
+
+    if (this.storagePositionSize.width !== undefined) {
+      this.settings.width = `${this.storagePositionSize.width}px`;
+    }
+
+    if (this.storagePositionSize.height !== undefined) {
+      this.settings.height = `${this.storagePositionSize.height}px`;
+    }
 
     const dims = this.getContainerDimensions();
     const offsetX = this.parseOffset(this.settings.offsetX);

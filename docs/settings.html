@@ -136,7 +136,7 @@
             <li><code>buttonXSVG</code> (string): SVG code for the header close button icon.</li>
             <li><code>buttonFooter</code> (boolean): Show close button in footer. Default: <code>true</code>.</li>
             <li><code>buttonFooterContent</code> (string): Text for footer close button. Default: <code>'Close'</code>.</li>
-            <li><code>buttonAction</code> (function): Custom callback function for the close buttons.</li>
+            <li><code>buttonAction</code> (function): Custom callback function for the close buttons. Sends <code>Flyin</code> instance.</li>
         </ul>
 
         <h3>Advanced and Skin Settings</h3>
@@ -154,12 +154,16 @@
 
         <h3>Callbacks</h3>
         <ul>
-            <li><code>prepared</code>: Triggered when popup is prepared.</li>
-            <li><code>ready</code>: Triggered when popup is ready.</li>
-            <li><code>beforeOpen</code> / <code>afterOpen</code>: Lifecycle events for opening.</li>
-            <li><code>beforeClose</code> / <code>afterClose</code>: Lifecycle events for closing.</li>
-            <li><code>beforeMove</code> / <code>afterMove</code>: Lifecycle events for movement.</li>
-            <li><code>beforeResize</code> / <code>afterResize</code>: Lifecycle events for resizing.</li>
+            <li><code>prepared</code>: Triggered when popup is prepared. Sends <code>Skin</code> instance.</li>
+            <li><code>ready</code>: Triggered when popup is ready. Sends <code>Flyin</code> instance.</li>
+            <li><code>beforeOpen</code>: Lifecycle event triggered before opening. Sends <code>Skin</code> instance.</li>
+            <li><code>afterOpen</code>: Lifecycle event triggered after opening. Sends <code>Skin</code> instance.</li>
+            <li><code>beforeClose</code>: Lifecycle event triggered before closing. Sends <code>Skin</code> instance.</li>
+            <li><code>afterClose</code>: Lifecycle event triggered after closing. Sends <code>Skin</code> instance.</li>
+            <li><code>beforeMove</code>: Lifecycle event triggered before movement. Sends <code>Flyin</code> instance.</li>
+            <li><code>afterMove</code>: Lifecycle event triggered after movement. Sends <code>Flyin</code> instance.</li>
+            <li><code>beforeResize</code>: Lifecycle event triggered before resizing. Sends <code>Flyin</code> instance.</li>
+            <li><code>afterResize</code>: Lifecycle event triggered after resizing. Sends <code>Flyin</code> instance.</li>
         </ul>
     </section>
 
